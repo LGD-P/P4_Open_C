@@ -10,7 +10,7 @@
 
 * La norme PEP8 devra être vérifiée grâce à l'outil flake8
 
-------
+---
 
 # Déroulement de base d'un tournois:
 
@@ -20,7 +20,7 @@
     4. Lorsque le tour est terminé, entrez les résultats.
     5. Répétez les étapes 3 et 4 pour les tours suivants jusqu'à ce que tous les tours soient joués, et que le tournoi soit terminé.
 
-
+---
 
 # Un tournois est constitué de: 
     • Nom
@@ -38,6 +38,8 @@
     • Description
         ◦ Les remarques générales du directeur du tournoi vont ici.
 
+---
+
 # Un joueur est constitué de:
 
     • Nom de famille
@@ -46,6 +48,8 @@
     • Sexe
     • Classement
         ◦ Il s'agit d'un chiffre positif.
+
+---
 
 # Le rapport est constitué de:
 
@@ -60,12 +64,9 @@
     • Liste de tous les tours d'un tournoi.
     • Liste de tous les matchs d'un tournoi.
 
-
-
 ---------
 
-
-Liste des commandes à exécuter pour lancer le programme:
+# Liste des commandes à exécuter pour lancer le programme:
 
 Pré-requis: se placer depuis le terminal dans le dossier où l'on exécute le script:
 
@@ -76,7 +77,11 @@ Avant toute chose on clone le répository git:
 Une fois le projet cloné on crée et on active l'environnement virtuel:
 
     python3 -m venv env
+
+suivi de:
+
     source env/bin/activate
+  
 
 Puis on lance l'installation des modules nécessaires au fonctionnement du script:
 
