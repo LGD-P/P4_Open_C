@@ -8,7 +8,7 @@
 
 * Une base de donnée TinyDB devra stocker les résultats du tournois. Un rapport pourra être généré à la fin du tournois. De plus l'état du programme pourra être chargé à tout moment entre les actions de l'utilisateur.
 
-* La norme PEP8 devra être vérifier grace à l'outil flake8
+* La norme PEP8 devra être vérifiée grâce à l'outil flake8
 
 ------
 
