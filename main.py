@@ -1,7 +1,9 @@
 import sys
 from rich.console import Console
+from datetime import datetime
 
 from classes_tournament_player import(Tournament, Player)
+
 
 
 
@@ -34,7 +36,7 @@ def choice_creat_tournament(menu_choice):
         
     if int(menu_choice) == 1:
         nom = input("Entrez le nom du Tournois : ")
-        date = input("Entrez la date au format jj-mm-aaaa : ")
+        date = datetime.now().strftime("%d-%m-%Y")
         place = input("Entrez le lieu du Tournois ")
         tours = []
         players= []
