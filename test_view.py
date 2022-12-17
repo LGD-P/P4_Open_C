@@ -1,9 +1,8 @@
 from rich.console import Console
 
 
-from test_controller import (TOURNAMENT_LIST,PLAYERS_LIST,
-                             exit_main_menu, creat_tournament,
-                             add_players)
+from test_controller import (exit_main_menu, creat_tournament,
+                             add_players, Players,PLAYERS_LIST)
 
 
 c = Console()
@@ -41,13 +40,6 @@ if __name__ == "__main__":
     while starting_menu:  
         display_the_menu = display_menu()
         choice_creat_tournament(display_the_menu)
-        """
-        print(TOUNAMENT_LIST)
-        print(PLAYERS_LIST)
-        """
-
-
-
 
 ###     FAITS:        ###
 # Création d'un tournois ok

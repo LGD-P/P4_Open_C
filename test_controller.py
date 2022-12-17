@@ -5,7 +5,7 @@ from rich.console import Console
 from test_model import Players, Tournament
 
 TOURNAMENT_LIST = [1]
-PLAYERS_LIST = [1,2,3,4,6,7,8]
+PLAYERS_LIST = [0,1,2,3,4,6,7,8]
 
 c = Console()
 

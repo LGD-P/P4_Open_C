@@ -33,6 +33,7 @@ class Players:
     birth: str
     sex: str
     rank: int
+    points: int = 6548
 
 
 
@@ -42,10 +43,21 @@ class Players:
                                f"- Date de naissance: {self.birth}\n"
                                f"- Sexe: {self.sex}\n"
                                f"- rank: {self.rank}\n"
+                               f"- points: {self.points}\n"
                                )
         
 
 
+@dataclass
+class Rounds:
+    matching_lists : list
+    players_names: "Players.first_name , Players.last_name"
+    starting_match_time: str
+    end_match_time: str
     
     
-
+@dataclass
+class Match:
+    list_of_mach_tuples: list
+    
+    
