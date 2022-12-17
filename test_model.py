@@ -33,7 +33,7 @@ class Players:
     birth: str
     sex: str
     rank: int
-    counter: ClassVar[int] = 0
+
 
 
     def __post_init__(self):
@@ -44,11 +44,6 @@ class Players:
                                f"- rank: {self.rank}\n"
                                )
         
-    def __post_init__(self):
-        Players.counter += 1
-        self.number_of_player_created = f"Vous avez créer [bold red]{Players.counter}"\
-            " joueurs[bold red]"
-
 
 
     

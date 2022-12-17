@@ -1,7 +1,7 @@
 from rich.console import Console
 
 
-from test_controller import (TOUNAMENT_LIST,PLAYERS_LIST,
+from test_controller import (TOURNAMENT_LIST,PLAYERS_LIST,
                              exit_main_menu, creat_tournament,
                              add_players)
 
@@ -46,6 +46,19 @@ if __name__ == "__main__":
         print(PLAYERS_LIST)
         """
 
+
+
+
+###     FAITS:        ###
+# Création d'un tournois ok
+# Création de huit joueurs ok 
+# Quitter le menu ok
+
+
+###    A FAIRE:       ###
+# Générer des paires 
+# Entrer les résultats
+# Gérer la base de données
 
     
     
