@@ -33,7 +33,7 @@ class Players:
     birth: str
     sex: str
     rank: int
-    points: int = 6548
+    points: int 
 
 
 

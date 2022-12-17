@@ -5,9 +5,19 @@ from rich.console import Console
 from test_model import Players, Tournament
 
 TOURNAMENT_LIST = [1]
-PLAYERS_LIST = [0,1,2,3,4,6,7,8]
+PLAYERS_LIST = [
+                Players("DENIS", "Laurent", "11-12-2000","h",321,0),
+                Players("LAURENT", "Denis", "11-10-2005","h",123,0),
+                Players("MOINE", "Alice", "10-10-1990","f",100,0),
+                Players("VAULT", "Lise", "01-02-1980","F",10,0),
+                Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
+                Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
+                Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
+                Players("PRIMA", "Louis", "15-04-1945","f",12,0)
+                ]
 
 c = Console()
+
 
 
         
@@ -117,3 +127,10 @@ def exit_main_menu(menu_choice):
     if int(menu_choice) == 6:
         sys.exit()  
                 
+                
+                
+                
+if __name__ == "__main__":
+    
+    for element in PLAYERS_LIST:
+        print(element.last_name)
