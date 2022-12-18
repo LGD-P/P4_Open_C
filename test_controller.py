@@ -4,7 +4,8 @@ from rich.console import Console
 
 from test_model import Players, Tournament
 
-TOURNAMENT_LIST = [1]
+TOURNAMENT_LIST = [Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
+                              [],[],"Blitz","Description",4)]
 PLAYERS_LIST = [
                 Players("DENIS", "Laurent", "11-12-2000","h",321,0),
                 Players("LAURENT", "Denis", "11-10-2005","h",123,0),
@@ -13,17 +14,19 @@ PLAYERS_LIST = [
                 Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
                 Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
                 Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
-                Players("PRIMA", "Louis", "15-04-1945","f",12,0)
+                
+             
                 ]
 
 c = Console()
 
 
-
+"""T
+                              
+                              Players("PRIMA", "Louis", "15-04-1945","m",12,0)"""
         
 
 def creat_tournament(menu_choice):
-    
     if int(menu_choice) == 1:
         try:
             if len(TOURNAMENT_LIST) == 1:
@@ -70,7 +73,7 @@ def creat_tournament(menu_choice):
             
                 TOURNAMENT_LIST.append(tournois)
                 
-                c.print(f"\nMerci, votre tournois est créer :\n "
+                c.print(f"\nMerci, votre tournois est créé :\n "
                         f"[bold yellow]{tournois.display_tournament}[bold yellow]")
         except:
             pass
@@ -101,8 +104,44 @@ def add_players(menu_choice):
                     first_name = c.input("[bold green3]Entrez le prénom du Joueur:"\
                         "[bold green3] ")
             
-                birth= c.input("[bold green3]Entrez l'age du joueur:"\
-                    "jj-mm-aaaa[bold green3]")
+            
+                c.print("[bold green3]Entrez la date de naissance du joueur :")
+                
+                
+                day = c.input("Jour: ")
+                while not day.isdigit() or int(day) not in range(1,32):
+                    c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
+                    day = c.input("Jour: ")
+                
+                month = c.input("Mois: ")
+                while not month.isdigit() or int(month) not in range(1,13):
+                    c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
+                    month = c.input("Mois: ")
+            
+                        
+                while int(month) == 2 and int(day) in range(29,32):
+                    c.print("[bold red] Le mois de février ne compte pas de 29 30 "\
+                    "ou 31[bold red]")
+                    
+                    day = c.input("Jour: ")
+                    while not day.isdigit() or int(day) not in range(1,32):
+                        c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
+                        day = c.input("Jour: ")
+                        
+                    month = c.input("Mois: ")
+                    while not month.isdigit() or int(month) not in range(1,13):
+                        c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
+                        month = c.input("Mois: ")
+                            
+                year = c.input("Année: ")
+                while not year.isdigit() or not int(year) in range(
+                    (int(datetime.now().strftime("%Y"))-118),
+                    (int(datetime.now().strftime("%Y"))-10)) :
+                        c.print("[bold red]\nInvalide: Le joueur doit avoir "\
+                            "au moins 10 ans, au plus 118 ans")
+                        year = c.input("Année: ")
+                
+                birth= (f'{day}-{month}-{year}')
         
                 sex_list = ["h","f"]
                 sex= c.input("[bold green3]Entrez le sexe: H - F[bold green3] ")
@@ -111,13 +150,19 @@ def add_players(menu_choice):
                     sex = c.input("[bold green3]Entrez le sexe du joueur: H / F "\
                         "[bold green3]")
                     
-                rank= c.input("[bold green3]Entrez le classement du joueur: [bold green3]")
+                rank= c.input("[bold green3]Entrez le classement du joueur:" \
+                    "[bold green3]")
+                     
+                added_player = Players(last_name,first_name,str(birth),sex,int(rank),0)
+                                 
+                PLAYERS_LIST.append(added_player)
                 
-                player =  Players(last_name,first_name,birth,sex,rank)
+                TOURNAMENT_LIST[0].players.append(added_player)
                 
-                PLAYERS_LIST.append(player)
+                c.print(f"\n [yellow]Player N°{len(PLAYERS_LIST)} ajouté à la "\
+                    "liste des joueurs[yellow]\n")
+         
                 
-                c.print(f"Nombre de joueur crées : {len(PLAYERS_LIST)}\n")
             
         except:
             pass
@@ -129,8 +174,3 @@ def exit_main_menu(menu_choice):
                 
                 
                 
-                
-if __name__ == "__main__":
-    
-    for element in PLAYERS_LIST:
-        print(element.last_name)
