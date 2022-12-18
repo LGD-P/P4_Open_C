@@ -4,8 +4,9 @@ from rich.console import Console
 
 from test_model import Players, Tournament
 
-TOURNAMENT_LIST = [Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
-                              [],[],"Blitz","Description",4)]
+
+
+
 PLAYERS_LIST = [
                 Players("DENIS", "Laurent", "11-12-2000","h",321,0),
                 Players("LAURENT", "Denis", "11-10-2005","h",123,0),
@@ -14,16 +15,15 @@ PLAYERS_LIST = [
                 Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
                 Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
                 Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
-                
-             
+                Players("PRIMA", "Louis", "15-04-1945","m",12,0) 
                 ]
+
+TOURNAMENT_LIST = [Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
+                              [],PLAYERS_LIST,"Blitz","Description",4)]
 
 c = Console()
 
 
-"""T
-                              
-                              Players("PRIMA", "Louis", "15-04-1945","m",12,0)"""
         
 
 def creat_tournament(menu_choice):
@@ -161,6 +161,8 @@ def add_players(menu_choice):
                 
                 c.print(f"\n [yellow]Player N°{len(PLAYERS_LIST)} ajouté à la "\
                     "liste des joueurs[yellow]\n")
+                
+
          
                 
             
