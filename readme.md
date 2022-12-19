@@ -10,7 +10,6 @@
 
 * La norme PEP8 devra être vérifiée grâce à l'outil flake8
 
-
 ---
 
 # Déroulement de base d'un tournois:
