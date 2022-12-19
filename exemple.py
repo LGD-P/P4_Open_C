@@ -2,8 +2,6 @@ def add_player(player_info):
     return None
 
    
-
-
 menu = {
     "1":{
         "label": "ajouter un joueur",
@@ -18,7 +16,7 @@ choix = input("Choix utilisateur")
 
 
 if choix in menu:
-    menu[choix]["action"]
+    menu[choix]["action"]()
 
 
 

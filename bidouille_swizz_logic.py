@@ -48,8 +48,6 @@ for element_1, element_2 in zip(first_rank_part,second_rank_part):
 # Correspondante pour faire l'annonce des matchs.
 
 
-
-
 counter = -1
 listing_of_match_first_round = []
 for element in first_list_of_match:
@@ -63,5 +61,5 @@ for element in first_list_of_match:
         [(PLAYERS_LIST[first_list_of_match[counter][1][1]].last_name),
          (PLAYERS_LIST[first_list_of_match[counter][1][1]].rank)]))
 
-for element in listing_of_match_first_round:
-    print(tuple(element))
+listing_of_match_first_round = tuple(listing_of_match_first_round)
+
