@@ -17,6 +17,7 @@ choix = input("Choix utilisateur")
 
 if choix in menu:
     menu[choix]["action"]()
+    
 
 
 

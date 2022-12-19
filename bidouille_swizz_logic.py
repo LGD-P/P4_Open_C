@@ -6,6 +6,7 @@ from rich import print
 # On récupère l'index des joueurs dans la liste ainsi que leur rang
 # On créer un dictionnaire avec pour clef le rang des joueurs
 
+
 players_rank_list= []
 player_index = []
 
