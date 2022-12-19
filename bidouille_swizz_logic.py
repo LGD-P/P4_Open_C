@@ -82,6 +82,8 @@ for element in test3:
     print(element)
 
 
-print(test3[0][0][1])
-
-print(PLAYERS_LIST[test3[0][0][1]].last_name)
+counter = -1
+for element in test3:
+    counter += 1
+    print(f"{(PLAYERS_LIST[test3[counter][0][1]].last_name)} joue contre " \
+        f"{(PLAYERS_LIST[test3[counter][1][1]].last_name)}")
