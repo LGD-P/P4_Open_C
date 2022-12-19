@@ -1,89 +1,56 @@
 from test_controller import *
+from rich import print
 
 
+# On prends la liste des joueurs
+# On récupère l'index des joueurs dans la liste ainsi que leur rang
+# On créer un dictionnaire avec pour clef le rang des joueurs
 
-players_list_by_rank = []
+players_rank_list= []
 player_index = []
 
 for element in PLAYERS_LIST:
-    players_list_by_rank.append(element.rank)
+    players_rank_list.append(element.rank)
     player_index.append(PLAYERS_LIST.index(element))
 
 
-print("")
-print("Position des joueur et classement")
-
-dico_player_position = dict(zip(players_list_by_rank,player_index))
+dico_player_position = dict(zip(players_rank_list,player_index))
 
 
-
-print(dico_player_position)
-print("")
-
+# On classe le dictionnaire par rang
+# Pui on en fait une liste contenant rang/index 
 
 
+sorted_players_dict = sorted(dico_player_position.items())
 
+print(sorted_players_dict)
 
-print("DICTIONNAIRE CLASSE")
-print("")
+player_rank_index_list = []
+for k,v in sorted_players_dict:
+    player_rank_index_list.append([k,v])
 
 
 
-sd = sorted(dico_player_position.items())
-test = []
-for k,v in sd:
-    test.append([k,v])
-
-print(test)
+# On créer deux listes avec les rangs des joueurs par ordre croissant
+# Puis on fusionne chaque moitié de liste avec la moitié correspondante
 
 
+first_rank_part = player_rank_index_list[0:4]
+second_rank_part = player_rank_index_list[4:9]
 
+first_list_of_match = []
+for element_1, element_2 in zip(first_rank_part,second_rank_part):
+    first_list_of_match.append([element_1, element_2])
 
-print("")
-print("LISTE DES RANGS")
-print("")
-print(players_list_by_rank)
-print("")
-print("LISTE DES INDEX")
-print("")
-players_list_by_rank = sorted(players_list_by_rank)
-print(player_index)
-print("")
-print("LISTE COUPEE EN DEUX TRIEE PAR RANG")
-print("")
-print(players_list_by_rank[0:4])
-print(players_list_by_rank[4:9])
-print("")
-
-premiere_partie = players_list_by_rank[0:4]
-seconde_partie = players_list_by_rank[4:9]
-
-
-
-pair = []
-
-for element_1,element_2 in zip(premiere_partie,seconde_partie):
-    pair.append([element_1,element_2])
     
-print(pair)
-
-
-pp = test[0:4]
-
-sp = test[4:9]
-
-
-test3 = []
-for el1, el2 in zip(pp,sp):
-    test3.append([el1,el2])
-    
-print("*"*10)
-for element in test3:
-    print(element)
+# Ainsi il n'y a plus qu'a aller chercher l'index du joueur dans la liste
+# Correspondante pour faire l'annonce des matchs.
 
 
 counter = -1
-for element in test3:
+for element in first_list_of_match:
     counter += 1
-    print(f"{(PLAYERS_LIST[test3[counter][0][1]].last_name)} joue contre " \
-        f"{(PLAYERS_LIST[test3[counter][1][1]].last_name)}")
+    print(f"{(PLAYERS_LIST[first_list_of_match[counter][0][1]].last_name)} joue contre " \
+        f"{(PLAYERS_LIST[first_list_of_match[counter][1][1]].last_name)}")
+
+

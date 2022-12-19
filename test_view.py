@@ -50,10 +50,12 @@ if __name__ == "__main__":
 # Création d'un tournois ok
 # Création de huit joueurs ok 
 # Quitter le menu ok
+# Générer des paires 
 
 
 ###    A FAIRE:       ###
-# Générer des paires 
+# Alimenter les classes Tounois 
+# Match et Rounds avec les paires générées.
 # Entrer les résultats
 # Gérer la base de données
 
