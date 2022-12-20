@@ -8,14 +8,22 @@ from MODEL import *
 
 
 c = Console()
+
 TOURNAMENT_LIST = [Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
-                              [],[],"Blitz","Description",4)] 
+                              [],[
+                                  Players("DENIS", "Laurent", "11-12-2000","h",321,0),
+                                  Players("LAURENT", "Denis", "11-10-2005","h",123,0),
+                                  Players("MOINE", "Alice", "10-10-1990","f",100,0),
+                                  Players("VAULT", "Lise", "01-02-1980","f",10,0),
+                                  Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
+                                  Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
+                                  Players("EDON", "Gabrielle", "09-03-1985","f",25,0)
+                                  ],"Blitz","Description",4)] 
 
 @dataclass
 class MenuController:
     choice_from_menu : str
     
-            
     def creat_tournament(self):      
         nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
         date = datetime.now().strftime("%d-%m-%Y")
@@ -67,6 +75,9 @@ class MenuController:
             c.print("\n[bold red]Pour ajouter des joueurs, veuillez créer"\
             " un tournois[bold red]")
             pass
+        elif len(TOURNAMENT_LIST[0].players)==8:
+            c.print("\n[bold red]Vous avez enregistré 08 joueurs dans ce tournois\n"\
+            " Le nombre maximum de joueur est atteint.[bold red]\n")
         
         else:
                             
