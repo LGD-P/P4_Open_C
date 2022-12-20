@@ -25,7 +25,6 @@ class MenuView:
 
                 
         
-
 MAIN_MENU = MenuView({
     "1":{
         "label":"[bold blue]- 1. Créer un tournois\n  [bold blue]",
