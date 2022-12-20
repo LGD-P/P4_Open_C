@@ -8,8 +8,8 @@ from MODEL import *
 
 
 c = Console()
-TOURNAMENT_LIST = [
-    ] 
+TOURNAMENT_LIST = [Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
+                              [],[],"Blitz","Description",4)] 
 
 @dataclass
 class MenuController:
@@ -63,13 +63,12 @@ class MenuController:
         c.print(TOURNAMENT_LIST)
     
     def add_player(self):
-        try:
-            TOURNAMENT_LIST == 0
+        if  len(TOURNAMENT_LIST) == 0 :
             c.print("\n[bold red]Pour ajouter des joueurs, veuillez créer"\
-                " un tournois[bold red]")
+            " un tournois[bold red]")
             pass
         
-        except:
+        else:
                             
             last_name= c.input("[bold green3]Entrez le nom du Joueur: [bold green3] ")
             while last_name.isdigit():
