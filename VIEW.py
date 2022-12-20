@@ -5,19 +5,19 @@ from CONTROLLER import *
 
 c = Console()
 
-
+STARTING_MENU = True
 
 @dataclass
 class MenuView:
     menu: dict 
-
+    
     def display_menu(self):
-            c.print("\n[bold yellow]Bonjour, Veuillez faire un choix dans "\
-                "le menu:[bold yellow]\n")
-            for element in self.menu:
-                c.print(self.menu[element]["label"])
-            menu_choice = c.input("[bold red]==> [bold red]")
-            return menu_choice
+        c.print("\n[bold yellow]Bonjour, Veuillez faire un choix dans "\
+            "le menu:[bold yellow]\n")
+        for element in self.menu:
+            c.print(self.menu[element]["label"])
+        menu_choice = c.input("[bold red]==> [bold red]")
+        return menu_choice
         
     def display_choices(self,choice):
         if choice in MAIN_MENU.menu:
@@ -57,7 +57,8 @@ MAIN_MENU = MenuView({
 
 
 if __name__ == "__main__":
-    user_choices = MAIN_MENU.display_menu()
-    MAIN_MENU.display_choices(user_choices)
+    while STARTING_MENU:
+        user_choices = MAIN_MENU.display_menu()
+        MAIN_MENU.display_choices(user_choices)
 
     
