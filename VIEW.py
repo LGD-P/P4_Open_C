@@ -1,6 +1,7 @@
 
 from rich.console import Console
 from dataclasses import dataclass
+from CONTROLLER import *
 
 c = Console()
 
@@ -11,13 +12,22 @@ class MenuView:
     menu: dict 
 
     def display_menu(self):
-            c.print("\n[bold yellow]Bonjour, Veuillez faire un choix dans le menu:[bold yellow]\n")
+            c.print("\n[bold yellow]Bonjour, Veuillez faire un choix dans "\
+                "le menu:[bold yellow]\n")
             for element in self.menu:
                 c.print(self.menu[element]["label"])
-            choice = c.input("[bold red]==> [bold red]")
+            menu_choice = c.input("[bold red]==> [bold red]")
+            return menu_choice
+        
+    def display_choices(self,choice):
+        if choice in MAIN_MENU.menu:
+            c.print("[bold green]\n ça fonctionne [bold green]\n")
+            MAIN_MENU.menu[choice]["action"]()
+        c.print("[bold red]\nChoix non valide\n[bold red]")
+                
         
 
-main_menu = MenuView({
+MAIN_MENU = MenuView({
     "1":{
         "label":"[bold blue]- 1. Créer un tournois\n  [bold blue]",
         "action":"",
@@ -40,21 +50,15 @@ main_menu = MenuView({
             },
     "6":{
         "label":"[bold blue]- 6. Quitter\n  [bold blue]",
-        "action":"",
+        "action":action_after_choice.quit_menu
             }
     })
 
 
 
 
-
-
-
-
-
-
-
-
-
 if __name__ == "__main__":
-    main_menu.display_menu()
+    user_choices = MAIN_MENU.display_menu()
+    MAIN_MENU.display_choices(user_choices)
+
+    
