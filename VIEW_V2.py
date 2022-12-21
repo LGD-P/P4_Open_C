@@ -40,9 +40,7 @@ class TournamentView:
         for element in self.tournament_view:
             c.print(self.tournament_view[element]["label"])
         self.tournament_choice = c.input("[bold red]==> [bold red]")
-        return self.tournament_choice
-        
-    def display_tournament_choices(self):
+                
         if self.tournament_choice in TOURNAMENT_MENU_VIEW.tournament_view:
             TOURNAMENT_MENU_VIEW.tournament_view[self.tournament_choice]["action"]()
 
@@ -72,10 +70,7 @@ class PlayerMenuView:
             c.print(self.player_view[element]["label"])
             
         self.player_choice = c.input("[bold red]==> [bold red]")
-        return self.player_choice
-
-    
-    def display_player_choices(self):
+   
         if self.player_choice in PLAYER_MENU_VIEW.player_view:
          PLAYER_MENU_VIEW.player_view[self.player_choice]["action"]()
 
@@ -131,8 +126,6 @@ if __name__ == "__main__":
     while STARTING_MENU:
         MAIN_MENU.display_menu()
         MAIN_MENU.display_choices()   
-        # TOURNAMENT_MENU_VIEW.display_tournament_choices()
-        # PLAYER_MENU_VIEW.display_player_choices()
 
    
 
