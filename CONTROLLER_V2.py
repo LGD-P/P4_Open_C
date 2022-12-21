@@ -30,14 +30,13 @@ class MenuController:
         
         
 action_to_quit = MenuController("")
+
+
         
 @dataclass
 class TournamentController:
     choice_from_menu : str       
     
-    # Si cette fonction est placé dans la classe 
-    # TournamentView je ne peux pas l'appelle au moment d'instancier 
-    # la classe TournamentVieu
     def display_tournament_list(self):
         counter = 0
         for tournois in TOURNAMENT_LIST:
@@ -88,4 +87,87 @@ class TournamentController:
                     f"[bold yellow]{tournois.display_tournament}[bold yellow]")
                 
 
-action_in_tournmanent_menu = TournamentController("")
+TOURNAMENT_CONTROLLER = TournamentController("")
+
+
+
+@dataclass
+class PlayerController:
+    choice_from_menu : str 
+    
+    
+    def add_player(self):
+        last_name= c.input("[bold green3]Entrez le nom du Joueur: [bold green3] ")
+        while last_name.isdigit():
+            c.print("[bold red]\nInvalide, le nom ne peut pas contenir "\
+                    "de numéro\n ")
+            last_name= c.input("[bold green3]Entrez le nom du Joueur:"\
+                "[bold green3] ")
+                    
+            
+        first_name= c.input("[bold green3]Entrez le prénom du Joueur: "\
+            "[bold green3] ")
+        while first_name.isdigit():
+            c.print("[bold red]\nInvalide, le prénom ne peut pas contenir "\
+                    "de numéro\n ")
+            first_name = c.input("[bold green3]Entrez le prénom du Joueur:"\
+                "[bold green3] ")
+
+        c.print("[bold green3]Entrez la date de naissance du joueur :")
+        
+        day = c.input("Jour: ")
+        while not day.isdigit() or int(day) not in range(1,32):
+            c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
+            day = c.input("Jour: ")
+        
+        month = c.input("Mois: ")
+        while not month.isdigit() or int(month) not in range(1,13):
+            c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
+            month = c.input("Mois: ")
+
+                
+        while int(month) == 2 and int(day) in range(29,32):
+            c.print("[bold red] Le mois de février ne compte pas de 29 30 "\
+            "ou 31[bold red]")
+            
+            day = c.input("Jour: ")
+            while not day.isdigit() or int(day) not in range(1,32):
+                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
+                day = c.input("Jour: ")
+                
+            month = c.input("Mois: ")
+            while not month.isdigit() or int(month) not in range(1,13):
+                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
+                month = c.input("Mois: ")
+                    
+        year = c.input("Année: ")
+        while not year.isdigit() or not int(year) in range(
+            (int(datetime.now().strftime("%Y"))-118),
+            (int(datetime.now().strftime("%Y"))-10)) :
+                c.print("[bold red]\nInvalide: Le joueur doit avoir "\
+                    "au moins 10 ans, au plus 118 ans")
+                year = c.input("Année: ")
+        
+        birth= (f'{day}-{month}-{year}')
+
+        sex_list = ["h","f"]
+        sex= c.input("[bold green3]Entrez le sexe: H - F[bold green3] ")
+        while not sex.lower() in sex_list or sex.isdigit():
+            c.print("[bold red]\nInvalide ")
+            sex = c.input("[bold green3]Entrez le sexe du joueur: H / F "\
+                "[bold green3]")
+            
+        rank= c.input("[bold green3]Entrez le classement du joueur:" \
+            "[bold green3]")
+                
+        added_player = Players(last_name,first_name,str(birth),sex,int(rank),0)
+        
+        TOURNAMENT_LIST[0].players.append(added_player)
+
+
+    def display_player_listing(self):
+        for element in TOURNAMENT_LIST:
+            c.print(element.players)
+        
+        
+PLAYER_CONTROLLER = PlayerController("")

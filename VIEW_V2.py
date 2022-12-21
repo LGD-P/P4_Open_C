@@ -52,11 +52,44 @@ class TournamentView:
 TOURNAMENT_MENU_VIEW = TournamentView(
     {"1":{
         "label":"[bold blue]- 1. Afficher les tournois [bold blue]",
-        "action": action_in_tournmanent_menu.display_tournament_list    
+        "action": TOURNAMENT_CONTROLLER.display_tournament_list    
          },
      "2":{"label":"[bold blue]- 2. Ajouter un tournois [bold blue]\n",
-          "action": action_in_tournmanent_menu.add_tournament
+          "action": TOURNAMENT_CONTROLLER.add_tournament
     }
+    })
+
+
+@dataclass
+class PlayerMenuView:
+    player_view : dict
+    player_choice : str = None
+    
+    def display_player_menu(self):
+        c.print("\n[bold yellow]Possibilité en rapport avec les joueurs "\
+            "[bold yellow]\n")
+        for element in self.player_view:
+            c.print(self.player_view[element]["label"])
+            
+        self.player_choice = c.input("[bold red]==> [bold red]")
+        return self.player_choice
+
+    
+    def display_player_choices(self):
+        if self.player_choice in PLAYER_MENU_VIEW.player_view:
+         PLAYER_MENU_VIEW.player_view[self.player_choice]["action"]()
+
+
+
+PLAYER_MENU_VIEW = PlayerMenuView({
+    "1":{
+    "label": "[bold blue]- 1. Afficher les joueurs [bold blue]",
+     "action":PLAYER_CONTROLLER.display_player_listing
+     },
+    "2":{
+        "label": "[bold blue]- 2. Ajouter un joueur [bold blue]",
+         "action":PLAYER_CONTROLLER.add_player
+        }
     })
 
 
@@ -68,7 +101,7 @@ MAIN_MENU = MenuView({
             },
     "2":{
         "label":"[bold blue]- 2. Gérer des joueurs :pencil: [bold blue]",
-        "action":"",
+        "action":PLAYER_MENU_VIEW.display_player_menu,
             },
     "3":{
         "label":"[bold blue]- 3. Lancer un tournois :watch:[bold blue]",
@@ -92,11 +125,15 @@ MAIN_MENU = MenuView({
 
 
 
+
+
 if __name__ == "__main__":
     while STARTING_MENU:
         MAIN_MENU.display_menu()
         MAIN_MENU.display_choices()   
-        TOURNAMENT_MENU_VIEW.display_tournament_choices()
+        # TOURNAMENT_MENU_VIEW.display_tournament_choices()
+        # PLAYER_MENU_VIEW.display_player_choices()
+
    
 
           
