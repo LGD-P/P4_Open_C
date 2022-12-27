@@ -1,18 +1,21 @@
+from datetime import datetime
+
 class Tournament:
-    def __init__(self, name, date, place, tours, players,
-                 time_control, description, number_of_rounds):
+    def __init__(self, name=str, date=str, place=str, tours=list, players=list,
+                 time_control=str, description=str, number_of_rounds=4):
         
-        self.name = str
-        self.date = str
-        self.place = str
-        self.tours = list
-        self.players = list
-        self.time_control = str
-        self.description = str
-        self.number_of_rounds = 4
+        self.name = name
+        self.date = date
+        self.place = place
+        self.tours = tours
+        self.players = players
+        self.time_control = time_control
+        self.description = description
+        self.number_of_rounds = number_of_rounds
         
-    def __str__(self) -> str:
-        return  (f"\n- Nom du tounois: {self.name}\n"
+    def __str__(self):
+        return  (
+                f"\n- Nom du tounois: {self.name}\n"
                 f"- Date du tournois: {self.date}\n"
                 f"- Lieu du tournois: {self.place}\n"
                 f"- Nombre de round: {self.number_of_rounds}\n"
@@ -22,7 +25,7 @@ class Tournament:
                 f"- Description: {self.description}\n"
                 )
         
-    def __repr__(self) -> str:
+    def __repr__(self):
         return (f"\n{self.name}\n"
                 f"{self.date}\n"
                 f"{self.place}\n"
@@ -36,17 +39,17 @@ class Tournament:
     
     
 class Players:
-    def __init__(self, last_name, first_name, 
-                 birth, sex,rank,points):
+    def __init__(self, last_name=str, first_name=str, 
+                 birth=str, sex=str,rank=int,points=int):
     
-        self.last_name: str
-        self.first_name: str  
-        self.birth: str
-        self.sex: str
-        self.rank: int
-        self.points: int 
+        self.last_name = last_name
+        self.first_name = first_name  
+        self.birth = birth
+        self.sex = sex
+        self.rank = rank
+        self.points =  points
         
-    def __str__(self) -> str:
+    def __str__(self):
         return (f"- Nom: {self.last_name}\n"
                 f"- Prénom: {self.first_name}\n"
                 f"- Date de naissance: {self.birth}\n"
@@ -55,13 +58,23 @@ class Players:
                 f"- points: {self.points}\n"
                 )
         
-    def __repr__(self) -> str:
-        return (f"{self.last_name}\n"
-                f"{self.first_name}\n"
-                f"{self.birth}\n"
-                f"{self.sex}\n"
-                f"{self.rank}\n"
+    def __repr__(self):
+        return (f"{self.last_name} "
+                f"{self.first_name} "
+                f"{self.birth} "
+                f"{self.sex} "
+                f"{self.rank} "
                 f"{self.points}\n"
                 )
     
-    
+test = Tournament("Chess-Event","Paris",datetime.now().strftime("%d-%m-%Y"),
+                              [],[
+                                  Players("DENIS", "Laurent", "11-12-2000","h",321,0),
+                                  Players("LAURENT", "Denis", "11-10-2005","h",123,0),
+                                  Players("MOINE", "Alice", "10-10-1990","f",100,0),
+                                  Players("VAULT", "Lise", "01-02-1980","f",10,0),
+                                  Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
+                                  Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
+                                  Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
+                                  Players("PATTON", "Gabriel", "09-03-1970","h",20,0)
+                                  ],"Blitz","Description",4)
