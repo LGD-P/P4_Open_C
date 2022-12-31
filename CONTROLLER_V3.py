@@ -1,14 +1,20 @@
 from rich.console import Console
+
 import sys
 
 from MODEL_V3 import Tournament, Players
+
 from VIEW_V3 import MenuView
 
-c = Console  
+c = Console()  
+
+
+def quit_menu():
+    c.print("[bold red]Merci à bientôt[bold red]")
+    sys.exit() 
         
 class MenuController:
     def __init__(self):
-        self.running_program = True
         self.menu_view_in_controller = MenuView({
     "1":{
         "label":"[bold blue]- 1. Gérer des tournois :pencil: [bold blue]",
@@ -32,18 +38,16 @@ class MenuController:
             },
     "6":{
         "label":"[bold blue]- 6. Quitter :raising_hand: \n [bold blue]",
-        "action": MenuController.quit_menu
+        "action": quit_menu
             }
     })
 
 
-    def quit_menu(self):
-        c.print("[bold red]Merci à bientôt[bold red]")
-        sys.exit() 
+
         
-    def run_program(self):
-        while self.running_program:
-            self.menu_view_in_controller.display_menu()
-            self.menu_view_in_controller.display_choices()
+    def run_program(self, running_program=True):
+        while running_program:
+            self.menu_view_in_controller.display_menu_and_get_choice()
+
         
 
