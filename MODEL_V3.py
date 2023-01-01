@@ -65,3 +65,7 @@ class Players:
                 f"{self.rank} "
                 f"{self.points}\n"
                 )
+        
+        
+    def add_in_tournament(self):
+        print(f"- {self.last_name}, {self.first_name}, classement = {self.rank}\n")

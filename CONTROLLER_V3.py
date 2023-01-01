@@ -4,7 +4,7 @@ import sys
 
 from MODEL_V3 import Tournament, Players
 
-from VIEW_V3 import MenuView
+from VIEW_V3 import MenuView, PlayerView
 
 c = Console()  
 
@@ -25,35 +25,90 @@ class MenuController:
         "action":PlayersController().add_player,
             },
     "3":{
+        "label":"[bold blue]- 4. Ajouter des joueurs à un tournois :pencil:[bold blue]",
+            "action":PlayersController().add_player_in_tournament,
+            },
+    "4":{
         "label":"[bold blue]- 3. Lancer un tournois :watch:[bold blue]",
             "action":"",
             },
-    "4":{
-        "label":"[bold blue]- 4. Ajouter des résultats :trophy: [bold blue]",
-        "action":"",
-            },
     "5":{
-        "label":"[bold blue]- 5. Montrer le rapport :bar_chart: [bold blue]",
+        "label":"[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
         "action":"",
             },
     "6":{
-        "label":"[bold blue]- 6. Quitter :raising_hand: \n [bold blue]",
+        "label":"[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
+        "action":"",
+            },
+    "7":{
+        "label":"[bold blue]- 7. Quitter :raising_hand: \n [bold blue]",
         "action": quit_menu
             }
     })
 
 
-
-        
     def run_program(self, running_program=True):
         while running_program:
             self.menu_view_in_controller.display_menu_and_get_choice()
      
 
+      
+class TournamentController:
+    def __init__(self, tournament_list = []) :
+           self.tournament_list = tournament_list
+           
+    def add_tournament(self):
+            nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
+            date = datetime.now().strftime("%d-%m-%Y")
+            place = c.input("[bold green3]Entrez le lieu du Tournois [bold green3] ")
+            tours = []
+            players= []
+            time_control_dict = {1:"Bullet",2:"Blitz",3:"Coup rapide"}
+
+            time_control= c.input("[bold green3]Choisissez le mode de contrôle "\
+                "du temps\n[bold green3]"\
+                    "[bold green]- 1. Bullet\n"
+                    "- 2. Blitz\n"
+                    "- 3. Coup rapide\n[bold green]")
+
+            while not time_control.isdigit() or int(time_control) <= 0 \
+            or int(time_control) >3:
+                c.print("[bold red]\nInvalide, possiblités ==> 1. 2. 3. [bold red]\n")
+                time_control= input( 
+                "- 1. Bullet\n"
+                "- 2. Blitz\n"
+                "- 3. Coup rapide\n"
+                )
+
+            time_control = time_control_dict[int(time_control)]
+                
+                
+            description = c.input("[bold green3]Indiquez la description du tournois "\
+                "[bold green3]")
+            
+            
+            tournois = Tournament(nom,date,place,tours,
+                                players,time_control,
+                                description)
+            
+            self.tournament_list.append(tournois)
+            
+            c.print(self.tournament_list)
+ 
+ 
+                    
+    def add_player_in_tournament(self):
+        return None
+
+
+
+
+
+
 class PlayersController:
-    def __init__(self,players_list = []):
-        self.players_list = players_list
-        
+    def __init__(self):
+        self.players_list = PlayerView()
+
     def add_player(self):
         last_name= c.input("[bold green3]Entrez le nom du Joueur: [bold green3] ")
         while last_name.isdigit():
@@ -124,46 +179,4 @@ class PlayersController:
         
         print(self.players_list)
         
-        
-class TournamentController:
-    def __init__(self, tournament_list = []) :
-           self.tournament_list = tournament_list
-           
-    def add_tournament(self):
-            nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
-            date = datetime.now().strftime("%d-%m-%Y")
-            place = c.input("[bold green3]Entrez le lieu du Tournois [bold green3] ")
-            tours = []
-            players= []
-            time_control_dict = {1:"Bullet",2:"Blitz",3:"Coup rapide"}
 
-            time_control= c.input("[bold green3]Choisissez le mode de contrôle "\
-                "du temps\n[bold green3]"\
-                    "[bold green]- 1. Bullet\n"
-                    "- 2. Blitz\n"
-                    "- 3. Coup rapide\n[bold green]")
-
-            while not time_control.isdigit() or int(time_control) <= 0 \
-            or int(time_control) >3:
-                c.print("[bold red]\nInvalide, possiblités ==> 1. 2. 3. [bold red]\n")
-                time_control= input( 
-                "- 1. Bullet\n"
-                "- 2. Blitz\n"
-                "- 3. Coup rapide\n"
-                )
-
-            time_control = time_control_dict[int(time_control)]
-                
-                
-            description = c.input("[bold green3]Indiquez la description du tournois "\
-                "[bold green3]")
-            
-            
-            tournois = Tournament(nom,date,place,tours,
-                                players,time_control,
-                                description)
-            
-            self.tournament_list.append(tournois)
-            
-            c.print(self.tournament_list)
-                    
