@@ -4,7 +4,7 @@ import sys
 
 from MODEL_V3 import Tournament, Players
 
-from VIEW_V3 import MenuView, PlayerView
+from VIEW_V3 import MenuView, PlayerView, TournamentView
 
 c = Console()  
 
@@ -54,8 +54,14 @@ class MenuController:
 
       
 class TournamentController:
-    def __init__(self, tournament_list = []) :
-           self.tournament_list = tournament_list
+    def __init__(self,) :
+           self.tournament_list_controller = TournamentView([
+            Tournament("Chess-Show","Moscow",datetime.now().strftime("%d-%m-%Y"),
+                       [],[],"Blitz","Description",4
+                       ),
+            Tournament("Chess-Show N°2","Paris",datetime.now().strftime("%d-%m-%Y"),
+            [],[],"Blitz","Description N°2",4)
+            ])
            
     def add_tournament(self):
             nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
@@ -91,14 +97,13 @@ class TournamentController:
                                 players,time_control,
                                 description)
             
-            self.tournament_list.append(tournois)
+            self.tournament_list_controller.tournament_list_view.append(tournois)
             
-            c.print(self.tournament_list)
+            c.print(self.tournament_list_controller.tournament_list_view)
  
  
                     
-    def add_player_in_tournament(self):
-        return None
+   
 
 
 
@@ -107,7 +112,17 @@ class TournamentController:
 
 class PlayersController:
     def __init__(self):
-        self.players_list = PlayerView()
+        self.players_list_controller = PlayerView([
+            Players("DENIS", "Laurent", "11-12-2000","h",321,0),
+            Players("LAURENT", "Denis", "11-10-2005","h",123,0),
+            Players("MOINE", "Alice", "10-10-1990","f",100,0),
+            Players("VAULT", "Lise", "01-02-1980","f",10,0),
+            Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
+            Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
+            Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
+            Players("PATTON", "Gabriel", "09-03-1970","h",20,0),
+            Players("LEROY", "Anatole","17/10/1975","h",2,0)
+        ])
 
     def add_player(self):
         last_name= c.input("[bold green3]Entrez le nom du Joueur: [bold green3] ")
@@ -175,8 +190,14 @@ class PlayersController:
                 
         choice_2 = Players(last_name,first_name,str(birth),sex,int(rank),0)
         
-        self.players_list.append(choice_2)
+        self.players_list_controller.players_list_view.append(choice_2)
         
-        print(self.players_list)
+        print(self.players_list_controller.players_list_view)
         
+        
+    def add_player_in_tournament(self):
+        self.players_list_controller.display_players_to_choose()
+        choice = c.input(
+            "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
+            )
 

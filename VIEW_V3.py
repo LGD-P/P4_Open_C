@@ -1,6 +1,7 @@
 from rich.console import Console
+from datetime import datetime
 
-from MODEL_V3 import Players
+from MODEL_V3 import Players, Tournament
 
 c = Console()
 
@@ -26,36 +27,50 @@ class MenuView:
    
 
 class PlayerView:
-    def __init__(self):
-        self.players_list = [
-            Players("DENIS", "Laurent", "11-12-2000","h",321,0),
-            Players("LAURENT", "Denis", "11-10-2005","h",123,0),
-            Players("MOINE", "Alice", "10-10-1990","f",100,0),
-            Players("VAULT", "Lise", "01-02-1980","f",10,0),
-            Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
-            Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
-            Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
-            Players("PATTON", "Gabriel", "09-03-1970","h",20,0)
-            ]
+    def __init__(self, players_list_view=[]):
+        self.players_list_view = players_list_view
     
     def display_players_to_choose(self):
         counter = 0
         value = []
         key = [] 
+        if self.players_list_view :
+            c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
+            
+            for players in self.players_list_view :
+                value.append(f"{players.last_name}  {players.first_name}  classement = {players.rank}")
         
-        for players in self.players_list:
-            value.append(f"{players.last_name}  {players.first_name}  classement = {players.rank}")
-    
-        for _ in range(len(value)):
-            counter += 1
-            key.append(counter)
-    
-        players_availables = dict(zip(key,value))
+            for _ in range(len(value)):
+                counter += 1
+                key.append(counter)
         
-        c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
-        for k,v in players_availables.items():
-            c.print(f"[bold blue]- {k}: {v}[bold blue]\n")
+            players_availables = dict(zip(key,value))
+            
+            for k,v in players_availables.items():
+                c.print(f"[bold blue]- {k}: {v}[bold blue]\n")
+        else:
+            c.print("[bold red]Aucun joueurs n'a été créé...[bold red]")
+
+
+class TournamentView:
+    def __init__(self, tournament_list_view = []):
+        self.tournament_list_view = tournament_list_view
+
+    def display_tournament(self):
+        counter = 0
+        c.print("[bold yellow] Tournois disponibles : \n[bold yellow]")
+        if self.tournament_list_view:
+            for element in self.tournament_list_view:
+                counter += 1
+                c.print(f"Tounois N°{counter} : {element}")
+        else:
+            c.print("[bold red] Aucun tournois n'a été créé..[bold red]")
+
+
+
+
+
 
 
 if __name__ == "__main__":
-    PlayerView().display_players_to_choose()
+    TournamentView().display_tournament()
