@@ -31,7 +31,7 @@ class PlayerView:
         self.players_list_view = players_list_view
     
     def display_players_to_choose(self):
-        counter = 0
+        counter = -1
         value = []
         key = [] 
         if self.players_list_view :
@@ -48,6 +48,8 @@ class PlayerView:
             
             for k,v in players_availables.items():
                 c.print(f"[bold blue]- {k}: {v}[bold blue]\n")
+                
+            return players_availables
         else:
             c.print("[bold red]Aucun joueurs n'a été créé...[bold red]")
 
@@ -57,18 +59,24 @@ class TournamentView:
         self.tournament_list_view = tournament_list_view
 
     def display_tournament(self):
-        counter = 0
-        c.print("[bold yellow] Tournois disponibles : \n[bold yellow]")
+        counter = -1
+        value = []
+        key = [] 
         if self.tournament_list_view:
-            for element in self.tournament_list_view:
-                counter += 1
-                c.print(f"Tounois N°{counter} : {element}")
-        """else:
-            c.print("[bold red] Aucun tournois n'a été créé, "\
-                "merci d'en créer un.[bold red]")
-            pass"""
-
-
+            c.print("[bold yellow] Tournois disponibles : \n[bold yellow]")
+            for tournament in self.tournament_list_view:
+                value.append(f"{tournament.name},{tournament.place}")
+            for _ in range(len(value)):
+                counter +=1
+                key.append(counter)
+                
+            tournaments_availables = dict(zip(key,value))
+            
+            for k,v in tournaments_availables.items():
+                c.print(f"[bold bleu]- {k} : {v}[bold bleu]")
+                
+            return tournaments_availables
+    
 
 
 

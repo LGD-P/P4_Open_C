@@ -189,15 +189,38 @@ class PlayersController:
             
             c.print("[bold yellow]Choisissez un tournois dans lequel"\
                 " ajouter un joueur: [bold yellow]")
-            TournamentController().tournament_list_controller.display_tournament()
+            
+            propose_tournament = TournamentController().tournament_list_controller.display_tournament()
+                  
             tournament_choice = c.input("[bold red]==>[bold red]")
             
-            self.players_list_controller.display_players_to_choose()
+            while not tournament_choice.isdigit() or not int(tournament_choice) in propose_tournament:
+                c.print("[bold red] Faites un choix dans la liste[bold red]")
+                tournament_choice = c.input("[bold red]==>[bold red]")
+                
+            
+            propose_players = self.players_list_controller.display_players_to_choose()
             player_choice = c.input(
             "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
             )
+            
+            while not player_choice.isdigit() or not int(player_choice) in propose_players:
+                c.print("[bold red] Faites un choix dans la liste[bold red]")
+                player_choice = c.input(
+                    "[bold red]==> [blod red]"
+                    )
+            
         
             
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
 
 
