@@ -25,11 +25,11 @@ class MenuController:
         "action":PlayersController().add_player,
             },
     "3":{
-        "label":"[bold blue]- 4. Ajouter des joueurs à un tournois :pencil:[bold blue]",
+        "label":"[bold blue]- 3. Ajouter des joueurs à un tournois :pencil:[bold blue]",
             "action":PlayersController().add_player_in_tournament,
             },
     "4":{
-        "label":"[bold blue]- 3. Lancer un tournois :watch:[bold blue]",
+        "label":"[bold blue]- 4. Lancer un tournois :watch:[bold blue]",
             "action":"",
             },
     "5":{
@@ -55,13 +55,7 @@ class MenuController:
       
 class TournamentController:
     def __init__(self,) :
-           self.tournament_list_controller = TournamentView([
-            Tournament("Chess-Show","Moscow",datetime.now().strftime("%d-%m-%Y"),
-                       [],[],"Blitz","Description",4
-                       ),
-            Tournament("Chess-Show N°2","Paris",datetime.now().strftime("%d-%m-%Y"),
-            [],[],"Blitz","Description N°2",4)
-            ])
+           self.tournament_list_controller = TournamentView()
            
     def add_tournament(self):
             nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
@@ -97,32 +91,16 @@ class TournamentController:
                                 players,time_control,
                                 description)
             
-            self.tournament_list_controller.tournament_list_view.append(tournois)
+            return self.tournament_list_controller.tournament_list_view.append(tournois)
             
-            c.print(self.tournament_list_controller.tournament_list_view)
+            # c.print(self.tournament_list_controller.tournament_list_view)
  
  
-                    
-   
-
-
-
-
 
 
 class PlayersController:
     def __init__(self):
-        self.players_list_controller = PlayerView([
-            Players("DENIS", "Laurent", "11-12-2000","h",321,0),
-            Players("LAURENT", "Denis", "11-10-2005","h",123,0),
-            Players("MOINE", "Alice", "10-10-1990","f",100,0),
-            Players("VAULT", "Lise", "01-02-1980","f",10,0),
-            Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
-            Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
-            Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
-            Players("PATTON", "Gabriel", "09-03-1970","h",20,0),
-            Players("LEROY", "Anatole","17/10/1975","h",2,0)
-        ])
+        self.players_list_controller = PlayerView()
 
     def add_player(self):
         last_name= c.input("[bold green3]Entrez le nom du Joueur: [bold green3] ")
@@ -190,14 +168,57 @@ class PlayersController:
                 
         choice_2 = Players(last_name,first_name,str(birth),sex,int(rank),0)
         
-        self.players_list_controller.players_list_view.append(choice_2)
+        return self.players_list_controller.players_list_view.append(choice_2)
         
-        print(self.players_list_controller.players_list_view)
+        # print(self.players_list_controller.players_list_view)
         
         
     def add_player_in_tournament(self):
-        self.players_list_controller.display_players_to_choose()
-        choice = c.input(
+        
+        if not TournamentController().tournament_list_controller.tournament_list_view :
+            
+            c.print("[bold red]Veuillez créer un tournois pour "\
+                "pouvoir l'alimenter en joueurs..\n [bold red]")
+            
+        elif TournamentController().tournament_list_controller.tournament_list_view \
+            and not self.players_list_controller.players_list_view:
+                c.print("[bold red]Veuillez créer des joueurs pour "\
+                "pouvoir les ajouter à des tournois")
+                
+        else:
+            
+            c.print("[bold yellow]Choisissez un tournois dans lequel"\
+                " ajouter un joueur: [bold yellow]")
+            TournamentController().tournament_list_controller.display_tournament()
+            tournament_choice = c.input("[bold red]==>[bold red]")
+            
+            self.players_list_controller.display_players_to_choose()
+            player_choice = c.input(
             "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
             )
+        
+            
+                
 
+
+"""
+[
+            Players("DENIS", "Laurent", "11-12-2000","h",321,0),
+            Players("LAURENT", "Denis", "11-10-2005","h",123,0),
+            Players("MOINE", "Alice", "10-10-1990","f",100,0),
+            Players("VAULT", "Lise", "01-02-1980","f",10,0),
+            Players("CREPIN", "Maurice", "12-07-1950","h",40,0),
+            Players("TIAGO", "Daniela", "05-06-1977","f",35,0),
+            Players("EDON", "Gabrielle", "09-03-1985","f",25,0),
+            Players("PATTON", "Gabriel", "09-03-1970","h",20,0),
+            Players("LEROY", "Anatole","17/10/1975","h",2,0)
+        ]
+        
+        [
+            Tournament("Chess-Show","Moscow",datetime.now().strftime("%d-%m-%Y"),
+                       [],[],"Blitz","Description",4
+                       ),
+            Tournament("Chess-Show N°2","Paris",datetime.now().strftime("%d-%m-%Y"),
+            [],[],"Blitz","Description N°2",4)
+            ]
+"""

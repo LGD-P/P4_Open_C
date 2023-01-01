@@ -63,8 +63,10 @@ class TournamentView:
             for element in self.tournament_list_view:
                 counter += 1
                 c.print(f"Tounois N°{counter} : {element}")
-        else:
-            c.print("[bold red] Aucun tournois n'a été créé..[bold red]")
+        """else:
+            c.print("[bold red] Aucun tournois n'a été créé, "\
+                "merci d'en créer un.[bold red]")
+            pass"""
 
 
 
