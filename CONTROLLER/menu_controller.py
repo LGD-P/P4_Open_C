@@ -14,7 +14,6 @@ from CONTROLLER.tournament_controller import TournamentController
 c = Console()  
 
 
-
 def quit_menu():
     c.print("[bold red]Merci à bientôt[bold red]")
     sys.exit() 

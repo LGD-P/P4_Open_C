@@ -89,31 +89,42 @@ class TournamentController:
             tournament_choice = self.tournament_list[int(tournament_choice)]
                 
             
-            propose_players = self.player_view.display_players_to_choose(self.player_list)
+            propose_players = self.player_view.display_players_to_choose(self.player_list, tournament_choice.players)
             # afficher seulement les joueurs qui ne sont pas dans le tournois 
-            player_choice = c.input(
-            "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
-            )
+
             
-            while not player_choice.isdigit() or not int(player_choice) in propose_players:
-                c.print("[bold red] Faites un choix dans la liste[bold red]")
+            if type(propose_players) == dict:
                 player_choice = c.input(
-                    "[bold red]==> [blod red]"
+                    "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
                     )
-            
-            player_choice = self.player_list[int(player_choice)]
-            # n'afficher que les players qui ne sont pas déjà dans les tournois.
-            while player_choice in tournament_choice.players :
-                c.print("[bold red] Ce joueur est déjà dans le tournois merci d'en choisir un autre[bold red]")
-                player_choice = c.input(
-                    "[bold red]==> [blod red]"
-                    )
-                
-           
-            tournament_choice.players.append(player_choice)
-            
-            print("****"*10)
-            print("Affichage du tournois après alimentation: \n")
-            print(tournament_choice)
           
-    
+            
+                while not player_choice.isdigit() or not int(player_choice) in propose_players:
+                    c.print("[bold red] Faites un choix dans la liste[bold red]")
+                    player_choice = c.input(
+                        "[bold red]==> [blod red]"
+                        )
+                
+                player_choice = self.player_list[int(player_choice)]
+                # n'afficher que les players qui ne sont pas déjà dans les tournois.
+                while player_choice in tournament_choice.players :
+                    c.print("[bold red] Ce joueur est déjà dans le tournois merci d'en choisir un autre[bold red]")
+                    player_choice = c.input(
+                        "[bold red]==> [blod red]"
+                        )
+                    
+            
+                tournament_choice.players.append(player_choice)
+                                
+                print("****"*10)
+                print("Affichage du tournois après alimentation: \n")
+                print(tournament_choice)
+            
+            else:
+                pass
+
+
+        
+          
+          
+          
