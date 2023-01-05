@@ -103,14 +103,14 @@ class TournamentController:
             
             player_choice = self.player_list[int(player_choice)]
             # n'afficher que les players qui ne sont pas déjà dans les tournois.
-            while player_choice in tournament_choice.player:
+            while player_choice in tournament_choice.players :
                 c.print("[bold red] Ce joueur est déjà dans le tournois merci d'en choisir un autre[bold red]")
                 player_choice = c.input(
                     "[bold red]==> [blod red]"
                     )
                 
            
-            tournament_choice.player.append(player_choice)
+            tournament_choice.players.append(player_choice)
             
             print("****"*10)
             print("Affichage du tournois après alimentation: \n")
