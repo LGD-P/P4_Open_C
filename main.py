@@ -1,5 +1,4 @@
-
-from CONTROLLER_V3 import *
+from CONTROLLER.menu_controller import MenuController
 
 
 def main():
