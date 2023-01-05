@@ -84,7 +84,7 @@ class PlayerController:
                 
         choice_2 = Player(last_name,first_name,str(birth),sex,int(rank),0)
         
-        return self.players_list_controller.players_list_view.append(choice_2)
+        return self.player_list.append(choice_2)
         
         # print(self.players_list_controller.players_list_view)
         

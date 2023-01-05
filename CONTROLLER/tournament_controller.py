@@ -19,8 +19,8 @@ class TournamentController:
     def __init__(self,tournament_list, player_list) :
            self.tournament_view = TournamentView()
            self.tournament_list = tournament_list
-           self.player_list = player_list
            self.player_view = PlayerView()
+           self.player_list = player_list
            
            
     def add_tournament(self):
