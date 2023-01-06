@@ -21,3 +21,8 @@ class MenuView:
             return self.menu_view[menu_choice]["action"]()
         c.print("\n[bold red]Merci de faire un choix présent"\
                 " dans le menu[bold red]\n")
+        
+        
+        
+    def quit_message(self):
+        c.print("[bold red]Merci à bientôt[bold red]")

@@ -57,5 +57,5 @@ class MenuController:
             self.menu_view_in_controller.display_menu_and_get_choice()
             
     def quit_menu(self):
-        c.print("[bold red]Merci à bientôt[bold red]")
+        self.menu_view_in_controller.quit_message()
         sys.exit() 
