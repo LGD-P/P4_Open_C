@@ -12,7 +12,6 @@ class Tournament:
     description: str
     number_of_rounds: int = 4
 
-
     def __post_init__(self):
         self.display_tournament = (f"\n- Nom du tounois: {self.name}\n"
                                    f"- Date du tournois: {self.date}\n"
@@ -23,6 +22,3 @@ class Tournament:
                                    f"- Mode de contrôle du temps: {self.time_control}\n"
                                    f"- Description: {self.description}\n"
                                    )
-
-        
-        
