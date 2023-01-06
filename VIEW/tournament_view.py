@@ -45,7 +45,7 @@ class TournamentView:
 
         return created_tournament
 
-    def display_tournament(self, tournament_list):
+    def display_tournament_to_fill(self, tournament_list):
 
         counter = -1
         value = []
@@ -82,12 +82,13 @@ class TournamentView:
             c.print("[bold yellow]Choisissez un tournois dans lequel"
                     " ajouter un joueur: [bold yellow]")
 
-            propose_tournament = self.tournament_view.display_tournament(
+            propose_tournament = self.tournament_view.display_tournament_to_fill(
                 tournament_list)
 
             tournament_choice = c.input("[bold red]==>[bold red]")
 
-            while not tournament_choice.isdigit() or not int(tournament_choice) in propose_tournament:
+            while not tournament_choice.isdigit() or not int(tournament_choice) in \
+                    propose_tournament:
                 c.print("[bold red] Faites un choix dans la liste[bold red]")
                 tournament_choice = c.input("[bold red]==>[bold red]")
 
@@ -102,7 +103,8 @@ class TournamentView:
                     "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
                 )
 
-                while not player_choice.isdigit() or not int(player_choice) in propose_players:
+                while not player_choice.isdigit() or not int(player_choice) in \
+                        propose_players:
                     c.print("[bold red] Faites un choix dans la liste[bold red]")
                     player_choice = c.input(
                         "[bold red]==> [blod red]"
@@ -112,7 +114,8 @@ class TournamentView:
                 # n'afficher que les players qui ne sont pas déjà dans les tournois.
                 while player_choice in tournament_choice.players:
                     c.print(
-                        "[bold red] Ce joueur est déjà dans le tournois merci d'en choisir un autre[bold red]")
+                        "[bold red] Ce joueur est déjà dans le tournois merci d'en"
+                        "choisir un autre[bold red]")
                     player_choice = c.input(
                         "[bold red]==> [blod red]"
                     )
