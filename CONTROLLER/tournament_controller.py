@@ -1,18 +1,11 @@
 from rich.console import Console
-from datetime import datetime
-import sys
 
 
-from MODEL.tournament_model import Tournament
-from MODEL.player_model import Player
-
-from VIEW.menu_view import MenuView
 from VIEW.tournament_view import TournamentView
 from VIEW.player_view import PlayerView
 
 
 c = Console()  
-
 
       
 class TournamentController:
@@ -24,43 +17,12 @@ class TournamentController:
            
            
     def add_tournament(self):
-            nom = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
-            date = datetime.now().strftime("%d-%m-%Y")
-            place = c.input("[bold green3]Entrez le lieu du Tournois [bold green3] ")
-            tours = []
-            players= []
-            time_control_dict = {1:"Bullet",2:"Blitz",3:"Coup rapide"}
-
-            time_control= c.input("[bold green3]Choisissez le mode de contrôle "\
-                "du temps\n[bold green3]"\
-                    "[bold green]- 1. Bullet\n"
-                    "- 2. Blitz\n"
-                    "- 3. Coup rapide\n[bold green]")
-
-            while not time_control.isdigit() or int(time_control) <= 0 \
-            or int(time_control) >3:
-                c.print("[bold red]\nInvalide, possiblités ==> 1. 2. 3. [bold red]\n")
-                time_control= input( 
-                "- 1. Bullet\n"
-                "- 2. Blitz\n"
-                "- 3. Coup rapide\n"
-                )
-
-            time_control = time_control_dict[int(time_control)]
-                
-                
-            description = c.input("[bold green3]Indiquez la description du tournois "\
-                "[bold green3]")
-            
-            
-            tournois = Tournament(nom,date,place,tours,
-                                players,time_control,
-                                description)
-            
-            return self.tournament_list.append(tournois)
-            
-            # c.print(self.tournament_list_controller.tournament_list_view)
+         self.tournament_list.append(self.tournament_view.display_tournament_form())
+         # prin de débug
+         print(self.tournament_list)
  
+   
+   
      
     def add_player_in_tournament(self):
         
