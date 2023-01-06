@@ -14,9 +14,7 @@ from CONTROLLER.tournament_controller import TournamentController
 c = Console()  
 
 
-def quit_menu():
-    c.print("[bold red]Merci à bientôt[bold red]")
-    sys.exit() 
+
         
 class MenuController:
     def __init__(self):
@@ -49,7 +47,7 @@ class MenuController:
             },
     "7":{
         "label":"[bold blue]- 7. Quitter :raising_hand: \n [bold blue]",
-        "action": quit_menu
+        "action": self.quit_menu
             }
     })
 
@@ -57,3 +55,7 @@ class MenuController:
     def run_program(self, running_program=True):
         while running_program:
             self.menu_view_in_controller.display_menu_and_get_choice()
+            
+    def quit_menu(self):
+        c.print("[bold red]Merci à bientôt[bold red]")
+        sys.exit() 
