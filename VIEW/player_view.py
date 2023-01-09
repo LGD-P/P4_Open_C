@@ -79,7 +79,20 @@ class PlayerView:
         return created_player
 
     def display_players_to_choose(self, player_list, tourament_list):
-        counter = -1
+        if player_list:
+            c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
+
+            for player in player_list:
+                if not player in tourament_list:
+                    c.print(
+                        f"- {player_list.index(player)} [bold green] {player.last_name} {player.first_name} {player.rank}[bold green]")
+                else:
+                    pass
+                    """c.print(f"- {player_list.index(player)}  {player} [bold red]joueur DEJA DANS LE"
+                            "TOURNOIS[bold red]")"""
+
+        """
+       counter = -1
         value = []
         key = []
         c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
@@ -105,3 +118,4 @@ class PlayerView:
 
         else:
             c.print("[bold red]Aucun joueurs n'a été créé...[bold red]")
+"""
