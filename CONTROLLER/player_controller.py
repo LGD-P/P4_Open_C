@@ -16,4 +16,5 @@ class PlayerController:
         self.player_list.append(
             self.players_list_controller.display_player_form())
         # print de debug
+        print("PLAYER CONTROLLER \n")
         print(self.player_list)

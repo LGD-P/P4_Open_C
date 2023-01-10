@@ -24,3 +24,7 @@ class TournamentController:
     def add_player_in_tournament(self):
         self.tournament_view.display_add_player_in_tournament_form(
             self.tournament_list, self.player_list)
+        print("PLAYER STOCKES DANS LA LISTE DU TOURNAMENT CONTROLLER \n")
+        print(self.player_list)
+        print("VUE DU TOURNOIS ALIMENTE\n")
+        print(self.tournament_list)

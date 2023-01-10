@@ -85,37 +85,7 @@ class PlayerView:
             for player in player_list:
                 if not player in tourament_list:
                     c.print(
-                        f"- {player_list.index(player)} [bold green] {player.last_name} {player.first_name} {player.rank}[bold green]")
+                        f"- {player_list.index(player)} [bold green] {player.last_name}"
+                        f" {player.first_name}, rang :  {player.rank}[bold green]")
                 else:
                     pass
-                    """c.print(f"- {player_list.index(player)}  {player} [bold red]joueur DEJA DANS LE"
-                            "TOURNOIS[bold red]")"""
-
-        """
-       counter = -1
-        value = []
-        key = []
-        c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
-        if player_list:
-            for global_player in player_list:
-                if not global_player in tourament_list:
-                    value.append(
-                        f"{global_player.last_name}  {global_player.first_name}  classement = {global_player.rank}")
-                else:
-                    c.print(
-                        "[bold red]Pas de joueurs disponibles dans la liste, pour ce tournois...[bold red]")
-
-            for _ in range(len(value)):
-                counter += 1
-                key.append(counter)
-
-            players_availables = dict(zip(key, value))
-
-            for k, v in players_availables.items():
-                c.print(f"[bold blue]- {k}: {v}[bold blue]\n")
-
-            return players_availables
-
-        else:
-            c.print("[bold red]Aucun joueurs n'a été créé...[bold red]")
-"""

@@ -64,26 +64,6 @@ class TournamentView:
 
             return tournament_choice
 
-    """
-    counter = -1
-    value = []
-    key = []
-    if tournament_list:
-    c.print("[bold yellow] Tournois disponibles : \n[bold yellow]")
-    for tournament in tournament_list:
-        value.append(f"{tournament.name},{tournament.place}")
-    for _ in range(len(value)):
-        counter += 1
-        key.append(counter)
-
-    tournaments_availables = dict(zip(key, value))
-
-    for k, v in tournaments_availables.items():
-        c.print(f"[bold bleu]- {k} : {v}[bold bleu]")
-
-    return tournaments_availables
-    """
-
     def display_add_player_in_tournament_form(self, tournament_list, player_list):
         self.tournament_view = TournamentView()
         self.player_view = PlayerView()
@@ -106,9 +86,6 @@ class TournamentView:
             tournament_choice = self.tournament_view.display_tournament_to_fill(
                 tournament_list)
 
-            print(type(tournament_choice))
-            print(tournament_list[int(tournament_choice)])
-
             try:
                 tournament_list[int(tournament_choice)]
 
@@ -124,39 +101,33 @@ class TournamentView:
                 player_list, tournament_choice.players)
             # afficher seulement les joueurs qui ne sont pas dans le tournois 
 
-
-"""
-            if type(propose_players) == dict:
-                player_choice = c.input(
-                    "[bold yellow]Entrez le N° correspondant à votre choix [blod yellow]"
-                )
-
-                while not player_choice.isdigit() or not int(player_choice) in \
-                        propose_players:
-                    c.print("[bold red] Faites un choix dans la liste[bold red]")
-                    player_choice = c.input(
-                        "[bold red]==> [blod red]"
-                    )
-
-                player_choice = player_list[int(player_choice)]
-                # n'afficher que les players qui ne sont pas déjà dans les tournois.
-                while player_choice in tournament_choice.players:
-                    c.print(
-                        "[bold red] Ce joueur est déjà dans le tournois merci d'en"
-                        "choisir un autre[bold red]")
-                    player_choice = c.input(
-                        "[bold red]==> [blod red]"
-                    )
-
-            tournament_choice.players.append(player_choice)
-
-            print("****"*10)
-            print("Affichage du tournois après alimentation: \n")
-            print(tournament_choice)
-
+            if tournament_choice.players == player_list:
+                c.print(
+                    "[bold red]Il n'y a pas de joueur dispinible pour "
+                    "ce tournois.\n[bold red]")
             else:
-                pass
 
+                player_choice = c.input("[bold yellow]Choisissez votre joueur\n "
+                                        " ==> [bold yellow]")
 
-# gérer les conditions d'affichage dans la view
-"""
+                while not player_choice.isdigit():
+                    c.print(
+                        "[bold red]Faites un choix parmis ceux disponibles[bold red]")
+                    player_choice = c.input("[bold yellow]==> [bold yellow]")
+
+                try:
+                    player_list[int(player_choice)]
+                except IndexError:
+                    c.print(
+                        "[bold red]Faites un choix parmis ceux disponibles[bold red]")
+                    player_choice = c.input("[bold yellow]==> [bold yellow]")
+
+                while player_list[int(player_choice)] in tournament_choice.players:
+                    c.print(
+                        "[bold red]Ce joueur est déjà dans la liste [bold red]")
+                    player_choice = c.input("[bold yellow]==> [bold yellow]")
+
+                tournament_choice.players.append(
+                    player_list[int(player_choice)])
+
+                c.print(tournament_choice)
