@@ -73,10 +73,13 @@ class PlayerView:
         rank = c.input("[bold green3]Entrez le classement du joueur:"
                        "[bold green3]")
 
-        created_player = Player(last_name, first_name,
-                                str(birth), sex, int(rank), 0)
-
-        return created_player
+        return {
+            "last_name": last_name,
+            "first_name": first_name,
+            "birth": birth,
+            "sex": sex,
+            "rank": rank
+        }
 
     def display_players_to_choose(self, player_list, tourament_list):
         if player_list:
@@ -87,5 +90,3 @@ class PlayerView:
                     c.print(
                         f"- {player_list.index(player)} [bold green] {player.last_name}"
                         f" {player.first_name}, rang :  {player.rank}[bold green]")
-                else:
-                    pass

@@ -2,6 +2,7 @@ from rich.console import Console
 
 
 from VIEW.player_view import PlayerView
+from MODEL.player_model import Player
 
 
 c = Console()
@@ -10,11 +11,13 @@ c = Console()
 class PlayerController:
     def __init__(self, player_list):
         self.player_list = player_list
-        self.players_list_controller = PlayerView()
+        self.players_list_view = PlayerView()
 
     def add_player(self):
-        self.player_list.append(
-            self.players_list_controller.display_player_form())
-        # print de debug
-        print("PLAYER CONTROLLER \n")
+        # récupérer le dictionnaire et ajouter un joueur à player list
+        player = self.players_list_view.display_player_form()
+
+        self.player_list.append(Player(player["last_name"], player["first_name"],
+                                       player["birth"], player["sex"], player["rank"]))
+
         print(self.player_list)
