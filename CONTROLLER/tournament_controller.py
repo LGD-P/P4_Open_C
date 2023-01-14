@@ -3,7 +3,10 @@ from rich.console import Console
 
 from VIEW.tournament_view import TournamentView
 from VIEW.player_view import PlayerView
+from VIEW.round_view import RoundView
+
 from MODEL.tournament_model import Tournament
+from MODEL.round_model import Round
 
 
 c = Console()
@@ -15,6 +18,7 @@ class TournamentController:
         self.tournament_list = tournament_list
         self.player_view = PlayerView()
         self.player_list = player_list
+        self.round_view = RoundView()
 
     def add_tournament(self):
 
@@ -42,5 +46,5 @@ class TournamentController:
         # c.print(self.tournament_list)
 
     def creat_first_round(self):
-        displaay_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
+        display_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
             self.tournament_list)
