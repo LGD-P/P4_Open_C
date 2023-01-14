@@ -135,3 +135,34 @@ class TournamentView:
                     "chosen_tournament": tournament_choice,
                     "chosen_player": player_list[int(player_choice)]
                 }
+
+    def display_choose_tournament_to_launch(self, tournament_list):
+        if tournament_list:
+            tournament_available = []
+            for tournament in tournament_list:
+                if len(tournament.players) == 8:
+                    tournament_available.append(
+                        tournament_list.index(tournament))
+                    c.print(f"{tournament_list.index(tournament)} [bold green]"
+                            f"{tournament.name}, {tournament.place}[bold green]\n")
+                    tournament_choice = c.input(
+                        "[bold blue]Faites votre choix :  [bold blue]"
+                    )
+
+                    while not tournament_choice.isdigit():
+                        tournament_choice = c.input(
+                            "[bold red]Veillez faire un choix dans la liste[bold red]"
+                        )
+                    while not int(tournament_choice) in tournament_available:
+                        tournament_choice = c.input(
+                            "[bold red]Veillez faire le choix d'un tournois avec "
+                            "suffisament de joueurs \n ==> [bold red]"
+                        )
+
+                else:
+                    c.print(f"{tournament_list.index(tournament)} "
+                            f"[bold green] {tournament.name}, {tournament.place} "
+                            "[bold green][bold red] Pas assez de joueurs dans le "
+                            "tournois [bold red]\n")
+
+            return tournament_choice

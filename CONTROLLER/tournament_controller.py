@@ -40,3 +40,7 @@ class TournamentController:
         # c.print(self.player_list)
         # print("VUE DU TOURNOIS ALIMENTE\n")
         # c.print(self.tournament_list)
+
+    def creat_first_round(self):
+        displaay_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
+            self.tournament_list)

@@ -37,7 +37,7 @@ class MenuController:
             },
             "4": {
                 "label": "[bold blue]- 4. Lancer un tournois :watch:[bold blue]",
-                "action": "",
+                "action": self.tournament_controller.creat_first_round,
             },
             "5": {
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
@@ -106,10 +106,6 @@ class MenuController:
         for players in quick_players_list:
             self.player_controller.player_list.append(players
                                                       )
-
-        #player_one = Player()
-        # self.player_controller.player_list.append(player_one)
-        #    idem tournament
 
     def quit_menu(self):
         self.menu_view_in_controller.quit_message()
