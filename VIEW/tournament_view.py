@@ -51,15 +51,13 @@ class TournamentView:
 
     def display_tournament_to_fill(self, tournament_list):
         if tournament_list:
-            counter = -1
             for tournament in tournament_list:
-                counter += 1
-                c.print(f"- {counter}[bold green] {tournament.name}, "
-                        f"{tournament.place}[bold green]\n")
-
-            tournament_choice = c.input(
-                "[bold blue]Faites votre choix :  [bold blue]"
-            )
+                if not len(tournament.players) == 8:
+                    c.print(f"{tournament_list.index(tournament)} [bold green]"
+                            f"{tournament.name}, {tournament.place}[bold green]\n")
+                    tournament_choice = c.input(
+                        "[bold blue]Faites votre choix :  [bold blue]"
+                    )
 
             while not tournament_choice.isdigit():
                 tournament_choice = c.input(
