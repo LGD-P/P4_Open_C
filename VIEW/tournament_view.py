@@ -2,6 +2,7 @@ from rich.console import Console
 from datetime import datetime
 
 from MODEL.tournament_model import Tournament
+from MODEL.player_model import Player
 from VIEW.player_view import PlayerView
 
 c = Console()
@@ -166,3 +167,6 @@ class TournamentView:
                             "tournois [bold red]\n")
 
             return tournament_choice
+
+    def creat_first_round(self, tournament_list):
+        return None

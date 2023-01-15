@@ -48,3 +48,11 @@ class TournamentController:
     def creat_first_round(self):
         display_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
             self.tournament_list)
+
+        tournament_to_run = self.tournament_list[int(
+            display_available_tournement_to_launch)]
+
+        tournament_to_run = sorted(tournament_to_run.players,
+                                   key=lambda player: player.rank)
+
+        c.print(tournament_to_run)
