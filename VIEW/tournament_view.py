@@ -168,5 +168,5 @@ class TournamentView:
 
             return tournament_choice
 
-    def creat_first_round(self, tournament_list):
+    def display_first_round(self, tournament_list):
         return None

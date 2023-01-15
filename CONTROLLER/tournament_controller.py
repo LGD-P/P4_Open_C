@@ -55,4 +55,17 @@ class TournamentController:
         tournament_to_run = sorted(tournament_to_run.players,
                                    key=lambda player: player.rank)
 
-        c.print(tournament_to_run)
+        first_part = tournament_to_run[0:4]
+        second_part = tournament_to_run[4:9]
+
+        first_list_of_match = []
+        for element_1, element_2 in zip(first_part, second_part):
+            first_list_of_match.append([element_1, element_2])
+
+        # c.print(first_list_of_match)
+        return first_list_of_match
+
+    def fill_round_instance(self):
+        first_list_of_round = self.creat_first_round()
+
+        self.round_view.display_round_view(first_list_of_round)

@@ -37,7 +37,7 @@ class MenuController:
             },
             "4": {
                 "label": "[bold blue]- 4. Lancer un tournois :watch:[bold blue]",
-                "action": self.tournament_controller.creat_first_round,
+                "action": self.tournament_controller.fill_round_instance,
             },
             "5": {
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
