@@ -1,4 +1,5 @@
 from rich.console import Console
+from datetime import datetime
 
 
 from VIEW.tournament_view import TournamentView
@@ -13,12 +14,13 @@ c = Console()
 
 
 class TournamentController:
-    def __init__(self, tournament_list, player_list):
+    def __init__(self, tournament_list, player_list, round_list):
         self.tournament_view = TournamentView()
         self.tournament_list = tournament_list
         self.player_view = PlayerView()
         self.player_list = player_list
         self.round_view = RoundView()
+        self.round_list = round_list
 
     def add_tournament(self):
 
@@ -62,6 +64,15 @@ class TournamentController:
         for element_1, element_2 in zip(first_part, second_part):
             first_list_of_match.append([element_1, element_2])
 
+        # add first round list in tournament chosen
+        self.tournament_list[
+            int(display_available_tournement_to_launch)
+        ].tours.append(first_list_of_match)
+
+        c.print(self.tournament_list[
+            int(display_available_tournement_to_launch)
+        ])
+
         # c.print(first_list_of_match)
         return first_list_of_match
 
@@ -69,3 +80,16 @@ class TournamentController:
         first_list_of_round = self.creat_first_round()
 
         self.round_view.display_round_view(first_list_of_round)
+
+        for tournament in self.tournament_list:
+            if first_list_of_round in tournament.tours:
+
+                self.round_list.append(
+                    Round(first_list_of_round, "Round_1",
+                          datetime.now().strftime("%d-%m-%Y"),
+                          f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
+                          f"Heure de fin : à venir",
+                          1, tournament.name)
+                )
+
+        c.print(self.round_list)

@@ -10,7 +10,7 @@ class RoundView:
         table = Table(
             title="[bold yellow]-Premier Round du tournois-[bold yellow]", style="red")
 
-        table.add_column("Joueurs Un", justify="center",
+        table.add_column("Joueur Un", justify="center",
                          style="cyan", no_wrap=True)
         table.add_column("Jouera contre", justify="center", style="magenta")
         table.add_column("Joueur Deux", justify="center", style="green")

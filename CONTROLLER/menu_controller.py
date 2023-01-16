@@ -21,7 +21,7 @@ class MenuController:
         self.running_program = True
         self.player_controller = PlayerController([])
         self.tournament_controller = TournamentController(
-            [], self.player_controller.player_list)
+            [], self.player_controller.player_list, [])
         self.menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: [bold blue]",
