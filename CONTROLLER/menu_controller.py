@@ -4,6 +4,7 @@ import sys
 
 from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
+from MODEL.match_model import Match
 
 from VIEW.menu_view import MenuView
 from VIEW.tournament_view import TournamentView
@@ -20,8 +21,9 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
+        self.match_model = Match(())
         self.tournament_controller = TournamentController(
-            [], self.player_controller.player_list, [])
+            [], self.player_controller.player_list, [], self.match_model)
         self.menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: [bold blue]",
@@ -41,7 +43,7 @@ class MenuController:
             },
             "5": {
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
-                "action": "",
+                "action": self.tournament_controller.add_result,
             },
             "6": {
                 "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",

@@ -167,6 +167,5 @@ class TournamentView:
                             "tournois [bold red]\n")
 
             return tournament_choice
-
-    def display_first_round(self, tournament_list):
-        return None
+        else:
+            c.print("[bold red]Vous devez créer un tournois d'abord...\n[bold red]")
