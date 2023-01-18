@@ -21,21 +21,22 @@ class MatchView:
                     )
                     pass
 
-                else:
-                    match_index = -1
-                    for match in tournament.tours:
-                        match_index += 1
-                        c.print("\n==========================\n")
-                        c.print(
-                            f"- Dans le tournois {tournament.name:}\n"
-                            f"  Qui a gagné ce match : {match[match_index][0].last_name}"
-                            f" {match[match_index][0].first_name} contre "
-                            f"{match[match_index][1].last_name} "
-                            f"{match[match_index][1].first_name}\n"
-                            f"- 1: {match[match_index][0].last_name}\n"
-                            f"- 2: {match[match_index][1].last_name}\n"
-                            f"- 3: Egalité\n"
-                        )
+        for tournament in tournament_list:
+            index = -1
+            for match_list in tournament.tours:
+                index += 1
+                for match in match_list:
 
-                        winner = c.input(
-                            "[bold red]Entrez le vainqueur : [bold red]")
+                    c.print(
+                        f"- Dans le tournois {tournament.name:}\n"
+                        f"  Qui a gagné ce match : {match[0].last_name}"
+                        f" {match[0].first_name} contre "
+                        f"{match[1].last_name} "
+                        f"{match[1].first_name}\n"
+                        f"- 1: {match[0].last_name}\n"
+                        f"- 2: {match[1].last_name}\n"
+                        f"- 3: Egalité\n"
+                    )
+
+                    winner = c.input(
+                        "[bold red]Entrez le vainqueur : [bold red]\n")
