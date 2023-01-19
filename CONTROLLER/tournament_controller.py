@@ -1,5 +1,6 @@
 from rich.console import Console
 from datetime import datetime
+from operator import attrgetter
 
 
 from VIEW.tournament_view import TournamentView
@@ -111,23 +112,57 @@ class TournamentController:
 
         for tournament in self.tournament_list:
             for match_list in tournament.tours:
-                for match in match_list:
+                for player in match_list:
                     player_score = self.match_view.display_match_to_add_result(
                         self.tournament_list)
 
                     self.round_list[0].ending_hour = f"Heure de fin : "\
                         f"{datetime.now().strftime('%H:%M:%S')}"
 
-                    if self.score[int(player_score)]:
-                        match[0].points += 1
-                        match[1].points += 0
-                    elif self.score[int(player_score)]:
-                        match[1].points += 1
-                        match[0].points += 0
-                    else:
-                        match[0].points += 0.5
-                        match[1].points += 0.5
+                    if int(player_score) == 1:
+                        player[0].points += 1
+                        player[1].points += 0
 
-        c.print(self.tournament_list[1])
-        c.print("[bold red]*************************[bold red]")
-        c.print(self.round_list)
+                    elif int(player_score) == 2:
+                        player[1].points += 1
+                        player[0].points += 0
+                    elif int(player_score) == 3:
+                        player[0].points += 0.5
+                        player[1].points += 0.5
+
+        #c.print("\n\n[bold red]*************************[bold red]")
+        #c.print("[bold red]*************************[bold red]")
+        # c.print(self.tournament_list[1])
+        #c.print("[bold red]*************************[bold red]")
+        #c.print("[bold red]*************************[bold red]")
+        # c.print(self.round_list)
+        #c.print("[bold red]*************************[bold red]")
+        #c.print("[bold red]*************************[bold red]")
+
+        self.load_winner_for_round_2()
+
+    def load_winner_for_round_2(self):
+        winner_list = []
+
+        for players in self.round_list[0].match_list:
+
+            if players[0].points > players[1].points:
+                winner_list.append(players[0])
+
+            elif players[1].points > players[0].points:
+                winner_list.append(players[1])
+
+            else:
+                if players[0].rank < players[1].rank:
+
+                    winner_list.append(players[0])
+                else:
+                    winner_list.append(players[1])
+
+        c.print(winner_list)
+        c.print(sorted(winner_list, key=lambda players:
+                (players.points), reverse=True))
+
+        c.print(sorted(winner_list, key=attrgetter('points'), reverse=True))
+
+        #
