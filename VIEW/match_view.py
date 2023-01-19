@@ -20,16 +20,15 @@ class MatchView:
                         " Il faut d'abord lancer le tournois[bold red]\n"
                     )
                     pass
-
+        index = -1
         for tournament in tournament_list:
-            index = -1
             for match_list in tournament.tours:
                 index += 1
                 # problème d'affichage...
                 c.print(
                     f"- Dans le tournois {tournament.name:}\n"
-                    f"  Qui a gagné ce match : {match_list[index][0].last_name}"
-                    f" {match_list[index][0].first_name} contre "
+                    f"  Qui a gagné ce match : {match_list[index][0].last_name} "
+                    f"{match_list[index][0].first_name} contre "
                     f"{match_list[index][1].last_name} "
                     f"{match_list[index][1].first_name}\n"
                     f"- 1: {match_list[index][0].last_name}\n"

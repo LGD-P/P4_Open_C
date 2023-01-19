@@ -1,6 +1,5 @@
 from rich.console import Console
 from datetime import datetime
-from operator import attrgetter
 
 
 from VIEW.tournament_view import TournamentView
@@ -139,8 +138,6 @@ class TournamentController:
         #c.print("[bold red]*************************[bold red]")
         #c.print("[bold red]*************************[bold red]")
 
-        self.load_winner_for_round_2()
-
     def load_winner_for_round_2(self):
         winner_list = []
 
@@ -159,10 +156,30 @@ class TournamentController:
                 else:
                     winner_list.append(players[1])
 
-        c.print(winner_list)
         c.print(sorted(winner_list, key=lambda players:
-                (players.points), reverse=True))
+                       (players.points), reverse=True))
 
-        c.print(sorted(winner_list, key=attrgetter('points'), reverse=True))
+        return sorted(winner_list, key=lambda players:
+                      (players.points), reverse=True)
 
-        #
+    def creat_second_round(self):
+
+        display_second_round = self.load_winner_for_round_2()
+
+        half_list = len(display_second_round)//2
+
+        first_part_round2 = display_second_round[half_list:]
+        second_part_round2 = display_second_round[:half_list]
+
+        second_list_of_match = []
+        for element_1, element_2 in zip(first_part_round2, second_part_round2):
+            second_list_of_match.append([element_1, element_2])
+
+        # add first round list in tournament chosen
+        self.tournament_list[1].tours.append(second_list_of_match)
+
+        c.print(self.tournament_list[1])
+
+        self.round_view.display_round_view(second_list_of_match)
+
+        return second_list_of_match

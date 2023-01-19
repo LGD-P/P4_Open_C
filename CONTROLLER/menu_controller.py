@@ -45,17 +45,21 @@ class MenuController:
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
                 "action": self.tournament_controller.add_result,
             },
-            "6": {
-                "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
+            "7": {
+                "label": "[bold blue]- 7. Lancer le Second Round :watch: [bold blue]",
+                "action": self.tournament_controller.creat_second_round,
+            },
+            "8": {
+                "label": "[bold blue]- 8. Montrer le rapport :bar_chart: [bold blue]",
                 "action": "",
             },
-            "7": {
-                "label": "[bold blue]- 7. Quitter :raising_hand: \n [bold blue]",
+            "9": {
+                "label": "[bold blue]- 9. Quitter :raising_hand: \n [bold blue]",
                 "action": self.quit_menu,
             },
 
-            "8": {
-                "label": "[bold blue]- 8. Ajout rapide de tournois et joueurs \n"
+            "10": {
+                "label": "[bold blue]- 10. Ajout rapide de tournois et joueurs \n"
                 "[bold blue]",
                 "action": self.generate_data
             }
