@@ -38,7 +38,7 @@ class MenuController:
                 "action": self.tournament_controller.add_player_in_tournament,
             },
             "4": {
-                "label": "[bold blue]- 4. Lancer un tournois :watch:[bold blue]",
+                "label": "[bold blue]- 4. Lancer un tournois : Premier Round :watch:[bold blue]",
                 "action": self.tournament_controller.fill_round_instance,
             },
             "5": {

@@ -22,9 +22,7 @@ class MatchView:
                     pass
 
         for tournament in tournament_list:
-            index = -1
             for match_list in tournament.tours:
-                index += 1
                 for match in match_list:
 
                     c.print(
@@ -40,3 +38,9 @@ class MatchView:
 
                     winner = c.input(
                         "[bold red]Entrez le vainqueur : [bold red]\n")
+
+                    while not winner.isdigit() or not int(winner) in [1, 2, 3]:
+                        winner = c.input(
+                            "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
+
+                    return winner

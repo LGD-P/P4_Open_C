@@ -25,6 +25,11 @@ class TournamentController:
         self.round_list = round_list
         self.match_view = MatchView()
         self.match_list = match_list
+        self.score = {
+            1: 0,
+            2: 1,
+            3: 0.5
+        }
 
     def add_tournament(self):
 
@@ -100,7 +105,29 @@ class TournamentController:
                           1, tournament.name)
                 )
 
-        c.print(self.round_list)
+       # c.print(self.round_list)
 
     def add_result(self):
-        self.match_view.display_match_to_add_result(self.tournament_list)
+
+        for tournament in self.tournament_list:
+            for match_list in tournament.tours:
+                for match in match_list:
+                    player_score = self.match_view.display_match_to_add_result(
+                        self.tournament_list)
+
+                    self.round_list[0].ending_hour = f"Heure de fin : "\
+                        f"{datetime.now().strftime('%H:%M:%S')}"
+
+                    if self.score[int(player_score)]:
+                        match[0].points += 1
+                        match[1].points += 0
+                    elif self.score[int(player_score)]:
+                        match[1].points += 1
+                        match[0].points += 0
+                    else:
+                        match[0].points += 0.5
+                        match[1].points += 0.5
+
+        c.print(self.tournament_list[1])
+        c.print("[bold red]*************************[bold red]")
+        c.print(self.round_list)
