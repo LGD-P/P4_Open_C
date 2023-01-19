@@ -1,8 +1,7 @@
 from rich.console import Console
 from datetime import datetime
 
-from MODEL.tournament_model import Tournament
-from MODEL.player_model import Player
+
 from VIEW.player_view import PlayerView
 
 c = Console()
@@ -101,7 +100,6 @@ class TournamentView:
 
             self.player_view.display_players_to_choose(
                 player_list, tournament_choice.players)
-            # afficher seulement les joueurs qui ne sont pas dans le tournois 
 
             if tournament_choice.players == player_list:
                 c.print(

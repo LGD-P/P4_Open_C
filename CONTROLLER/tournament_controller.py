@@ -63,13 +63,15 @@ class TournamentController:
         if not display_available_tournement_to_launch:
             pass
         else:
-
+            # get tournament choice to run
             tournament_to_run = self.tournament_list[int(
                 display_available_tournement_to_launch)]
 
+            # sort players of this tournament
             tournament_to_run = sorted(tournament_to_run.players,
                                        key=lambda player: player.rank)
 
+            # continue swiss logic by rank
             first_part = tournament_to_run[0:4]
             second_part = tournament_to_run[4:9]
 
@@ -82,11 +84,6 @@ class TournamentController:
                 int(display_available_tournement_to_launch)
             ].tours.append(first_list_of_match)
 
-        # c.print(self.tournament_list[
-            #    int(display_available_tournement_to_launch)
-            # ])
-
-            # c.print(first_list_of_match)
             return first_list_of_match
 
     def fill_round_instance(self):
@@ -112,12 +109,13 @@ class TournamentController:
         for tournament in self.tournament_list:
             for match_list in tournament.tours:
                 for player in match_list:
+                    # use match_view to get the input result back
                     player_score = self.match_view.display_match_to_add_result(
                         self.tournament_list)
-
+                    # set ending hours of round
                     self.round_list[0].ending_hour = f"Heure de fin : "\
                         f"{datetime.now().strftime('%H:%M:%S')}"
-
+                    # give each players points
                     if int(player_score) == 1:
                         player[0].points += 1
                         player[1].points += 0
@@ -140,6 +138,9 @@ class TournamentController:
 
     def load_winner_for_round_2(self):
         winner_list = []
+
+        # Using the round 1 list updated with players score
+        # we build a winner list for the next round
 
         for players in self.round_list[0].match_list:
 
@@ -164,12 +165,12 @@ class TournamentController:
 
     def creat_second_round(self):
 
+        # Using the winner list we sort and creat next round
+
         display_second_round = self.load_winner_for_round_2()
 
-        half_list = len(display_second_round)//2
-
-        first_part_round2 = display_second_round[half_list:]
-        second_part_round2 = display_second_round[:half_list]
+        first_part_round2 = display_second_round[0:2]
+        second_part_round2 = display_second_round[2:4]
 
         second_list_of_match = []
         for element_1, element_2 in zip(first_part_round2, second_part_round2):
