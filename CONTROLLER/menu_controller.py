@@ -69,14 +69,14 @@ class MenuController:
     def generate_data(self):
 
         quick_players_list = [
-            Player("DENIS", "Laurent", "11-12-2000", "h", 321, 0),
-            Player("LAURENT", "Denis", "11-10-2005", "h", 123, 0),
-            Player("MOINE", "Alice", "10-10-1990", "f", 100, 0),
-            Player("VAULT", "Lise", "01-02-1980", "f", 10, 0),
-            Player("CREPIN", "Maurice", "12-07-1950", "h", 40, 0),
-            Player("TIAGO", "Daniela", "05-06-1977", "f", 35, 0),
-            Player("EDON", "Gabrielle", "09-03-1985", "f", 25, 0),
-            Player("PATTON", "Gabriel", "09-03-1970", "h", 20, 0)]
+            Player("DENIS", "Laurent", "11-12-2000", "h", 321),
+            Player("LAURENT", "Denis", "11-10-2005", "h", 123),
+            Player("MOINE", "Alice", "10-10-1990", "f", 100),
+            Player("VAULT", "Lise", "01-02-1980", "f", 10),
+            Player("CREPIN", "Maurice", "12-07-1950", "h", 40),
+            Player("TIAGO", "Daniela", "05-06-1977", "f", 35),
+            Player("EDON", "Gabrielle", "09-03-1985", "f", 25),
+            Player("PATTON", "Gabriel", "09-03-1970", "h", 20)]
 
         for players in quick_players_list:
             self.player_controller.player_list.append(players

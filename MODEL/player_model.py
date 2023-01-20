@@ -8,7 +8,6 @@ class Player:
     birth: str
     sex: str
     rank: int
-    points: int = 0
 
     def __post_init__(self):
         self.display_player = (f"- Nom: {self.last_name}\n"
@@ -16,5 +15,5 @@ class Player:
                                f"- Date de naissance: {self.birth}\n"
                                f"- Sexe: {self.sex}\n"
                                f"- rank: {self.rank}\n"
-                               f"- points: {self.points}\n"
+
                                )

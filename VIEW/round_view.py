@@ -25,12 +25,13 @@ class RoundView:
                     f"\n{first_round_list[index][0].last_name} "
                     f"{first_round_list[index][0].first_name}\n"
                     f"classement : {first_round_list[index][0].rank}\n"
-                    f"points : {first_round_list[index][0].points}\n",
                     f"\n== Jouera contre == >\n",
                     f"\n{first_round_list[index][1].last_name} "
                     f"{first_round_list[index][1].first_name}\n"
-                    f"classement : {first_round_list[index][1].rank}\n"
-                    f"points : {first_round_list[index][1].points}\n",
+                    f"classement : {first_round_list[index][1].rank}\n",
                     end_section=True)
 
             c.print(table)
+
+    # Prévoir l'affichage des points dans le tableau avec un self.tournament pour
+    # le player score

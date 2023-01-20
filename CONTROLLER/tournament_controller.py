@@ -100,27 +100,45 @@ class TournamentController:
        # c.print(self.round_list)
 
     def add_result(self):
-
+        index = -1
         for tournament in self.tournament_list:
             for match_list in tournament.tours:
                 for player in match_list:
+                    index += 1
                     # use match_view to get the input result back
                     player_score = self.match_view.display_match_to_add_result(
                         self.tournament_list)
+
                     # set ending hours of round
                     self.round_list[0].ending_hour = f"Heure de fin : "\
                         f"{datetime.now().strftime('%H:%M:%S')}"
+
                     # give each players points
-                    if int(player_score) == 1:
-                        player[0].points += 1
-                        player[1].points += 0
+                    if int(player_score) == 0:
+                        tournament.player_score[
+                            f"{player[0].last_name} {player[0].first_name}"
+                        ] = 1
+                        tournament.player_score[
+                            f"{player[1].last_name} {player[1].first_name}"
+                        ] = 0
+
+                    elif int(player_score) == 1:
+                        tournament.player_score[
+                            f"{player[0].last_name} {player[0].first_name}"
+                        ] = 0
+                        tournament.player_score[
+                            f"{player[1].last_name} {player[1].first_name}"
+                        ] = 1
 
                     elif int(player_score) == 2:
-                        player[1].points += 1
-                        player[0].points += 0
-                    elif int(player_score) == 3:
-                        player[0].points += 0.5
-                        player[1].points += 0.5
+                        tournament.player_score[
+                            f"{player[0].last_name} {player[0].first_name}"
+                        ] = 0.5
+                        tournament.player_score[
+                            f"{player[1].last_name} {player[1].first_name}"
+                        ] = 0.5
+
+                c.print(tournament)
 
         #c.print("\n\n[bold red]*************************[bold red]")
         #c.print("[bold red]*************************[bold red]")
