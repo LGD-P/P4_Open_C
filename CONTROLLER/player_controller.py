@@ -20,4 +20,4 @@ class PlayerController:
         self.player_list.append(Player(player["last_name"], player["first_name"],
                                        player["birth"], player["sex"], player["rank"]))
 
-        print(self.player_list)
+        # print(self.player_list)

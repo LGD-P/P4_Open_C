@@ -25,11 +25,6 @@ class TournamentController:
         self.round_list = round_list
         self.match_view = MatchView()
         self.match_list = match_list
-        self.score = {
-            1: 0,
-            2: 1,
-            3: 0.5
-        }
 
     def add_tournament(self):
 
@@ -64,36 +59,36 @@ class TournamentController:
             pass
         else:
             # get tournament choice to run
-            tournament_to_run = self.tournament_list[int(
-                display_available_tournement_to_launch)]
+            tournament_to_run = display_available_tournement_to_launch
 
             # sort players of this tournament
-            tournament_to_run = sorted(tournament_to_run.players,
-                                       key=lambda player: player.rank)
+            # mylist = sorted(mylist, key=lambda k: (k['name'].lower(), k['age'])) ! tuple
+            tournament_to_run_players = sorted(tournament_to_run.players,
+                                               key=lambda player: player.rank)
 
             # continue swiss logic by rank
-            first_part = tournament_to_run[0:4]
-            second_part = tournament_to_run[4:9]
+            # utiliser len(list//2)
+            first_part = tournament_to_run_players[0:4]
+            second_part = tournament_to_run_players[4:9]
 
             first_list_of_match = []
             for element_1, element_2 in zip(first_part, second_part):
                 first_list_of_match.append([element_1, element_2])
 
             # add first round list in tournament chosen
-            self.tournament_list[
-                int(display_available_tournement_to_launch)
-            ].tours.append(first_list_of_match)
+            tournament_to_run.tours.append(
+                first_list_of_match)
 
             return first_list_of_match
 
-    def fill_round_instance(self):
+    def fill_round_instance_creat_announcement(self):
         first_list_of_round = self.creat_first_round()
 
         self.round_view.display_round_view(first_list_of_round)
 
         for tournament in self.tournament_list:
             if first_list_of_round in tournament.tours:
-
+                # fill round instance with match
                 self.round_list.append(
                     Round(first_list_of_round, "Round_1",
                           datetime.now().strftime("%d-%m-%Y"),

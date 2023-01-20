@@ -10,6 +10,7 @@ class Tournament:
     players: list
     time_control: str
     description: str
+    player_score: dict
     number_of_rounds: int = 4
 
     def __post_init__(self):
@@ -21,4 +22,5 @@ class Tournament:
                                    f"- Liste des joueurs: {self.players}\n"
                                    f"- Mode de contrôle du temps: {self.time_control}\n"
                                    f"- Description: {self.description}\n"
+                                   f"- score :{self.player_score}"
                                    )
