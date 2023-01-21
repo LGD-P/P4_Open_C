@@ -78,26 +78,26 @@ class TournamentController:
             # add first round list in tournament chosen
             tournament_to_run.tours.append(
                 first_list_of_match)
+            c.print(tournament_to_run)
 
-            return first_list_of_match
+            return tournament_to_run
 
     def fill_round_instance_creat_announcement(self):
-        first_list_of_round = self.creat_first_round()
+        tournament_running = self.creat_first_round()
 
-        self.round_view.display_round_view(first_list_of_round)
+        self.round_view.display_round_view(
+            tournament_running)
 
-        for tournament in self.tournament_list:
-            if first_list_of_round in tournament.tours:
-                # fill round instance with match
-                self.round_list.append(
-                    Round(first_list_of_round, "Round_1",
-                          datetime.now().strftime("%d-%m-%Y"),
-                          f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
-                          f"Heure de fin : à venir",
-                          1, tournament.name)
-                )
+        # fill round instance with match
+        self.round_list.append(
+            Round(tournament_running.tours, "Round_1",
+                  datetime.now().strftime("%d-%m-%Y"),
+                  f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
+                  f"Heure de fin : à venir",
+                  1, tournament_running.name)
+        )
 
-       # c.print(self.round_list)
+        # c.print(self.round_list)
 
     def add_result(self):
         index = -1

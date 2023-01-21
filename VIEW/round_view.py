@@ -5,8 +5,9 @@ c = Console()
 
 class RoundView:
 
-    def display_round_view(self, first_round_list):
-        if not first_round_list:
+    def display_round_view(self, tournament_running):
+
+        if not tournament_running.tours[0]:
             pass
         else:
             table = Table(
@@ -19,19 +20,22 @@ class RoundView:
             table.add_column("Joueur Deux", justify="center", style="green")
 
             index = -1
-            for _ in first_round_list:
+            # for tournament in tournament_list:
+            for players_match in tournament_running.tours[-1]:
                 index += 1
                 table.add_row(
-                    f"\n{first_round_list[index][0].last_name} "
-                    f"{first_round_list[index][0].first_name}\n"
-                    f"classement : {first_round_list[index][0].rank}\n"
+                    f"\n{players_match[0].last_name} "
+                    f"{players_match[0].first_name}\n"
+                    f"classement : {players_match[0].rank}\n",
                     f"\n== Jouera contre == >\n",
-                    f"\n{first_round_list[index][1].last_name} "
-                    f"{first_round_list[index][1].first_name}\n"
-                    f"classement : {first_round_list[index][1].rank}\n",
+                    f"\n{players_match[1].last_name} "
+                    f"{players_match[1].first_name}\n"
+                    f"classement : {players_match[1].rank}\n",
                     end_section=True)
 
             c.print(table)
 
     # Prévoir l'affichage des points dans le tableau avec un self.tournament pour
     # le player score
+    # f"scrore : {tournament.player_score[f'{first_round_list[index][0].last_name}']}
+    # {tournament.player_score[f'{first_round_list[index][0].first_name}']} "
