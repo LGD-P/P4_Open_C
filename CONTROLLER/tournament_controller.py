@@ -25,6 +25,7 @@ class TournamentController:
         self.round_list = round_list
         self.match_view = MatchView()
         self.match_list = match_list
+        self.started_tournaments = []
 
     def add_tournament(self):
 
@@ -44,12 +45,6 @@ class TournamentController:
 
         return player_in_tournament["chosen_tournament"].players.append(
             player_in_tournament["chosen_player"])
-
-        # print de débug
-        # print("PLAYER STOCKES DANS LA LISTE DU TOURNAMENT CONTROLLER \n")
-        # c.print(self.player_list)
-        # print("VUE DU TOURNOIS ALIMENTE\n")
-        # c.print(self.tournament_list)
 
     def creat_first_round(self):
         display_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
@@ -80,6 +75,8 @@ class TournamentController:
                 first_list_of_match)
             c.print(tournament_to_run)
 
+            self.started_tournaments.append(tournament_to_run)
+
             return tournament_to_run
 
     def fill_round_instance_creat_announcement(self):
@@ -100,6 +97,9 @@ class TournamentController:
         # c.print(self.round_list)
 
     def add_result(self):
+        self.match_view.display_match_to_add_result(
+            self.started_tournaments)
+        """
         index = -1
         for tournament in self.tournament_list:
             for match_list in tournament.tours:
@@ -139,6 +139,7 @@ class TournamentController:
                         ] = 0.5
 
                 c.print(tournament)
+                """
 
         #c.print("\n\n[bold red]*************************[bold red]")
         #c.print("[bold red]*************************[bold red]")
