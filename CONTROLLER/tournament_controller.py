@@ -98,7 +98,7 @@ class TournamentController:
 
     def add_result(self):
         self.match_view.display_match_to_add_result(
-            self.started_tournaments)
+            self.started_tournaments, self.tournament_list)
         """
         index = -1
         for tournament in self.tournament_list:
