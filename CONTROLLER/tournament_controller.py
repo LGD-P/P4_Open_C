@@ -97,8 +97,14 @@ class TournamentController:
         # c.print(self.round_list)
 
     def add_result(self):
-        self.match_view.display_match_to_add_result(
+
+        # gérer la logique de résultat avec lme dictionnaire
+        # dans la match view  créer les élements qui vont être récupérer ici.
+        result = self.match_view.display_match_to_add_result(
             self.started_tournaments, self.tournament_list)
+
+        c.print(f"Ceci est un test : {result}")
+
         """
         index = -1
         for tournament in self.tournament_list:
