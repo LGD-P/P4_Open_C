@@ -90,7 +90,7 @@ class TournamentController:
             Round(tournament_running.tours, "Round_1",
                   datetime.now().strftime("%d-%m-%Y"),
                   f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
-                  f"Heure de fin : à venir",
+                  f"None",
                   1, tournament_running.name)
         )
 
@@ -109,6 +109,15 @@ class TournamentController:
             if tournament in self.tournament_list:
                 self.tournament_list[self.tournament_list.index(
                     tournament)].player_score = result
+
+                for round in self.round_list:
+                    if tournament.name == round.tournament_name:
+                        round.ending_hour = f"Fin de round : "\
+                            f"{datetime.now().strftime('%H:%M:%S')}"
+                    else:
+                        c.print("[bold green] PAS OK [bold green]")
+
+        c.print(self.round_list)
 
     def load_winner_for_round_2(self):
         winner_list = []
