@@ -5,6 +5,14 @@ c = Console()
 
 class MatchView:
     def display_match_to_add_result(self, started_tournaments, tournament_list):
+        result = {}
+
+        for tournament in started_tournaments:
+            for player in tournament.players:
+                tournament.player_score[f"{player}"] = 0
+
+        c.print(started_tournaments)
+
         if not started_tournaments:
             c.print(
                 "[bold red]Il faut d'abord créer et commencer "
@@ -23,10 +31,10 @@ class MatchView:
                 # prévoir les condition en cas de choix hors liste :
 
                 # à prévoir la modification des instances de tournois concernés par les résultats
+
                 # c.print(started_tournaments[int(tournament_choice)])
                 tournament_choice = started_tournaments[int(tournament_choice)]
 
-                # prévilégier l'appel direct à la tournament liste
                 if tournament_choice in tournament_list:
                     tournament_choice = tournament_list[tournament_list.index(
                         tournament_choice)
@@ -39,7 +47,7 @@ class MatchView:
                 for match_list in round:
                     for _ in match_list:
                         index += 1
-                        # problème d'affichage...
+
                         c.print(
                             f"- Dans le tournois {tournament_choice.name:}\n"
                             f"  Qui a gagné ce match : {match_list[index][0].last_name} "
@@ -59,10 +67,14 @@ class MatchView:
                                 "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
                         if int(winner) == 2:
-                            winner = 0.5
-                        elif winner == 0:
-                            winner = 0
-                        elif winner == 1:
-                            winner = 1
+                            result[f"{match_list[index][0]}"] += 0.5
+                            result[f"{match_list[index][1]}"] += 0.5
 
-                return winner
+                        elif int(winner) == 0:
+                            result[f"{match_list[index][0]}"] += 0
+                            result[f"{match_list[index][1]}"] += 1
+                        elif int(winner) == 1:
+                            result[f"{match_list[index][0]}"] += 1
+                            result[f"{match_list[index][1]}"] += 0
+
+                    return result

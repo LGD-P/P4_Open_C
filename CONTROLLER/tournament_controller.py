@@ -98,63 +98,21 @@ class TournamentController:
 
     def add_result(self):
 
-        # gérer la logique de résultat avec lme dictionnaire
+        # gérer la logique de résultat avec le dictionnaire
         # dans la match view  créer les élements qui vont être récupérer ici.
         result = self.match_view.display_match_to_add_result(
             self.started_tournaments, self.tournament_list)
 
-        c.print(f"Ceci est un test : {result}")
+        for tournament in self.started_tournaments:
+            tournament.player_score = result
 
-        """
-        index = -1
-        for tournament in self.tournament_list:
-            for match_list in tournament.tours:
-                for player in match_list:
-                    index += 1
-                    # use match_view to get the input result back
-                    player_score = self.match_view.display_match_to_add_result(
-                        self.tournament_list)
+            if tournament in self.tournament_list:
+                self.tournament_list[self.tournament_list.index(
+                    tournament)].player_score = result
 
-                    # set ending hours of round
-                    self.round_list[0].ending_hour = f"Heure de fin : "\
-                        f"{datetime.now().strftime('%H:%M:%S')}"
-
-                    # give each players points
-                    if int(player_score) == 0:
-                        tournament.player_score[
-                            f"{player[0].last_name} {player[0].first_name}"
-                        ] = 1
-                        tournament.player_score[
-                            f"{player[1].last_name} {player[1].first_name}"
-                        ] = 0
-
-                    elif int(player_score) == 1:
-                        tournament.player_score[
-                            f"{player[0].last_name} {player[0].first_name}"
-                        ] = 0
-                        tournament.player_score[
-                            f"{player[1].last_name} {player[1].first_name}"
-                        ] = 1
-
-                    elif int(player_score) == 2:
-                        tournament.player_score[
-                            f"{player[0].last_name} {player[0].first_name}"
-                        ] = 0.5
-                        tournament.player_score[
-                            f"{player[1].last_name} {player[1].first_name}"
-                        ] = 0.5
-
-                c.print(tournament)
-                """
-
-        #c.print("\n\n[bold red]*************************[bold red]")
-        #c.print("[bold red]*************************[bold red]")
-        # c.print(self.tournament_list[1])
-        #c.print("[bold red]*************************[bold red]")
-        #c.print("[bold red]*************************[bold red]")
-        # c.print(self.round_list)
-        #c.print("[bold red]*************************[bold red]")
-        #c.print("[bold red]*************************[bold red]")
+        c.print(f"Tournois en cours : {self.started_tournaments[0]}")
+        c.print("[bold red] ******************** [bold red]")
+        c.print(f" TEST : {self.tournament_list}")
 
     def load_winner_for_round_2(self):
         winner_list = []
