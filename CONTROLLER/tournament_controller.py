@@ -110,10 +110,6 @@ class TournamentController:
                 self.tournament_list[self.tournament_list.index(
                     tournament)].player_score = result
 
-        c.print(f"Tournois en cours : {self.started_tournaments[0]}")
-        c.print("[bold red] ******************** [bold red]")
-        c.print(f" TEST : {self.tournament_list}")
-
     def load_winner_for_round_2(self):
         winner_list = []
 

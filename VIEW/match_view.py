@@ -1,11 +1,12 @@
 from rich.console import Console
+from collections import defaultdict
 
 c = Console()
 
 
 class MatchView:
     def display_match_to_add_result(self, started_tournaments, tournament_list):
-        result = {}
+        result = defaultdict(int, {})
 
         for tournament in started_tournaments:
             for player in tournament.players:
