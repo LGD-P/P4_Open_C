@@ -81,12 +81,13 @@ class PlayerView:
             "rank": rank
         }
 
-    def display_players_to_choose(self, player_list, tourament_list):
+    def display_players_to_choose(self, player_list, tournament_list):
         if player_list:
             c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
 
             for player in player_list:
-                if not player in tourament_list:
-                    c.print(
-                        f"- {player_list.index(player)} [bold green] {player.last_name}"
-                        f" {player.first_name}, rang :  {player.rank}[bold green]")
+                for tournament in tournament_list:
+                    if not player in tournament.players:
+                        c.print(
+                            f"- {player_list.index(player)} [bold green] {player.last_name}"
+                            f" {player.first_name}, rang :  {player.rank}[bold green]")

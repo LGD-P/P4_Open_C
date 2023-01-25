@@ -66,7 +66,7 @@ class TournamentController:
             # add tounrament in stared list tournament
             self.started_tournaments.append(tournament_to_run)
 
-            # fill score
+            # set player score to 0
             for tournament in self.started_tournaments:
                 for player in tournament.players:
                     tournament.player_score[f"{player}"] = 0
@@ -86,7 +86,10 @@ class TournamentController:
             half_list = ((len(tournament_to_run_players)//2))
 
             first_part = tournament_to_run_players[0:half_list]
+            c.print(first_part)
+            print("\n")
             second_part = tournament_to_run_players[half_list:9]
+            c.print(second_part)
 
             first_list_of_match = []
             for element_1, element_2 in zip(first_part, second_part):
