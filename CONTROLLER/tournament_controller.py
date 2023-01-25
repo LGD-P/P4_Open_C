@@ -1,6 +1,6 @@
 from rich.console import Console
 from datetime import datetime
-from operator import attrgetter
+from operator import itemgetter
 
 
 from VIEW.tournament_view import TournamentView
@@ -35,7 +35,7 @@ class TournamentController:
         self.tournament_list.append(Tournament(tournament["name"], tournament["place"],
                                     tournament["date"], tournament["tours"],
                                     tournament["players"], tournament["time_control"],
-                                    tournament["description"]))
+                                    tournament["description"], tournament["player_score"]))
         # print de débug
         # c.print(self.tournament_list)
 
@@ -44,8 +44,14 @@ class TournamentController:
         player_in_tournament = self.tournament_view.display_add_player_in_tournament_form(
             self.tournament_list, self.player_list)
 
-        return player_in_tournament["chosen_tournament"].players.append(
-            player_in_tournament["chosen_player"])
+        if player_in_tournament == None:
+            return None
+        else:
+            player_in_tournament["chosen_tournament"].player_score[
+                f"{player_in_tournament['chosen_player']}"] = 0
+
+            return player_in_tournament["chosen_tournament"].players.append(
+                player_in_tournament["chosen_player"])
 
     def creat_first_round(self):
         display_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
@@ -57,8 +63,10 @@ class TournamentController:
             # get tournament choice to run
             tournament_to_run = display_available_tournement_to_launch
 
+            # add tounrament in stared list tournament
             self.started_tournaments.append(tournament_to_run)
 
+            # fill score
             for tournament in self.started_tournaments:
                 for player in tournament.players:
                     tournament.player_score[f"{player}"] = 0
@@ -67,14 +75,16 @@ class TournamentController:
             # c.print(sorted(tournament_to_run.players, key=lambda player: key[], reverse=True))
 
             # sort players of this tournament
+            # c.print(tournament_to_run.players)
 
             # mylist = sorted(mylist, key=lambda k: (k['name'].lower(), k['age'])) ! tuple
             tournament_to_run_players = sorted(tournament_to_run.players,
                                                key=lambda player: player.rank)
 
             # continue swiss logic by rank
-            # utiliser len(list//2)
+
             half_list = ((len(tournament_to_run_players)//2))
+
             first_part = tournament_to_run_players[0:half_list]
             second_part = tournament_to_run_players[half_list:9]
 
