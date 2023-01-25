@@ -16,6 +16,7 @@ class MatchView:
                 "un tournois[bold red]"
             )
             pass
+
         else:
             index = -1
             choice_list = []

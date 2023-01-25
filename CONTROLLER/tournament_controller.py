@@ -47,6 +47,7 @@ class TournamentController:
         if player_in_tournament == None:
             return None
         else:
+            # set player_score to 0 as soon as the player has been added in tournament
             player_in_tournament["chosen_tournament"].player_score[
                 f"{player_in_tournament['chosen_player']}"] = 0
 
@@ -81,6 +82,10 @@ class TournamentController:
             tournament_to_run_players = sorted(tournament_to_run.players,
                                                key=lambda player: player.rank)
 
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
+            c.print(tournament_to_run_players)
+
             # continue swiss logic by rank
 
             half_list = ((len(tournament_to_run_players)//2))
@@ -112,16 +117,38 @@ class TournamentController:
         self.round_view.display_round_view(
             tournament_running)
 
-        # fill round instance with match
-        self.round_list.append(
-            Round(tournament_running.tours, "Round_1",
-                  datetime.now().strftime("%d-%m-%Y"),
-                  f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
-                  f"None",
-                  1, tournament_running.name)
-        )
+        c.print(self.round_list)
 
-        # c.print(self.round_list)
+        # fill round instance with match
+        # Check if there is a round else creat round
+        round_index = 1
+        if len(self.round_list) == False:
+            self.round_list.append(
+                Round(tournament_running.tours, f"Round {1}",
+                      datetime.now().strftime("%d-%m-%Y"),
+                      f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
+                      f"None",
+                      1, tournament_running.name)
+            )
+        else:
+            # if there is a round(s) in list
+            # check if there is ending hour else creat it as 2nd or 3rd....
+            for round in self.round_list:
+                round_index += 1
+                if round.ending_hour != "None":
+                    self.round_list.append(
+                        Round(tournament_running.tours, f"Round {round_index}",
+                              datetime.now().strftime("%d-%m-%Y"),
+                              f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
+                              f"None",
+                              1, tournament_running.name)
+                    )
+
+        c.print("[green]****************************[green]")
+        c.print("[red]******************************[red]")
+        c.print(self.round_list)
+        c.print("[green]****************************[green]")
+        c.print("[red]******************************[red]")
 
     def add_result(self):
 
@@ -144,6 +171,11 @@ class TournamentController:
                             f"{datetime.now().strftime('%H:%M:%S')}"
 
         c.print(self.tournament_list)
+        c.print("[green]****************************[green]")
+        c.print("[red]******************************[red]")
+        c.print(self.round_list)
+        c.print("[green]****************************[green]")
+        c.print("[red]******************************[red]")
 
     def load_winner_for_round_2(self):
         winner_list = []
