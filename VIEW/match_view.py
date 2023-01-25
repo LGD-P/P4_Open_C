@@ -8,11 +8,7 @@ class MatchView:
     def display_match_to_add_result(self, started_tournaments, tournament_list):
         result = defaultdict(int, {})
 
-        for tournament in started_tournaments:
-            for player in tournament.players:
-                tournament.player_score[f"{player}"] = 0
-
-        c.print(started_tournaments)
+        # c.print(started_tournaments)
 
         if not started_tournaments:
             c.print(
@@ -22,16 +18,19 @@ class MatchView:
             pass
         else:
             index = -1
+            choice_list = []
             for tournament in started_tournaments:
                 index += 1
+                choice_list.append(index)
                 c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
                         "des résultats ?[bold yellow]\n\n"
                         f"- {index} : [bold green]{tournament.name}[bold green]\n")
                 tournament_choice = c.input("==> ")
 
-                # prévoir les condition en cas de choix hors liste :
-
-                # à prévoir la modification des instances de tournois concernés par les résultats
+                while not tournament_choice.isdigit() or not int(tournament_choice) in choice_list:
+                    c.print(
+                        '[bold red] Merci de faire un choix dans la liste[bold red]')
+                    tournament_choice = c.input("==> ")
 
                 # c.print(started_tournaments[int(tournament_choice)])
                 tournament_choice = started_tournaments[int(tournament_choice)]

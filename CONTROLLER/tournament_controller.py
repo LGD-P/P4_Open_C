@@ -1,5 +1,6 @@
 from rich.console import Console
 from datetime import datetime
+from operator import attrgetter
 
 
 from VIEW.tournament_view import TournamentView
@@ -56,15 +57,26 @@ class TournamentController:
             # get tournament choice to run
             tournament_to_run = display_available_tournement_to_launch
 
+            self.started_tournaments.append(tournament_to_run)
+
+            for tournament in self.started_tournaments:
+                for player in tournament.players:
+                    tournament.player_score[f"{player}"] = 0
+
+            c.print(self.tournament_list)
+            # c.print(sorted(tournament_to_run.players, key=lambda player: key[], reverse=True))
+
             # sort players of this tournament
+
             # mylist = sorted(mylist, key=lambda k: (k['name'].lower(), k['age'])) ! tuple
             tournament_to_run_players = sorted(tournament_to_run.players,
                                                key=lambda player: player.rank)
 
             # continue swiss logic by rank
             # utiliser len(list//2)
-            first_part = tournament_to_run_players[0:4]
-            second_part = tournament_to_run_players[4:9]
+            half_list = ((len(tournament_to_run_players)//2))
+            first_part = tournament_to_run_players[0:half_list]
+            second_part = tournament_to_run_players[half_list:9]
 
             first_list_of_match = []
             for element_1, element_2 in zip(first_part, second_part):
@@ -73,9 +85,11 @@ class TournamentController:
             # add first round list in tournament chosen
             tournament_to_run.tours.append(
                 first_list_of_match)
-            c.print(tournament_to_run)
+            # c.print(tournament_to_run)
 
-            self.started_tournaments.append(tournament_to_run)
+            for tournament in self.started_tournaments:
+                if tournament_to_run.name in tournament.name:
+                    tournament.tours = tournament_to_run.tours
 
             return tournament_to_run
 
@@ -103,9 +117,10 @@ class TournamentController:
         result = self.match_view.display_match_to_add_result(
             self.started_tournaments, self.tournament_list)
 
+        # add score in started list
         for tournament in self.started_tournaments:
             tournament.player_score = result
-
+        # add score in main tournaments list
             if tournament in self.tournament_list:
                 self.tournament_list[self.tournament_list.index(
                     tournament)].player_score = result
@@ -114,10 +129,8 @@ class TournamentController:
                     if tournament.name == round.tournament_name:
                         round.ending_hour = f"Fin de round : "\
                             f"{datetime.now().strftime('%H:%M:%S')}"
-                    else:
-                        c.print("[bold green] PAS OK [bold green]")
 
-        c.print(self.round_list)
+        c.print(self.tournament_list)
 
     def load_winner_for_round_2(self):
         winner_list = []

@@ -138,6 +138,7 @@ class TournamentView:
     def display_choose_tournament_to_launch(self, tournament_list):
         if tournament_list:
             tournament_available = []
+
             for tournament in tournament_list:
                 if not tournament.players:
                     c.print(
@@ -153,17 +154,17 @@ class TournamentView:
                             "[bold blue]Faites votre choix :  [bold blue]"
                         )
 
-                        while not tournament_choice.isdigit():
-                            tournament_choice = c.input(
-                                "[bold red]Veillez faire un choix dans la liste[bold red]"
-                            )
-                        try:
-                            tournament_available[int(tournament_choice)]
-                        except IndexError:
-                            tournament_choice = c.input(
-                                "[bold red]Veillez faire le choix d'un tournois avec "
-                                "suffisament de joueurs \n ==> [bold red]"
-                            )
+                        choice_list = []
+                        index = -1
+                        for element in tournament_available:
+                            index += 1
+                            choice_list.append(index)
+
+                        while not tournament_choice.isdigit() or not \
+                                int(tournament_choice) in choice_list:
+                            c.print(
+                                '[bold red] Merci de faire un choix dans la liste[bold red]')
+                            tournament_choice = c.input("==> ")
 
                         tournament_to_launch = tournament_available[int(
                             tournament_choice)]
