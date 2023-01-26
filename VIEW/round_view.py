@@ -35,6 +35,23 @@ class RoundView:
 
             c.print(table)
 
+    def debug_print(self, round_list):
+        for round in round_list:
+            if round.ending_hour == None:
+                c.print(f"{round.tournament_name}\n"
+                        f"{round.name}\n"
+                        f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                        f"{None}\n"
+                        f"{round.number_of_round}\n"
+                        f"{round.match_list}\n")
+            else:
+                c.print(f"{round.tournament_name}\n"
+                        f"{round.name}\n"
+                        f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                        f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                        f"{round.number_of_round}\n"
+                        f"{round.match_list}\n")
+
     # Prévoir l'affichage des points dans le tableau avec un self.tournament pour
     # le player score
     # f"scrore : {tournament.player_score[f'{first_round_list[index][0].last_name}']}

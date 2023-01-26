@@ -18,7 +18,6 @@ class Round:
                f"{self.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
                f"{self.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
                f"{self.number_of_round}\n"\
-               f"{self.tournament_name}\n"\
                f"{self.match_list}\n"
 
 

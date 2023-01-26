@@ -139,7 +139,7 @@ class TournamentController:
 
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
-        c.print(self.round_list)
+        c.print(self.round_view.debug_print(self.round_list))
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
 
