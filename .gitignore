@@ -5,3 +5,6 @@
 /to_do_list.md
 /questions.txt
 /test.py
+/VIEW/__pycache__
+/MODEL/__pycache__
+/CONTROLLER/__pycache__
