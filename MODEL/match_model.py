@@ -1,6 +1,8 @@
-from dataclasses import dataclass
 
 
-@dataclass
 class Match:
-    match: tuple
+    def __str__(self):
+        self.match = tuple
+
+    def __repr__(self):
+        return self.match

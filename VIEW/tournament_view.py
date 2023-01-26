@@ -136,6 +136,7 @@ class TournamentView:
                 if not tournament.players:
                     c.print(
                         "[bold red]Vous devez ajouter des joueurs d'abord...\n[bold red]")
+
                 else:
 
                     if len(tournament.players) != 0 and not len(tournament.players) % 2:

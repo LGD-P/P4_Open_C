@@ -21,7 +21,7 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
-        self.match_model = Match(())
+        self.match_model = Match()
         self.tournament_controller = TournamentController(
             [], self.player_controller.player_list, [], self.match_model)
         self.menu_view_in_controller = MenuView({
@@ -86,11 +86,15 @@ class MenuController:
             Tournament("PARIS Chess-Event", "Paris",
                        datetime.now().strftime("%d-%m-%Y"),
                        [], quick_players_list[0:9], "Blitz",
-                       "Description", {}, 4)
+                       "Description", 4, {})
         ]
 
         for tournnaments in quick_tounarment:
             self.tournament_controller.tournament_list.append(tournnaments)
+
+        for tournament in quick_tounarment:
+            for player in tournament.players:
+                tournament.player_score[player] = 0
 
     def quit_menu(self):
         self.menu_view_in_controller.quit_message()

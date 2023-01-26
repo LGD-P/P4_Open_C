@@ -68,14 +68,14 @@ class MatchView:
                                 "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
                         if int(winner) == 2:
-                            result[f"{match_list[index][0]}"] += 0.5
-                            result[f"{match_list[index][1]}"] += 0.5
+                            result[match_list[index][0]] += 0.5
+                            result[match_list[index][1]] += 0.5
 
                         elif int(winner) == 0:
-                            result[f"{match_list[index][0]}"] += 0
-                            result[f"{match_list[index][1]}"] += 1
+                            result[match_list[index][0]] += 0
+                            result[match_list[index][1]] += 1
                         elif int(winner) == 1:
-                            result[f"{match_list[index][0]}"] += 1
-                            result[f"{match_list[index][1]}"] += 0
+                            result[match_list[index][0]] += 1
+                            result[match_list[index][1]] += 0
 
                     return result

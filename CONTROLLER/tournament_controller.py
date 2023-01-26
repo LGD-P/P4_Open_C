@@ -49,7 +49,7 @@ class TournamentController:
         else:
             # set player_score to 0 as soon as the player has been added in tournament
             player_in_tournament["chosen_tournament"].player_score[
-                f"{player_in_tournament['chosen_player']}"] = 0
+                player_in_tournament['chosen_player']] = 0
 
             return player_in_tournament["chosen_tournament"].players.append(
                 player_in_tournament["chosen_player"])
@@ -68,9 +68,9 @@ class TournamentController:
             self.started_tournaments.append(tournament_to_run)
 
             # set player score to 0
-            for tournament in self.started_tournaments:
+            """for tournament in self.started_tournaments:
                 for player in tournament.players:
-                    tournament.player_score[f"{player}"] = 0
+                    tournament.player_score[player] = 0"""
 
             c.print(self.tournament_list)
             # c.print(sorted(tournament_to_run.players, key=lambda player: key[], reverse=True))
@@ -117,32 +117,25 @@ class TournamentController:
         self.round_view.display_round_view(
             tournament_running)
 
-        c.print(self.round_list)
-
         # fill round instance with match
         # Check if there is a round else creat round
-        round_index = 1
+
         if len(self.round_list) == False:
+            starting_hour = datetime.now()
             self.round_list.append(
                 Round(tournament_running.tours, f"Round {1}",
-                      datetime.now().strftime("%d-%m-%Y"),
-                      f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
-                      f"None",
-                      1, tournament_running.name)
+                      starting_hour,  # à refaire !!!!!!!
+                      None, 1, tournament_running.name)
             )
         else:
             # if there is a round(s) in list
-            # check if there is ending hour else creat it as 2nd or 3rd....
+            # check if there is ending hour else add new round  as 2nd  3rd etc..
             for round in self.round_list:
-                round_index += 1
-                if round.ending_hour != "None":
+                if round.ending_hour:
                     self.round_list.append(
-                        Round(tournament_running.tours, f"Round {round_index}",
-                              datetime.now().strftime("%d-%m-%Y"),
-                              f"Début de round : {datetime.now().strftime('%H:%M:%S')}",
-                              f"None",
-                              1, tournament_running.name)
-                    )
+                        Round(tournament_running.tours, f"Round {1}",
+                              starting_hour,  # à refaire !!!!!!!
+                              None, 1, tournament_running.name))
 
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
@@ -167,8 +160,8 @@ class TournamentController:
 
                 for round in self.round_list:
                     if tournament.name == round.tournament_name:
-                        round.ending_hour = f"Fin de round : "\
-                            f"{datetime.now().strftime('%H:%M:%S')}"
+                        if round.ending_hour == None:
+                            round.ending_hour = datetime.now()
 
         c.print(self.tournament_list)
         c.print("[green]****************************[green]")
