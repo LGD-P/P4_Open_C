@@ -67,12 +67,15 @@ class TournamentController:
             # add tounrament in stared list tournament
             self.started_tournaments.append(tournament_to_run)
 
-            # set player score to 0
-            """for tournament in self.started_tournaments:
-                for player in tournament.players:
-                    tournament.player_score[player] = 0"""
+            #################################
+            # DEBUG ZONE FOR SORTING
+            #################################
+            for tournament in self.tournament_list:
+                c.print("[green]****************************[green]")
+                c.print("[red]******************************[red]\n")
+                c.print("[red]TOURNOIS DANS LA LISTE:[red]")
+                c.print(tournament)
 
-            c.print(self.tournament_list)
             # c.print(sorted(tournament_to_run.players, key=lambda player: key[], reverse=True))
 
             # sort players of this tournament
@@ -84,17 +87,33 @@ class TournamentController:
 
             c.print("[green]****************************[green]")
             c.print("[red]******************************[red]")
+            c.print("[red]LISTE DES JOUEURS TRIEE:[red]")
             c.print(tournament_to_run_players)
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
 
             # continue swiss logic by rank
 
             half_list = ((len(tournament_to_run_players)//2))
 
             first_part = tournament_to_run_players[0:half_list]
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
+            c.print("[red]PREMIERE PARTIE DU GROUPE[red]")
             c.print(first_part)
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]\n\n")
             print("\n")
             second_part = tournament_to_run_players[half_list:9]
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
+            c.print("[red]DEIXIEME PARTIE DU GROUPE[red]")
             c.print(second_part)
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
+
+            ###################################################
+            ###################################################
 
             first_list_of_match = []
             for element_1, element_2 in zip(first_part, second_part):
@@ -137,11 +156,12 @@ class TournamentController:
                               starting_hour,  # à refaire !!!!!!!
                               None, 1, tournament_running.name))
 
-        c.print("[green]****************************[green]")
+        # print de débug
+        """c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
         c.print(self.round_view.debug_print(self.round_list))
         c.print("[green]****************************[green]")
-        c.print("[red]******************************[red]")
+        c.print("[red]******************************[red]")"""
 
     def add_result(self):
 
@@ -163,12 +183,13 @@ class TournamentController:
                         if round.ending_hour == None:
                             round.ending_hour = datetime.now()
 
-        c.print(self.tournament_list)
+        # print de débug
+        """c.print(self.tournament_list)
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
         c.print(self.round_list)
         c.print("[green]****************************[green]")
-        c.print("[red]******************************[red]")
+        c.print("[red]******************************[red]")"""
 
     def load_winner_for_round_2(self):
         winner_list = []
