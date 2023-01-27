@@ -79,10 +79,12 @@ class TournamentView:
 
             c.print("[bold red]Veuillez créer un tournois pour "
                     "pouvoir l'alimenter en joueurs..\n [bold red]")
+            return None
 
         elif not player_list:
             c.print("[bold red]Veuillez créer des joueurs pour "
                     "pouvoir les ajouter à des tournois")
+            return None
 
         else:
 
@@ -173,4 +175,4 @@ class TournamentView:
 
         else:
             c.print("[bold red]Vous devez créer un tournois d'abord...\n[bold red]")
-            pass
+            return None

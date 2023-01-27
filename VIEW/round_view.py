@@ -7,8 +7,8 @@ class RoundView:
 
     def display_round_view(self, tournament_running):
 
-        if not tournament_running.tours[0]:
-            pass
+        if tournament_running == None:
+            return None
         else:
             table = Table(
                 title="[bold yellow]-Premier Round du tournois-[bold yellow]", style="red")

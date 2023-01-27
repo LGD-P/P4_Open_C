@@ -55,11 +55,12 @@ class TournamentController:
                 player_in_tournament["chosen_player"])
 
     def creat_first_round(self):
+
         display_available_tournement_to_launch = self.tournament_view.display_choose_tournament_to_launch(
             self.tournament_list)
 
-        if not display_available_tournement_to_launch:
-            pass
+        if display_available_tournement_to_launch == None:
+            return None
         else:
             # get tournament choice to run
             tournament_to_run = display_available_tournement_to_launch
@@ -70,13 +71,12 @@ class TournamentController:
             #################################
             # DEBUG ZONE FOR SORTING
             #################################
-            for tournament in self.tournament_list:
-                c.print("[green]****************************[green]")
-                c.print("[red]******************************[red]\n")
-                c.print("[red]TOURNOIS DANS LA LISTE:[red]")
-                c.print(tournament)
+            c.print(
+                "[green_yellow]***********TEST N°2****************[green_yellow]\n")
+            tournament_to_run.player_score = sorted(tournament_to_run.player_score,
+                                                    key=lambda player: (player.rank))
 
-            # c.print(sorted(tournament_to_run.players, key=lambda player: key[], reverse=True))
+            c.print(tournament_to_run.player_score)
 
             # sort players of this tournament
             # c.print(tournament_to_run.players)
@@ -132,36 +132,39 @@ class TournamentController:
 
     def fill_round_instance_creat_announcement(self):
         tournament_running = self.creat_first_round()
-
-        self.round_view.display_round_view(
-            tournament_running)
-
-        # fill round instance with match
-        # Check if there is a round else creat round
-
-        if len(self.round_list) == False:
-            starting_hour = datetime.now()
-            self.round_list.append(
-                Round(tournament_running.tours, f"Round {1}",
-                      starting_hour,  # à refaire !!!!!!!
-                      None, 1, tournament_running.name)
-            )
+        if tournament_running == None:
+            return None
         else:
-            # if there is a round(s) in list
-            # check if there is ending hour else add new round  as 2nd  3rd etc..
-            for round in self.round_list:
-                if round.ending_hour:
-                    self.round_list.append(
-                        Round(tournament_running.tours, f"Round {1}",
-                              starting_hour,  # à refaire !!!!!!!
-                              None, 1, tournament_running.name))
 
-        # print de débug
-        """c.print("[green]****************************[green]")
-        c.print("[red]******************************[red]")
-        c.print(self.round_view.debug_print(self.round_list))
-        c.print("[green]****************************[green]")
-        c.print("[red]******************************[red]")"""
+            self.round_view.display_round_view(
+                tournament_running)
+
+            # fill round instance with match
+            # Check if there is a round else creat round
+
+            if len(self.round_list) == False:
+                starting_hour = datetime.now()
+                self.round_list.append(
+                    Round(tournament_running.tours, f"Round {1}",
+                          starting_hour,  # à refaire !!!!!!!
+                          None, 1, tournament_running.name)
+                )
+            else:
+                # if there is a round(s) in list
+                # check if there is ending hour else add new round  as 2nd  3rd etc..
+                for round in self.round_list:
+                    if round.ending_hour:
+                        self.round_list.append(
+                            Round(tournament_running.tours, f"Round {1}",
+                                  starting_hour,  # à refaire !!!!!!!
+                                  None, 1, tournament_running.name))
+
+            # print de débug
+            """c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")
+            c.print(self.round_view.debug_print(self.round_list))
+            c.print("[green]****************************[green]")
+            c.print("[red]******************************[red]")"""
 
     def add_result(self):
 
@@ -182,6 +185,11 @@ class TournamentController:
                     if tournament.name == round.tournament_name:
                         if round.ending_hour == None:
                             round.ending_hour = datetime.now()
+        """
+        c.print(
+            "[green_yellow]***********TEST N°2****************[green_yellow]\n")
+        c.print(sorted(self.started_tournaments[0].player_score,
+                       key=lambda player: (player.rank, player)))"""
 
         # print de débug
         """c.print(self.tournament_list)
