@@ -48,8 +48,14 @@ class TournamentController:
             return None
         else:
             # set player_score to 0 as soon as the player has been added in tournament
-            player_in_tournament["chosen_tournament"].player_score[
-                player_in_tournament['chosen_player']] = 0
+            player_in_tournament["chosen_tournament"].player_score.append(
+
+                {"player": player_in_tournament['chosen_player'],
+                 "player_rank": player_in_tournament['chosen_player'].rank,
+                 'score': None}
+            )
+
+            c.print(self.tournament_list)
 
             return player_in_tournament["chosen_tournament"].players.append(
                 player_in_tournament["chosen_player"])
@@ -71,11 +77,35 @@ class TournamentController:
             #################################
             # DEBUG ZONE FOR SORTING
             #################################
+            print(bool(self.round_list))  # Pourquoi si False ça ne passe pas ?
+
+            if self.round_list == []:
+                print("pas de round \n")
+                tournament_to_run_players = sorted(
+                    tournament_to_run .player_score, key=lambda k: (k["player_rank"]))
+
+            else:
+                print("déjà un Round \n")
+                tournament_to_run_players = sorted(
+                    tournament_to_run .player_score, key=lambda k: (-k["score"], k["player_rank"]))
+
+            c.print(tournament_to_run_players)
+
+            """
+            c.print(tournament_to_run.player_score)
+
+            c.print(
+                "[green_yellow]***********TEST N°1****************[green_yellow]\n")
+
+            c.print(sorted(tournament_to_run.players,
+                           key=lambda player: player.rank))
+
             c.print(
                 "[green_yellow]***********TEST N°2****************[green_yellow]\n")
-            tournament_to_run.player_score = sorted(tournament_to_run.player_score,
-                                                    key=lambda player: (player.rank))
-
+            # tournament_to_run.player_score = sorted(tournament_to_run.player_score[0],
+            #                                       key=lambda player: (player[player.rank], player[player]))
+            # modification de l'attribut player_score en [{}] toujours la même erreur :
+            # TypeError 'Player' object is not subscriptable
             c.print(tournament_to_run.player_score)
 
             # sort players of this tournament
@@ -91,7 +121,7 @@ class TournamentController:
             c.print(tournament_to_run_players)
             c.print("[green]****************************[green]")
             c.print("[red]******************************[red]")
-
+            """
             # continue swiss logic by rank
 
             half_list = ((len(tournament_to_run_players)//2))
@@ -146,7 +176,7 @@ class TournamentController:
                 starting_hour = datetime.now()
                 self.round_list.append(
                     Round(tournament_running.tours, f"Round {1}",
-                          starting_hour,  # à refaire !!!!!!!
+                          starting_hour,
                           None, 1, tournament_running.name)
                 )
             else:
@@ -156,7 +186,7 @@ class TournamentController:
                     if round.ending_hour:
                         self.round_list.append(
                             Round(tournament_running.tours, f"Round {1}",
-                                  starting_hour,  # à refaire !!!!!!!
+                                  starting_hour,
                                   None, 1, tournament_running.name))
 
             # print de débug
@@ -192,7 +222,7 @@ class TournamentController:
                        key=lambda player: (player.rank, player)))"""
 
         # print de débug
-        """c.print(self.tournament_list)
+        """c.print(self.tournament_list)    
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
         c.print(self.round_list)

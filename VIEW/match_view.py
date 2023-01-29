@@ -48,15 +48,14 @@ class MatchView:
                 for match_list in round:
                     for _ in match_list:
                         index += 1
-
                         c.print(
                             f"- Dans le tournois {tournament_choice.name:}\n"
-                            f"  Qui a gagné ce match : {match_list[index][0].last_name} "
-                            f"{match_list[index][0].first_name} contre "
-                            f"{match_list[index][1].last_name} "
-                            f"{match_list[index][1].first_name}\n"
-                            f"- 0: {match_list[index][0].last_name}\n"
-                            f"- 1: {match_list[index][1].last_name}\n"
+                            f"  Qui a gagné ce match : {match_list[index][0]['player'].last_name} "
+                            f"{match_list[index][0]['player'].first_name} contre "
+                            f"{match_list[index][1]['player'].last_name} "
+                            f"{match_list[index][1]['player'].first_name}\n"
+                            f"- 0: {match_list[index][0]['player'].last_name}\n"
+                            f"- 1: {match_list[index][1]['player'].last_name}\n"
                             f"- 2: Egalité\n"
                         )
 
@@ -68,14 +67,14 @@ class MatchView:
                                 "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
                         if int(winner) == 2:
-                            result[match_list[index][0]] += 0.5
-                            result[match_list[index][1]] += 0.5
+                            result[match_list[index][0]["score"]] += 0.5
+                            result[match_list[index][1]["score"]] += 0.5
 
                         elif int(winner) == 0:
-                            result[match_list[index][0]] += 0
-                            result[match_list[index][1]] += 1
+                            result[match_list[index][0]["score"]] += 0
+                            result[match_list[index][1]["score"]] += 1
                         elif int(winner) == 1:
-                            result[match_list[index][0]] += 1
-                            result[match_list[index][1]] += 0
+                            result[match_list[index][0]["score"]] += 1
+                            result[match_list[index][1]["score"]] += 0
 
                     return result

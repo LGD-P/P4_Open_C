@@ -2,7 +2,7 @@
 
 class Tournament:
     def __init__(self, name: str, date: str, place: str, tours: list, players: list,
-                 time_control: str, description: str, number_of_rounds: int = 4, player_score: dict = {}):
+                 time_control: str, description: str, number_of_rounds: int = 4, player_score: list = []):
         self.name = name
         self.date = date
         self.place = place
