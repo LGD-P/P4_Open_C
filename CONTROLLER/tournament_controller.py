@@ -88,14 +88,23 @@ class TournamentController:
                 c.print(
                     "[bold red] ***************************\n********************\n[bold red]")
 
+                winner_to_sort = []
+                for round in self.round_list[-1].match_list:
+                    winner_to_sort += round
+
+                c.print(winner_to_sort)
+                c.print(
+                    "[bold blue] ***************************\n********************\n[bold blue]")
                 sorted_element = sorted(
-                    tournament_to_run.player_score, key=lambda k: (-k['score'], k["player_rank"]))
+                    winner_to_sort, key=lambda k: (-k['score'], k["player_rank"]))
 
                 #  c.print(sorted_element)
 
                 half_part = len(sorted_element)//2
 
                 winner = sorted_element[0:half_part]
+                c.print(
+                    f"[bold blue] LES GAGNANTS SONT :\n {winner}[bold blue]")
 
                # c.print(winner)
                 # c.print(
