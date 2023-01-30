@@ -5,8 +5,9 @@ c = Console()
 
 
 class MatchView:
-    def display_match_to_add_result(self, started_tournaments, tournament_list):
-        result = defaultdict(int, {})
+    def display_match_to_add_result(self, started_tournaments, tournament_list, round_list):
+        # result = defaultdict(int, {})
+        # result = round_list[-1]
 
         # c.print(started_tournaments)
 
@@ -34,7 +35,8 @@ class MatchView:
                     tournament_choice = c.input("==> ")
 
                 # c.print(started_tournaments[int(tournament_choice)])
-                tournament_choice = started_tournaments[int(tournament_choice)]
+                tournament_choice = started_tournaments[int(
+                    tournament_choice)]
 
                 if tournament_choice in tournament_list:
                     tournament_choice = tournament_list[tournament_list.index(
@@ -44,6 +46,7 @@ class MatchView:
                 # tournament_list[started_tournaments[int(tournament_choice)]]
 
                 round = tournament_choice.tours
+
                 index = -1
                 for match_list in round:
                     for _ in match_list:
@@ -67,14 +70,22 @@ class MatchView:
                                 "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
                         if int(winner) == 2:
-                            result[match_list[index][0]["score"]] += 0.5
-                            result[match_list[index][1]["score"]] += 0.5
+                            for player in tournament_choice.player_score:
+                                if player["player"] == match_list[index][0]['player']:
+                                    player["score"] += 0.5
+                                elif player["player"] == match_list[index][1]['player']:
+                                    player["score"] += 0.5
 
                         elif int(winner) == 0:
-                            result[match_list[index][0]["score"]] += 0
-                            result[match_list[index][1]["score"]] += 1
-                        elif int(winner) == 1:
-                            result[match_list[index][0]["score"]] += 1
-                            result[match_list[index][1]["score"]] += 0
+                            for player in tournament_choice.player_score:
+                                if player["player"] == match_list[index][0]['player']:
+                                    player["score"] += 1
+                                elif player["player"] == match_list[index][1]['player']:
+                                    player["score"] += 0
 
-                    return result
+                        elif int(winner) == 1:
+                            for player in tournament_choice.player_score:
+                                if player["player"] == match_list[index][0]['player']:
+                                    player["score"] += 0
+                                elif player["player"] == match_list[index][1]['player']:
+                                    player["score"] += 1

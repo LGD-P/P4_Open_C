@@ -52,7 +52,7 @@ class TournamentController:
 
                 {"player": player_in_tournament['chosen_player'],
                  "player_rank": player_in_tournament['chosen_player'].rank,
-                 'score': None}
+                 'score': 0}
             )
 
             c.print(self.tournament_list)
@@ -71,77 +71,70 @@ class TournamentController:
             # get tournament choice to run
             tournament_to_run = display_available_tournement_to_launch
 
-            # add tounrament in stared list tournament
+            # add tounrament in started list tournament
             self.started_tournaments.append(tournament_to_run)
 
             #################################
             # DEBUG ZONE FOR SORTING
             #################################
-            print(bool(self.round_list))  # Pourquoi si False ça ne passe pas ?
+            # print(bool(self.round_list))  # Pourquoi si False ça ne passe pas ?
 
             if self.round_list == []:
-                print("pas de round \n")
+                c.print("[bold red]pas encore de round [bold red]\n")
                 tournament_to_run_players = sorted(
-                    tournament_to_run .player_score, key=lambda k: (k["player_rank"]))
+                    tournament_to_run.player_score, key=lambda k: (k["player_rank"]))
 
             else:
-                print("déjà un Round \n")
+                c.print("[bold green]Déjà un round[bold green]\n")
+                c.print(
+                    "[bold red] ***************************\n********************\n[bold red]")
+
+                sorted_element = sorted(
+                    tournament_to_run.player_score, key=lambda k: (-k['score']))
+
+                #  c.print(sorted_element)
+
+                half_part = len(sorted_element)//2
+
+                winner = sorted_element[0:half_part]
+
+               # c.print(winner)
+                # c.print(
+                #   "[bold red] ***************************\n********************\n[bold red]")
+
                 tournament_to_run_players = sorted(
-                    tournament_to_run .player_score, key=lambda k: (-k["score"], k["player_rank"]))
+                    winner, key=lambda k: (-k["score"], k["player_rank"]))
 
+            # c.print(
+             # "[bold red] ***************************\n********************\n[bold red]")
             c.print(tournament_to_run_players)
 
-            """
-            c.print(tournament_to_run.player_score)
-
-            c.print(
-                "[green_yellow]***********TEST N°1****************[green_yellow]\n")
-
-            c.print(sorted(tournament_to_run.players,
-                           key=lambda player: player.rank))
-
-            c.print(
-                "[green_yellow]***********TEST N°2****************[green_yellow]\n")
-            # tournament_to_run.player_score = sorted(tournament_to_run.player_score[0],
-            #                                       key=lambda player: (player[player.rank], player[player]))
-            # modification de l'attribut player_score en [{}] toujours la même erreur :
-            # TypeError 'Player' object is not subscriptable
-            c.print(tournament_to_run.player_score)
-
-            # sort players of this tournament
-            # c.print(tournament_to_run.players)
-
-            # mylist = sorted(mylist, key=lambda k: (k['name'].lower(), k['age'])) ! tuple
-            tournament_to_run_players = sorted(tournament_to_run.players,
-                                               key=lambda player: player.rank)
-
-            c.print("[green]****************************[green]")
-            c.print("[red]******************************[red]")
-            c.print("[red]LISTE DES JOUEURS TRIEE:[red]")
-            c.print(tournament_to_run_players)
-            c.print("[green]****************************[green]")
-            c.print("[red]******************************[red]")
-            """
             # continue swiss logic by rank
 
-            half_list = ((len(tournament_to_run_players)//2))
+            half_list = (len(tournament_to_run_players)//2)
 
             first_part = tournament_to_run_players[0:half_list]
-            c.print("[green]****************************[green]")
+
+            # print de début
+            """c.print("[green]****************************[green]")
             c.print("[red]******************************[red]")
             c.print("[red]PREMIERE PARTIE DU GROUPE[red]")
             c.print(first_part)
             c.print("[green]****************************[green]")
             c.print("[red]******************************[red]\n\n")
             print("\n")
+            """
             second_part = tournament_to_run_players[half_list:9]
+
+            # print de début
+            """
             c.print("[green]****************************[green]")
             c.print("[red]******************************[red]")
             c.print("[red]DEIXIEME PARTIE DU GROUPE[red]")
             c.print(second_part)
             c.print("[green]****************************[green]")
             c.print("[red]******************************[red]")
-
+            """
             ###################################################
             ###################################################
 
@@ -197,32 +190,21 @@ class TournamentController:
             c.print("[red]******************************[red]")"""
 
     def add_result(self):
-
+        c.print(self.tournament_list)
         # gérer la logique de résultat avec le dictionnaire
         # dans la match view  créer les élements qui vont être récupérer ici.
-        result = self.match_view.display_match_to_add_result(
-            self.started_tournaments, self.tournament_list)
+        self.match_view.display_match_to_add_result(
+            self.started_tournaments, self.tournament_list, self.round_list)
 
-        # add score in started list
         for tournament in self.started_tournaments:
-            tournament.player_score = result
-        # add score in main tournaments list
-            if tournament in self.tournament_list:
-                self.tournament_list[self.tournament_list.index(
-                    tournament)].player_score = result
+            for round in self.round_list:
+                if tournament.name == round.tournament_name:
+                    if round.ending_hour == None:
+                        round.ending_hour = datetime.now()
 
-                for round in self.round_list:
-                    if tournament.name == round.tournament_name:
-                        if round.ending_hour == None:
-                            round.ending_hour = datetime.now()
         """
-        c.print(
-            "[green_yellow]***********TEST N°2****************[green_yellow]\n")
-        c.print(sorted(self.started_tournaments[0].player_score,
-                       key=lambda player: (player.rank, player)))"""
-
         # print de débug
-        """c.print(self.tournament_list)    
+        c.print(self.tournament_list)
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")
         c.print(self.round_list)
