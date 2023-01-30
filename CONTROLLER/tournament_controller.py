@@ -78,7 +78,6 @@ class TournamentController:
             # DEBUG ZONE FOR SORTING
             #################################
             # print(bool(self.round_list))  # Pourquoi si False ça ne passe pas ?
-
             if self.round_list == []:
                 c.print("[bold red]pas encore de round [bold red]\n")
                 tournament_to_run_players = sorted(
@@ -90,9 +89,9 @@ class TournamentController:
                     "[bold red] ***************************\n********************\n[bold red]")
 
                 sorted_element = sorted(
-                    tournament_to_run.player_score, key=lambda k: (-k['score']))
+                    tournament_to_run.player_score, key=lambda k: (-k['score'], k["player_rank"]))
 
-                #  c.print(sorted_element)
+                #  c.print(sorted_element)
 
                 half_part = len(sorted_element)//2
 
@@ -168,17 +167,19 @@ class TournamentController:
             if len(self.round_list) == False:
                 starting_hour = datetime.now()
                 self.round_list.append(
-                    Round(tournament_running.tours, f"Round {1}",
+                    Round(tournament_running.tours[-1], f"Round {1}",
                           starting_hour,
                           None, 1, tournament_running.name)
                 )
             else:
                 # if there is a round(s) in list
                 # check if there is ending hour else add new round  as 2nd  3rd etc..
+                match_concerned = len(tournament_running.tours)
                 for round in self.round_list:
                     if round.ending_hour:
+                        starting_hour = datetime.now()
                         self.round_list.append(
-                            Round(tournament_running.tours, f"Round {1}",
+                            Round(tournament_running.tours[match_concerned - 1], f"Round {len(self.round_list) + 1}",
                                   starting_hour,
                                   None, 1, tournament_running.name))
 
@@ -194,7 +195,7 @@ class TournamentController:
         # gérer la logique de résultat avec le dictionnaire
         # dans la match view  créer les élements qui vont être récupérer ici.
         self.match_view.display_match_to_add_result(
-            self.started_tournaments, self.tournament_list, self.round_list)
+            self.started_tournaments, self.tournament_list)
 
         for tournament in self.started_tournaments:
             for round in self.round_list:
@@ -202,6 +203,7 @@ class TournamentController:
                     if round.ending_hour == None:
                         round.ending_hour = datetime.now()
 
+        c.print(self.round_list.__repr__())
         """
         # print de débug
         c.print(self.tournament_list)
@@ -210,52 +212,3 @@ class TournamentController:
         c.print(self.round_list)
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")"""
-
-    def load_winner_for_round_2(self):
-        winner_list = []
-
-        # Using the round 1 list updated with players score
-        # we build a winner list for the next round
-
-        for players in self.round_list[0].match_list:
-
-            if players[0].points > players[1].points:
-                winner_list.append(players[0])
-
-            elif players[1].points > players[0].points:
-                winner_list.append(players[1])
-
-            else:
-                if players[0].rank < players[1].rank:
-
-                    winner_list.append(players[0])
-                else:
-                    winner_list.append(players[1])
-
-        c.print(sorted(winner_list, key=lambda players:
-                       (players.points), reverse=True))
-
-        return sorted(winner_list, key=lambda players:
-                      (players.points), reverse=True)
-
-    def creat_second_round(self):
-
-        # Using the winner list we sort and creat next round
-
-        display_second_round = self.load_winner_for_round_2()
-
-        first_part_round2 = display_second_round[0:2]
-        second_part_round2 = display_second_round[2:4]
-
-        second_list_of_match = []
-        for element_1, element_2 in zip(first_part_round2, second_part_round2):
-            second_list_of_match.append([element_1, element_2])
-
-        # add first round list in tournament chosen
-        self.tournament_list[1].tours.append(second_list_of_match)
-
-        c.print(self.tournament_list[1])
-
-        self.round_view.display_round_view(second_list_of_match)
-
-        return second_list_of_match
