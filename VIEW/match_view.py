@@ -21,18 +21,19 @@ class MatchView:
         else:
 
             for tournament in started_tournaments:
+                choice_list = []
 
                 choice_list = [started_tournaments.index(tournament)]
 
-                c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
-                        "des résultats ?[bold yellow]\n\n"
-                        f"- {started_tournaments.index(tournament)} : [bold green]{tournament.name}[bold green]\n")
-                tournament_choice = c.input("==> ")
+            c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
+                    "des résultats ?[bold yellow]\n\n"
+                    f"- {started_tournaments.index(tournament)} : [bold green]{tournament.name}[bold green]\n")
+            tournament_choice = c.input("==> ")
 
-                while not tournament_choice.isdigit() or not int(tournament_choice) in choice_list:
-                    c.print(
-                        '[bold red] Merci de faire un choix dans la liste[bold red]')
-                    tournament_choice = c.input("==> ")
+            while not tournament_choice.isdigit() or not int(tournament_choice) in choice_list:
+                c.print(
+                    '[bold red] Merci de faire un choix dans la liste[bold red]')
+                tournament_choice = c.input("==> ")
 
             # c.print(started_tournaments[int(tournament_choice)])
             tournament_choice = started_tournaments[int(
