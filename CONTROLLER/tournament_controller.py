@@ -223,8 +223,41 @@ class TournamentController:
         c.print(self.tournament_list)
         # gérer la logique de résultat avec le dictionnaire
         # dans la match view  créer les élements qui vont être récupérer ici.
-        self.match_view.display_match_to_add_result(
+        tournament_choice = self.match_view.display_tournament_to_fill_result(
             self.started_tournaments, self.tournament_list)
+
+        round_index = (len(tournament_choice.tours))
+
+        round = tournament_choice.tours[round_index - 1]
+        index = -1
+
+        for match_list in round:
+            winner_choice = self.match_view.display_player_in_tournament_to_fill_score(
+                tournament_choice, match_list)
+
+            if int(winner_choice) == 2:
+                for player in tournament_choice.player_score:
+                    if player == match_list[0]:
+
+                        tournament_choice.player_score[player] += 0.5
+                    elif player == match_list[1]:
+                        tournament_choice.player_score[player] += 0.5
+
+            elif int(winner_choice) == 0:
+                for player in tournament_choice.player_score:
+                    if player == match_list[0]:
+                        tournament_choice.player_score[player] += 1
+                    elif player == match_list[1]:
+                        tournament_choice.player_score[player] += 0
+
+            elif int(winner_choice) == 1:
+                for player in tournament_choice.player_score:
+                    if player == match_list[0]:
+                        tournament_choice.player_score[player] += 0
+                    elif player == match_list[1]:
+                        tournament_choice.player_score[player] += 1
+
+            c.print(tournament_choice)
 
         for tournament in self.started_tournaments:
             for round in self.round_list:
