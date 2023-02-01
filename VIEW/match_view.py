@@ -5,7 +5,7 @@ c = Console()
 
 
 class MatchView:
-    def display_match_to_add_result(self, started_tournaments, tournament_list):
+    def display_tournament_to_fill_result(self, started_tournaments, tournament_list):
 
         if not started_tournaments:
             c.print(
@@ -40,49 +40,28 @@ class MatchView:
                     tournament_choice)
                 ]
 
-                # tournament_list[started_tournaments[int(tournament_choice)]]
+            return tournament_choice
 
-            round_index = (len(tournament_choice.tours))
-            round = tournament_choice.tours[round_index - 1]
+    def display_player_in_tournament_to_fill_score(self, tournament_choice, match_list):
 
-            index = -1
-            for match_list in round:
-                index += 1
-                c.print(
-                    f"- Dans le tournois {tournament_choice.name:}\n"
-                    f"  Qui a gagné ce match : {match_list[0].last_name} "
-                    f"{match_list[0].first_name} contre "
-                    f"{match_list[1].last_name} "
-                    f"{match_list[1].first_name}\n"
-                    f"- 0: {match_list[0].last_name}\n"
-                    f"- 1: {match_list[1].last_name}\n"
-                    f"- 2: Egalité\n"
-                )
+        # tournament_list[started_tournaments[int(tournament_choice)]]
 
-                winner = c.input(
-                    "[bold red]Entrez le vainqueur : [bold red]\n")
+        c.print(
+            f"- Dans le tournois {tournament_choice.name:}\n"
+            f"  Qui a gagné ce match : {match_list[0].last_name} "
+            f"{match_list[0].first_name} contre "
+            f"{match_list[1].last_name} "
+            f"{match_list[1].first_name}\n"
+            f"- 0: {match_list[0].last_name}\n"
+            f"- 1: {match_list[1].last_name}\n"
+            f"- 2: Egalité\n"
+        )
 
-                while not winner.isdigit() or not int(winner) in [0, 1, 2]:
-                    winner = c.input(
-                        "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
+        winner = c.input(
+            "[bold red]Entrez le vainqueur : [bold red]\n")
 
-                if int(winner) == 2:
-                    for player in tournament_choice.player_score:
-                        if player == match_list[0]:
-                            player += 0.5
-                        elif player == match_list[1]:
-                            player += 0.5
+        while not winner.isdigit() or not int(winner) in [0, 1, 2]:
+            winner = c.input(
+                "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
-                elif int(winner) == 0:
-                    for player in tournament_choice.player_score:
-                        if player == match_list[0]:
-                            player += 1
-                        elif player == match_list[1]:
-                            player += 0
-
-                elif int(winner) == 1:
-                    for player in tournament_choice.player_score:
-                        if player == match_list[0]:
-                            player += 0
-                        elif player == match_list[1]:
-                            player += 1
+        return winner

@@ -257,7 +257,7 @@ class TournamentController:
                     elif player == match_list[1]:
                         tournament_choice.player_score[player] += 1
 
-            c.print(tournament_choice)
+            # c.print(tournament_choice)
 
         for tournament in self.started_tournaments:
             for round in self.round_list:
