@@ -48,17 +48,9 @@ class TournamentController:
             return None
         else:
             # set player_score to 0 as soon as the player has been added in tournament
-            player_in_tournament["chosen_tournament"].player_score.append(
-
-                {"player": player_in_tournament['chosen_player'],
-                 "player_rank": player_in_tournament['chosen_player'].rank,
-                 'score': 0}
-            )
+            player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
 
             c.print(self.tournament_list)
-
-            return player_in_tournament["chosen_tournament"].players.append(
-                player_in_tournament["chosen_player"])
 
     def creat_first_round(self):
 
@@ -77,11 +69,32 @@ class TournamentController:
             #################################
             # DEBUG ZONE FOR SORTING
             #################################
-            # print(bool(self.round_list))  # Pourquoi si False ça ne passe pas ?
+
             if self.round_list == []:
                 c.print("[bold red]pas encore de round [bold red]\n")
+
                 tournament_to_run_players = sorted(
-                    tournament_to_run.player_score, key=lambda k: (k["player_rank"]))
+                    tournament_to_run.player_score.keys(), key=lambda k: (k.rank)
+                )
+
+            elif len(self.round_list[-1].match_list) == 1:
+                the_winner_is = (self.round_list[-1].match_list[0])
+
+                sorted_element = sorted(
+                    the_winner_is, key=lambda k: (-k['score'], k["player_rank"]))
+
+                #  c.print(sorted_element)
+
+                half_part = len(sorted_element)//2
+
+                winner = sorted_element[0:half_part]
+
+                c.print(
+                    f"[bold red] On dirait que ce tournois compte un vainqueur[bold red]"
+                    f" félicitation à :"
+                    f" {winner[0]['player'].last_name} "
+                    f" {winner[0]['player'].first_name}")
+                return None
 
             else:
                 c.print("[bold green]Déjà un round[bold green]\n")
@@ -92,11 +105,18 @@ class TournamentController:
                 for round in self.round_list[-1].match_list:
                     winner_to_sort += round
 
-                c.print(winner_to_sort)
+                # c.print(winner_to_sort)
+
                 c.print(
                     "[bold blue] ***************************\n********************\n[bold blue]")
                 sorted_element = sorted(
                     winner_to_sort, key=lambda k: (-k['score'], k["player_rank"]))
+
+                sorted_element = [
+                    element[0] for element in
+                    sorted(tournament_to_run.player_score.items(),
+                           key=lambda k: (-k[1], k[0].rank))
+                ]
 
                 #  c.print(sorted_element)
 
@@ -115,7 +135,7 @@ class TournamentController:
 
             # c.print(
              # "[bold red] ***************************\n********************\n[bold red]")
-            c.print(tournament_to_run_players)
+            # c.print(tournament_to_run_players)
 
             # continue swiss logic by rank
 

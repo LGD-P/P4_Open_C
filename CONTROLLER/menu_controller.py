@@ -86,7 +86,7 @@ class MenuController:
             Tournament("PARIS Chess-Event", "Paris",
                        datetime.now().strftime("%d-%m-%Y"),
                        [], quick_players_list[0:9], "Blitz",
-                       "Description", 4, [])
+                       "Description", {}, 4)
         ]
 
         for tournnaments in quick_tounarment:
@@ -94,8 +94,7 @@ class MenuController:
 
         for tournament in quick_tounarment:
             for player in tournament.players:
-                tournament.player_score.append(
-                    {"player": player, "player_rank": player.rank, 'score': 0})
+                tournament.player_score[player] = 0
 
     def quit_menu(self):
         self.menu_view_in_controller.quit_message()
