@@ -131,6 +131,35 @@ class TournamentController:
                     first_list_of_match.append(
                         [player_in_tournament_to_run[-2], player_in_tournament_to_run[-1]])
 
+                    for match_1 in first_list_of_match:
+                        for match_list in tournament_to_run.tours:
+                            for match in match_list:
+                                while first_list_of_match[-1] == tournament_to_run.tours[-1][-1]:
+                                    position = first_list_of_match.index(
+                                        match_1)
+                                    player_to_move = first_list_of_match[-1][0]
+                                    player_to_replace = first_list_of_match[-2][0]
+                                    first_list_of_match[-2].append(
+                                        player_to_move)
+                                    first_list_of_match[-1].append(
+                                        player_to_replace)
+                                    del (first_list_of_match[-2][0])
+                                    del (first_list_of_match[-1][0])
+
+                                else:
+                                    while match == match_1:
+                                        position = first_list_of_match.index(
+                                            match_1)
+                                        player_to_move = first_list_of_match[position][0]
+                                        player_to_replace = first_list_of_match[position+1][0]
+                                        first_list_of_match[position +
+                                                            1].append(player_to_move)
+                                        first_list_of_match[position].append(
+                                            player_to_replace)
+                                        del (
+                                            first_list_of_match[position+1][0])
+                                        del (first_list_of_match[position][0])
+
                     # add first round list in tournament chosen
                     tournament_to_run.tours.append(
                         first_list_of_match)
