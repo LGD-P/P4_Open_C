@@ -73,30 +73,33 @@ class TournamentController:
             if self.round_list == []:
                 c.print("[bold red]pas encore de round [bold red]\n")
 
-                tournament_to_run_players = sorted(
+                player_in_tournament_to_run = sorted(
                     tournament_to_run.player_score.keys(), key=lambda k: (k.rank)
                 )
 
-            elif len(self.round_list[-1].match_list) == 1:
-                the_winner_is = (self.round_list[-1].match_list[0])
+                """
+                elif len(self.round_list[-1].match_list) == 1:
+                    the_winner_is = (self.round_list[-1].match_list[0])
 
-                sorted_element = sorted(
-                    the_winner_is, key=lambda k: (-k['score'], k["player_rank"]))
+                    sorted_element = sorted(
+                        the_winner_is, key=lambda k: (-k['score'], k["player_rank"]))
 
-                #  c.print(sorted_element)
+                    #  c.print(sorted_element)
 
-                half_part = len(sorted_element)//2
+                    half_part = len(sorted_element)//2
 
-                winner = sorted_element[0:half_part]
+                    winner = sorted_element[0:half_part]
 
-                c.print(
-                    f"[bold red] On dirait que ce tournois compte un vainqueur[bold red]"
-                    f" félicitation à :"
-                    f" {winner[0]['player'].last_name} "
-                    f" {winner[0]['player'].first_name}")
-                return None
+                    c.print(
+                        f"[bold red] On dirait que ce tournois compte un vainqueur[bold red]"
+                        f" félicitation à :"
+                        f" {winner[0]['player'].last_name} "
+                        f" {winner[0]['player'].first_name}")
+                    return None
+                """
 
             else:
+
                 c.print("[bold green]Déjà un round[bold green]\n")
                 c.print(
                     "[bold red] ***************************\n********************\n[bold red]")
@@ -109,17 +112,18 @@ class TournamentController:
 
                 c.print(
                     "[bold blue] ***************************\n********************\n[bold blue]")
+                """
                 sorted_element = sorted(
                     winner_to_sort, key=lambda k: (-k['score'], k["player_rank"]))
-
-                sorted_element = [
+                """
+                player_in_tournament_to_run = [
                     element[0] for element in
                     sorted(tournament_to_run.player_score.items(),
                            key=lambda k: (-k[1], k[0].rank))
                 ]
 
                 #  c.print(sorted_element)
-
+                """
                 half_part = len(sorted_element)//2
 
                 winner = sorted_element[0:half_part]
@@ -133,15 +137,16 @@ class TournamentController:
                 tournament_to_run_players = sorted(
                     winner, key=lambda k: (-k["score"], k["player_rank"]))
 
-            # c.print(
+                """
+                # c.print(
              # "[bold red] ***************************\n********************\n[bold red]")
             # c.print(tournament_to_run_players)
 
             # continue swiss logic by rank
 
-            half_list = (len(tournament_to_run_players)//2)
+            half_list = len(player_in_tournament_to_run)//2
 
-            first_part = tournament_to_run_players[0:half_list]
+            first_part = player_in_tournament_to_run[0:half_list]
 
             # print de début
             """c.print("[green]****************************[green]")
@@ -152,7 +157,7 @@ class TournamentController:
             c.print("[red]******************************[red]\n\n")
             print("\n")
             """
-            second_part = tournament_to_run_players[half_list:9]
+            second_part = player_in_tournament_to_run[half_list:9]
 
             # print de début
             """
