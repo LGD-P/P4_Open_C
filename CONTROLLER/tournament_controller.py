@@ -219,7 +219,6 @@ class TournamentController:
         round_index = (len(tournament_choice.tours))
 
         round = tournament_choice.tours[round_index - 1]
-        index = -1
 
         for match_list in round:
             winner_choice = self.match_view.display_player_in_tournament_to_fill_score(
@@ -255,6 +254,7 @@ class TournamentController:
                     if round.ending_hour == None:
                         round.ending_hour = datetime.now()
 
+        # c.print(tournament.tours)
         # c.print(self.round_list.__repr__())
         """
         # print de débug
