@@ -131,7 +131,7 @@ class TournamentView:
                     "chosen_player": player_list[int(player_choice)]
                 }
 
-    def display_choose_tournament_to_launch(self, tournament_list):
+    def display_choose_a_tournament_to_launch(self, tournament_list):
         if tournament_list:
             tournament_available = []
 
@@ -246,7 +246,7 @@ class TournamentView:
             round_list_to_display = []
             for round in round_list:
 
-                if tournament_choosen.name == round.tournament_name:
+                if tournament_choosen.name in round.tournament_name:
 
                     round_list_to_display.append(round)
 
