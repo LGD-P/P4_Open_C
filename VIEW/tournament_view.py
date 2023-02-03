@@ -178,7 +178,7 @@ class TournamentView:
             c.print("[bold red]Vous devez créer un tournois d'abord...\n[bold red]")
             return None
 
-    def display_players_in_tournament_by_alphabetical_order(self, tournament_list):
+    def report_display_players_in_tournament_by_alphabetical_order(self, tournament_list):
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -199,7 +199,7 @@ class TournamentView:
 
             return sorted_players
 
-    def display_players_in_tournament_by_rank(self, tournament_list):
+    def report_display_players_in_tournament_by_rank(self, tournament_list):
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -219,7 +219,7 @@ class TournamentView:
 
             return sorted_players
 
-    def display_tournament_list(self, tournament_list):
+    def report_display_tournament_list(self, tournament_list):
         c.print("[bold magenta]Voici la liste des tournois : \n[bold magenta]")
         index = 0
         for tournament in tournament_list:
@@ -227,7 +227,7 @@ class TournamentView:
             c.print(
                 f"Tournois N°{index}: \n {tournament.__repr__()}")
 
-    def display_tour_in_tournament(self, tournament_list, round_list):
+    def report_display_tour_in_tournament(self, tournament_list, round_list):
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -252,7 +252,7 @@ class TournamentView:
 
             return round_list_to_display
 
-    def display_match_in_tournament(self, tournament_list):
+    def report_display_match_in_tournament(self, tournament_list):
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -290,7 +290,7 @@ class TournamentView:
                                "- 05. Liste de tous les matchs d'un tournoi.\n[bold blue]")
 
         if int(question) == 1:
-            players_list = self.display_players_in_tournament_by_alphabetical_order(
+            players_list = self.report_display_players_in_tournament_by_alphabetical_order(
                 tournament_list)
             c.print("[green3]Voici les joueurs :\n[green3]")
 
@@ -298,7 +298,7 @@ class TournamentView:
                 c.print(players)
 
         elif int(question) == 2:
-            players_list = self.display_players_in_tournament_by_rank(
+            players_list = self.report_display_players_in_tournament_by_rank(
                 tournament_list)
             c.print("[green3]Voici les joueurs :\n[green3]")
 
@@ -306,10 +306,10 @@ class TournamentView:
                 c.print(players)
 
         elif int(question) == 3:
-            self.display_tournament_list(tournament_list)
+            self.report_display_tournament_list(tournament_list)
 
         elif int(question) == 4:
-            list_of_tours = self.display_tour_in_tournament(
+            list_of_tours = self.report_display_tour_in_tournament(
                 tournament_list, round_list)
 
             c.print("[green3]Voici les rounds du tournois : [green3]\n")
@@ -317,7 +317,8 @@ class TournamentView:
                 c.print(str(round))
 
         elif int(question) == 5:
-            list_of_tours = self.display_match_in_tournament(tournament_list)
+            list_of_tours = self.report_display_match_in_tournament(
+                tournament_list)
             index = 0
             for tour in list_of_tours:
                 index += 1
