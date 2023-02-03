@@ -40,13 +40,15 @@ class TournamentController:
     def add_player_in_tournament(self):
 
         player_in_tournament = self.tournament_view.display_add_player_in_tournament_form(
-            self.tournament_list, self.player_list)
+            self.tournament_list, self.player_list, self.player_view)
 
         if player_in_tournament == None:
             return None
         else:
+            tournament = player_in_tournament["chosen_tournament"]
             # set player_score to 0 as soon as the player has been added in tournament
-            player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
+            tournament.player_score["chooser_player"] = 0
+            # player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
 
             # c.print(self.tournament_list)
 
