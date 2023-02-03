@@ -30,5 +30,4 @@ for match_1 in round_3:
                     del (round_3[position+1][0])
                     del (round_3[position][0])
 
-
-print(round_3)
+print(tours)

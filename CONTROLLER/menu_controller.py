@@ -7,8 +7,7 @@ from MODEL.player_model import Player
 from MODEL.match_model import Match
 
 from VIEW.menu_view import MenuView
-from VIEW.tournament_view import TournamentView
-from VIEW.player_view import PlayerView
+
 
 from CONTROLLER.player_controller import PlayerController
 from CONTROLLER.tournament_controller import TournamentController
@@ -47,7 +46,7 @@ class MenuController:
             },
             "6": {
                 "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
-                "action": "",
+                "action": self.tournament_controller.report,
             },
             "7": {
                 "label": "[bold blue]- 7. Quitter :raising_hand: \n [bold blue]",

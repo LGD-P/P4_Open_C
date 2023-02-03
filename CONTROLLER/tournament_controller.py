@@ -134,7 +134,7 @@ class TournamentController:
                     for match_1 in first_list_of_match:
                         for match_list in tournament_to_run.tours:
                             for match in match_list:
-                                while first_list_of_match[-1] == tournament_to_run.tours[-1][-1]:
+                                if first_list_of_match[-1] == tournament_to_run.tours[-1][-1]:
                                     position = first_list_of_match.index(
                                         match_1)
                                     player_to_move = first_list_of_match[-1][0]
@@ -293,3 +293,6 @@ class TournamentController:
         c.print(self.round_list)
         c.print("[green]****************************[green]")
         c.print("[red]******************************[red]")"""
+
+    def report(self):
+        self.tournament_view.display_report(self.tournament_list)
