@@ -257,8 +257,7 @@ class TournamentView:
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
             question = c.input("[bold yellow]Choisissez le tournois dont vous "
-                               "souhaitez afficher la liste des matchs "
-                               "alphabétique\n[bold yellow]"
+                               "souhaitez afficher la liste des matchs \n[bold yellow]"
                                f"[bold blue] - {tournament_list.index(tournament)} : "
                                f"{tournament.name}\n[bold blue]")
 

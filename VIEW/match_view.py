@@ -1,5 +1,5 @@
 from rich.console import Console
-from collections import defaultdict
+
 
 c = Console()
 

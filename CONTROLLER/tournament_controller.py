@@ -50,25 +50,18 @@ class TournamentController:
 
             # c.print(self.tournament_list)
 
-    def swiss_logic_round_one(self, tournament_to_run):
+    def swiss_logic_sorting_round_one(self, tournament_to_run):
         c.print("[bold green]Déjà un round[bold green]\n")
         c.print(
             "[bold red] ***************************\n********************\n[bold red]")
 
-        winner_to_sort = []
-        for round in self.round_list[-1].match_list:
-            winner_to_sort += round
-
-        # c.print(winner_to_sort)
-
-            player_in_tournament_to_run = [
-                element[0] for element in
-                sorted(tournament_to_run.player_score.items(),
-                       key=lambda k: (-k[1], k[0].rank))
-            ]
+        player_in_tournament_to_run = [
+            element[0] for element in sorted(tournament_to_run.player_score.items(),
+                                             key=lambda k: (-k[1], k[0].rank))
+        ]
         return player_in_tournament_to_run
 
-    def swiss_logic_round_two_and_more(self, tournament_to_run):
+    def swiss_logic_sorting_round_two_and_more(self, tournament_to_run):
         winner_to_sort = []
         for round in self.round_list[-1].match_list:
             winner_to_sort += round
@@ -130,55 +123,7 @@ class TournamentController:
                                 del (first_list_of_match[position][0])
         return first_list_of_match
 
-    def creat_round(self):
-
-        tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(
-            self.tournament_list)
-
-        if tournament_to_run == None:
-            return None
-        else:
-            self.started_tournaments.append(tournament_to_run)
-
-            #################################
-            # DEBUG ZONE FOR SORTING
-            #################################
-
-            if not self.round_list:
-                c.print("[bold red]pas encore de round [bold red]\n")
-
-                player_in_tournament_to_run = sorted(
-                    tournament_to_run.player_score.keys(), key=lambda k: (k.rank)
-                )
-
-            elif len(self.round_list) == 1:
-                player_in_tournament_to_run = self.swiss_logic_round_one(
-                    tournament_to_run)
-
-                # c.print(tournament_to_run.player_score)
-
-                # continue swiss logic by rank
-
-            elif len(self.round_list) > 1:
-                first_list_of_match = self.swiss_logic_round_two_and_more(
-                    tournament_to_run)
-
-                # add first round list in tournament chosen
-                tournament_to_run.tours.append(
-                    first_list_of_match)
-
-                for tournament in self.started_tournaments:
-                    if tournament_to_run.name in tournament.name:
-                        tournament.tours = tournament_to_run.tours
-
-                c.print(
-                    "[bold red] ***************************\n********************\n[bold red]")
-                c.print(tournament_to_run.tours[-1])
-                c.print(
-                    "[bold red] ***************************\n********************\n[bold red]")
-
-                return tournament_to_run
-
+    def swiss_logic_result(self, player_in_tournament_to_run, tournament_to_run):
         half_list = len(player_in_tournament_to_run)//2
 
         first_part = player_in_tournament_to_run[0:half_list]
@@ -201,6 +146,60 @@ class TournamentController:
                 tournament.tours = tournament_to_run.tours
 
         return tournament_to_run
+
+    def creat_round(self):
+
+        tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(
+            self.tournament_list)
+
+        if tournament_to_run == None:
+            return None
+        else:
+            self.started_tournaments.append(tournament_to_run)
+
+            #################################
+            # DEBUG ZONE FOR SORTING
+            #################################
+
+            if not self.round_list:
+                c.print("[bold red]pas encore de round [bold red]\n")
+
+                player_in_tournament_to_run = sorted(
+                    tournament_to_run.player_score.keys(), key=lambda k: (k.rank)
+                )
+
+            elif len(self.round_list) == 1:
+                player_in_tournament_to_run = self.swiss_logic_sorting_round_one(
+                    tournament_to_run)
+
+                # c.print(tournament_to_run.player_score)
+
+                # continue swiss logic by rank
+
+            elif len(self.round_list) > 1:
+                first_list_of_match = self.swiss_logic_sorting_round_two_and_more(
+                    tournament_to_run)
+
+                # add first round list in tournament chosen
+                tournament_to_run.tours.append(
+                    first_list_of_match)
+
+                for tournament in self.started_tournaments:
+                    if tournament_to_run.name in tournament.name:
+                        tournament.tours = tournament_to_run.tours
+
+                c.print(
+                    "[bold red] ***************************\n********************\n[bold red]")
+                c.print(tournament_to_run.tours[-1])
+                c.print(
+                    "[bold red] ***************************\n********************\n[bold red]")
+
+                return tournament_to_run
+
+        tournament_with_new_round = self.swiss_logic_result(
+            player_in_tournament_to_run, tournament_to_run)
+
+        return tournament_with_new_round
 
     def fill_round_instance_creat_announcement(self):
         tournament_running = self.creat_round()
