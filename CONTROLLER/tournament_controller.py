@@ -46,8 +46,11 @@ class TournamentController:
             return None
         else:
             tournament = player_in_tournament["chosen_tournament"]
+            player = player_in_tournament["chosen_player"]
+
+            tournament.players.append(player)
             # set player_score to 0 as soon as the player has been added in tournament
-            tournament.player_score["chooser_player"] = 0
+            tournament.player_score[player] = 0
             # player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
 
             # c.print(self.tournament_list)

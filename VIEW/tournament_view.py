@@ -128,7 +128,7 @@ class TournamentView:
 
             if len(tournament.players) == len(player_list):
                 c.print(
-                    "[bold red]Il n'y a pas de joueur disponible pour "
+                    "[bold red] Il n'y a pas de joueur disponible pour "
                     "ce tournois.\n[bold red]")
                 return None
 
@@ -153,8 +153,9 @@ class TournamentView:
                         "[bold red]Ce joueur est déjà dans la liste [bold red]")
                     player_choice = c.input("[bold yellow]==> [bold yellow]")
 
-                """tournament_choice.players.append(
-                    player_list[int(player_choice)])"""
+                 # tournament_choice.players.append(player_list[int(player_choice)])
+
+                #  c.print(player_list[int(player_choice)])
 
                 return {
                     "chosen_tournament": tournament,
