@@ -42,7 +42,7 @@ class MenuController:
             },
             "5": {
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
-                "action": self.tournament_controller.add_result,
+                "action": self.tournament_controller.fill_result,
             },
             "6": {
                 "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
