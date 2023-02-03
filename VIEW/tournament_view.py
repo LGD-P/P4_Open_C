@@ -4,6 +4,7 @@ from datetime import datetime
 
 from VIEW.player_view import PlayerView
 
+
 c = Console()
 
 
@@ -177,7 +178,7 @@ class TournamentView:
             c.print("[bold red]Vous devez créer un tournois d'abord...\n[bold red]")
             return None
 
-    def display_players_in_tounrnament_by_alphabetical_order(self, tournament_list):
+    def display_players_in_tournament_by_alphabetical_order(self, tournament_list):
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -218,16 +219,58 @@ class TournamentView:
 
             return sorted_players
 
-    def display_tournament_list(self):
-        return None
+    def display_tournament_list(self, tournament_list):
+        c.print("[bold magenta]Voici la liste des tournois : \n[bold magenta]")
+        index = 0
+        for tournament in tournament_list:
+            index += 1
+            c.print(
+                f"Tournois N°{index}: \n {tournament.__repr__()}")
 
-    def display_tour_in_tournament(self):
-        return None
+    def display_tour_in_tournament(self, tournament_list, round_list):
+        answer = []
+        for tournament in tournament_list:
+            answer.append(tournament_list.index(tournament))
+            question = c.input("[bold yellow]Choisissez le tournois dont vous "
+                               "souhaitez afficher la liste des tours "
+                               "alphabétique\n[bold yellow]"
+                               f"[bold blue] - {tournament_list.index(tournament)} : "
+                               f"{tournament.name}\n[bold blue]")
 
-    def display_match_in_tournament(self):
-        return None
+            while not question.isdigit() or not int(question) in answer:
+                question = c.input("[bold red]Faites un choix dans la liste :[bold red]\n\n"
+                                   f" - {tournament_list.index(tournament)} : {tournament}")
 
-    def display_report(self, tournament_list):
+            tournament_choosen = tournament_list[int(question)]
+
+            round_list_to_display = []
+            for round in round_list:
+
+                if tournament_choosen.name == round.tournament_name:
+
+                    round_list_to_display.append(round)
+
+            return round_list_to_display
+
+    def display_match_in_tournament(self, tournament_list):
+        answer = []
+        for tournament in tournament_list:
+            answer.append(tournament_list.index(tournament))
+            question = c.input("[bold yellow]Choisissez le tournois dont vous "
+                               "souhaitez afficher la liste des matchs "
+                               "alphabétique\n[bold yellow]"
+                               f"[bold blue] - {tournament_list.index(tournament)} : "
+                               f"{tournament.name}\n[bold blue]")
+
+            while not question.isdigit() or not int(question) in answer:
+                question = c.input("[bold red]Faites un choix dans la liste :[bold red]\n\n"
+                                   f" - {tournament_list.index(tournament)} : {tournament}")
+
+            tournament_choosen = tournament_list[int(question)]
+
+            return tournament_choosen.tours
+
+    def display_report(self, tournament_list, round_list):
         question = c.input("[bold yellow]  Que souhaitez-vous consulter ?[bold yellow]\n\n "
                            "[bold blue]- 01. Liste de tous les joueurs d'un tournoi par ordre alphabétique\n "
                            "- 02. Liste de tous les joueurs d'un tournoi par classement\n "
@@ -247,9 +290,9 @@ class TournamentView:
                                "- 05. Liste de tous les matchs d'un tournoi.\n[bold blue]")
 
         if int(question) == 1:
-            players_list = self.display_players_in_tounrnament_by_alphabetical_order(
+            players_list = self.display_players_in_tournament_by_alphabetical_order(
                 tournament_list)
-            c.print("[bold magenta]Voici les joueurs :\n[bold magenta]")
+            c.print("[green3]Voici les joueurs :\n[green3]")
 
             for players in players_list:
                 c.print(players)
@@ -257,7 +300,28 @@ class TournamentView:
         elif int(question) == 2:
             players_list = self.display_players_in_tournament_by_rank(
                 tournament_list)
-            c.print("[bold magenta]Voici les joueurs :\n[bold magenta]")
+            c.print("[green3]Voici les joueurs :\n[green3]")
 
             for players in players_list:
                 c.print(players)
+
+        elif int(question) == 3:
+            self.display_tournament_list(tournament_list)
+
+        elif int(question) == 4:
+            list_of_tours = self.display_tour_in_tournament(
+                tournament_list, round_list)
+
+            c.print("[green3]Voici les rounds du tournois : [green3]\n")
+            for round in list_of_tours:
+                c.print(str(round))
+
+        elif int(question) == 5:
+            list_of_tours = self.display_match_in_tournament(tournament_list)
+            index = 0
+            for tour in list_of_tours:
+                index += 1
+                c.print(f"[green3] Dans le tour N°{index}\n[green3]\n")
+                for match in tour:
+                    c.print(f"{match[0].last_name} {match[0].first_name} a affronté ==>"
+                            f" {match[1].last_name} {match[1].first_name} \n")

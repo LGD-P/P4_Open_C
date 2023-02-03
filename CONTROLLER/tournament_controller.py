@@ -295,4 +295,5 @@ class TournamentController:
         c.print("[red]******************************[red]")"""
 
     def report(self):
-        self.tournament_view.display_report(self.tournament_list)
+        self.tournament_view.display_report(
+            self.tournament_list, self.round_list)
