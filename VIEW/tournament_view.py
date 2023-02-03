@@ -11,6 +11,12 @@ c = Console()
 class TournamentView:
 
     def display_add_tournament_form(self):
+        """
+        This function take user input to fill player settings
+
+        Returns:
+            dict : {'player attributes' : user input}
+        """
         name = c.input(
             "[bold green3]Entrez le nom du Tournois : [bold green3] ")
         date = datetime.now().strftime("%d-%m-%Y")
@@ -52,6 +58,17 @@ class TournamentView:
         }
 
     def display_tournament_to_fill(self, tournament_list):
+        """
+        This function display tournament available 
+        User choose one and can fill it with players
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+
+        Returns:
+            instance: tournament
+        """
+
         if tournament_list:
             index = -1
             for tournament in tournament_list:
@@ -73,9 +90,22 @@ class TournamentView:
             # retourner directement l'instance du tournois
             return tournament_list[int(tournament_choice)]
 
-    def display_add_player_in_tournament_form(self, tournament_list, player_list):
-        self.player_view = PlayerView()
+    def display_add_player_in_tournament_form(self, tournament_list, player_list, player_view):
+        """
+        This function display only players available to fill tournament with
+        returning a dict with tournament and player choosen
 
+        Args:
+            tournament_list (list): list of each tournament instance created
+            player_view (instance): view instance to use player_view method and display player
+            tournament_list (list): list of each player instance created
+
+        Returns:
+            dict: {
+                    "chosen_tournament": tournament instance ,
+                    "chosen_player": player instance
+                }
+        """
         if not tournament_list:
 
             c.print("[bold red]Veuillez créer un tournois pour "
@@ -104,7 +134,7 @@ class TournamentView:
 
             else:
 
-                self.player_view.display_players_to_choose(
+                player_view.display_players_to_choose(
                     player_list, tournament_list)
 
                 player_choice = c.input("[bold yellow]Choisissez votre joueur\n "
@@ -132,6 +162,15 @@ class TournamentView:
                 }
 
     def display_choose_a_tournament_to_launch(self, tournament_list):
+        """
+        This function check the tournament list and propose user to launch one
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+
+        Returns:
+            instance: tournament instance
+        """
         if tournament_list:
             tournament_available = []
 
@@ -179,6 +218,16 @@ class TournamentView:
             return None
 
     def report_display_players_in_tournament_by_alphabetical_order(self, tournament_list):
+        """
+        This function used in report return player list by alphabetical order
+        using player list in tournament
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+
+        Returns:
+            list: list of player in tournament sorted by alphabetical order
+        """
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -200,6 +249,16 @@ class TournamentView:
             return sorted_players
 
     def report_display_players_in_tournament_by_rank(self, tournament_list):
+        """
+        This function used in report return player list by rank, using player list 
+        in tournament
+
+        Args:
+            tournament_list (_type_): list of each tournament instance created
+
+        Returns:
+            list : list of player in tournament sorted by rank
+        """
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -220,6 +279,12 @@ class TournamentView:
             return sorted_players
 
     def report_display_tournament_list(self, tournament_list):
+        """
+        This function used in report return tournament list
+
+        Args:
+            tournament_list (_type_): list of each tournament instance created
+        """
         c.print("[bold magenta]Voici la liste des tournois : \n[bold magenta]")
         index = 0
         for tournament in tournament_list:
@@ -228,6 +293,17 @@ class TournamentView:
                 f"Tournois N°{index}: \n {tournament.__repr__()}")
 
     def report_display_tour_in_tournament(self, tournament_list, round_list):
+        """
+        This function used in report return each round in and tournament selected
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+            round_list (list): list of each round instance created in tournament
+
+        Returns:
+            list: list of each round instance created in tournament
+        """
+
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -253,6 +329,15 @@ class TournamentView:
             return round_list_to_display
 
     def report_display_match_in_tournament(self, tournament_list):
+        """
+        This function used in report return each matchs played between each players in tournament
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+
+        Returns:
+            list: attribute of tournament selected as list of each match in tournament.
+        """
         answer = []
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
@@ -270,6 +355,12 @@ class TournamentView:
             return tournament_choosen.tours
 
     def display_report(self, tournament_list, round_list):
+        """
+        This report function user all precedents functions and displayer user choice
+        Args:
+            tournament_list (list): list of each tournament instance created
+            round_list (list): list of each round instance created in tournament
+        """
         question = c.input("[bold yellow]  Que souhaitez-vous consulter ?[bold yellow]\n\n "
                            "[bold blue]- 01. Liste de tous les joueurs d'un tournoi par ordre alphabétique\n "
                            "- 02. Liste de tous les joueurs d'un tournoi par classement\n "
