@@ -14,6 +14,9 @@ class PlayerController:
         self.players_list_view = PlayerView()
 
     def add_player(self):
+        """This function get dict from players_list_view.display_player_form()
+        and instanced a Player.
+        """
         # récupérer le dictionnaire et ajouter un joueur à player list
         player = self.players_list_view.display_player_form()
 
