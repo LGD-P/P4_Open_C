@@ -62,10 +62,15 @@ class MenuController:
         })
 
     def run_program(self):
+        """This function creat the loop used to run main menu
+        """
         while self.running_program:
             self.menu_view_in_controller.display_menu_and_get_choice()
 
     def generate_data(self):
+        """Use this feature to quickly set up a tournament with a list of players
+        so you can test the functionality of the program
+        """
 
         quick_players_list = [
             Player("DENIS", "Laurent", "11-12-2000", "h", 321),
@@ -96,5 +101,7 @@ class MenuController:
                 tournament.player_score[player] = 0
 
     def quit_menu(self):
+        """Quit menu killing main loop
+        """
         self.menu_view_in_controller.quit_message()
         self.running_program = False
