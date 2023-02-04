@@ -29,6 +29,10 @@ class TournamentController:
         self.started_tournaments = []
 
     def add_tournament(self):
+        """This function get dict from tournament_view
+        display_add_tournament_form() and instance a tournament in
+        tournament_list
+        """
 
         tournament = self.tournament_view.display_add_tournament_form()
 
@@ -38,6 +42,15 @@ class TournamentController:
                                     tournament["description"], tournament["player_score"]))
 
     def add_player_in_tournament(self):
+        """If a tournament is instanced in touranment_list
+        This function get dict from tournament_view,
+        display_add_player_in_tournament_form(), and fill tournament 
+        with selected player
+        The player score is also set on 0 by default
+
+        Returns:
+            None_: return None if there is no tournament in list
+        """
 
         player_in_tournament = self.tournament_view.display_add_player_in_tournament_form(
             self.tournament_list, self.player_list, self.player_view)
@@ -56,6 +69,15 @@ class TournamentController:
             # c.print(self.tournament_list)
 
     def swiss_logic_sorting_round_one(self, tournament_to_run):
+        """This function is the first part of swiss logic.
+        list of players in tournament to run is sorted by rank and returned
+
+        Args:
+            tournament_to_run (instance): tournament choosen by user
+
+        Returns:
+            list: players sorted list
+        """
         c.print("[bold green]Déjà un round[bold green]\n")
         c.print(
             "[bold red] ***************************\n********************\n[bold red]")
@@ -67,6 +89,16 @@ class TournamentController:
         return player_in_tournament_to_run
 
     def swiss_logic_sorting_round_two_and_more(self, tournament_to_run):
+        """This function is the second part of swiss logic,
+        called if a first round already exist. Player are then be sorted by score and 
+        rank. This function try to avoid matchs who have already been played
+
+        Args:
+            tournament_to_run (instance): tournament choosen by user
+
+        Returns:
+            list: players list sorted
+        """
         winner_to_sort = []
         for round in self.round_list[-1].match_list:
             winner_to_sort += round
@@ -129,6 +161,16 @@ class TournamentController:
         return first_list_of_match
 
     def swiss_logic_result(self, player_in_tournament_to_run, tournament_to_run):
+        """This function is the last part of swiss logic. Sorted players list is 
+        cut in half and ina  loop matchs are created.
+
+        Args:
+            player_in_tournament_to_run (list): player sorted
+            tournament_to_run (instance): tournament choosen by yser
+
+        Returns:
+            instance: tournament choosen with tours attribute filled.
+        """
         half_list = len(player_in_tournament_to_run)//2
 
         first_part = player_in_tournament_to_run[0:half_list]
@@ -141,7 +183,7 @@ class TournamentController:
         for element_1, element_2 in zip(first_part, second_part):
             first_list_of_match.append([element_1, element_2])
 
-        # add first round list in tournament chosen
+        # add  round list in tournament chosen
         tournament_to_run.tours.append(
             first_list_of_match)
         # c.print(tournament_to_run.player_score)
@@ -153,7 +195,11 @@ class TournamentController:
         return tournament_to_run
 
     def creat_round(self):
+        """This function used swiss logic to creat a tour
 
+        Returns:
+            instance: tournament instance filled with new tour
+        """
         tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(
             self.tournament_list)
 
@@ -207,6 +253,9 @@ class TournamentController:
         return tournament_with_new_round
 
     def fill_round_instance_creat_announcement(self):
+        """This function use create_round() to creat instance of round 
+        """
+
         tournament_running = self.creat_round()
         if tournament_running == None:
             return None
@@ -242,6 +291,14 @@ class TournamentController:
             c.print("[red]******************************[red]")"""
 
     def add_player_point(self, winner_choice, tournament_choice, match_list):
+        """This function will be user to add tournament.player_score result. 
+
+        Args:
+            winner_choice (int): will be input from 
+                match_view.display_tournament_to_fill_result()
+            tournament_choice (instance): tournament
+            match_list (instance attribute): tounrnament.tours
+        """
 
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
@@ -266,6 +323,10 @@ class TournamentController:
                     tournament_choice.player_score[player] += 1
 
     def fill_result(self):
+        """This function using add_player_point() fill tournament instance.player_score 
+        and 
+        round instance.
+        """
         tournament_choice = self.match_view.display_tournament_to_fill_result(
             self.started_tournaments, self.tournament_list)
 
@@ -288,5 +349,8 @@ class TournamentController:
                         round.ending_hour = datetime.now()
 
     def report(self):
+        """This function using tournament.view.display_report()
+        allow acces to report menu. 
+        """
         self.tournament_view.display_report(
             self.tournament_list, self.round_list)
