@@ -10,6 +10,11 @@ c = Console()
 class PlayerView:
 
     def display_player_form(self):
+        """This function display form to creat a player
+
+        Returns:
+            dict: {"attribute" : user entry}
+        """
 
         last_name = c.input(
             "[bold green3]Entrez le nom du Joueur: [bold green3] ")
@@ -82,6 +87,13 @@ class PlayerView:
         }
 
     def display_players_to_choose(self, player_list, tournament_list):
+        """This function display players availables in global list to fill 
+        tournament with. If a player already is in tournament he will not be display.
+
+        Args:
+            player_list (list): _players list
+            tournament_list (list): tournament list
+        """
         if player_list:
             c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
 

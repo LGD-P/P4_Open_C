@@ -6,6 +6,15 @@ c = Console()
 
 class MatchView:
     def display_tournament_to_fill_result(self, started_tournaments, tournament_list):
+        """This function display tournament available to receive players_score
+
+        Args:
+            started_tournaments (list): list of tournament already launch
+            tournament_list (list): list of tournament regesitered
+
+        Returns:
+            instance: tournament choosen
+        """
 
         if not started_tournaments:
             c.print(
@@ -43,6 +52,15 @@ class MatchView:
             return tournament_choice
 
     def display_player_in_tournament_to_fill_score(self, tournament_choice, match_list):
+        """This function display players matchs and option to give players points
+
+        Args:
+            started_choice (instance): tournament choosen
+            match_list (list): match in tournament choosen
+
+        Returns:
+            int: winner choosen
+        """
 
         # tournament_list[started_tournaments[int(tournament_choice)]]
 
