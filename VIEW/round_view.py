@@ -6,6 +6,14 @@ c = Console()
 class RoundView:
 
     def display_round_view(self, tournament_running):
+        """This funciton display a dashboard with matchs anouncements
+
+        Args:
+            tournament_running (list): match in tournament running
+
+        Returns:
+            None : none if no tournament is running
+        """
 
         if tournament_running == None:
             return None
@@ -36,6 +44,7 @@ class RoundView:
 
             c.print(table)
 
+    """
     def debug_print(self, round_list):
         for round in round_list:
             if round.ending_hour == None:
@@ -52,8 +61,4 @@ class RoundView:
                         f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
                         f"{round.number_of_round}\n"
                         f"{round.match_list}\n")
-
-    # Prévoir l'affichage des points dans le tableau avec un self.tournament pour
-    # le player score
-    # f"scrore : {tournament.player_score[f'{first_round_list[index][0].last_name}']}
-    # {tournament.player_score[f'{first_round_list[index][0].first_name}']} "
+    """
