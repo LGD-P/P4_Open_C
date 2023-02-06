@@ -37,3 +37,9 @@ class Tournament:
             f"- Mode de contrôle du temps: {self.time_control}\n"
             f"- Nombre de round: {self.number_of_rounds}\n"
             f"- Score des joueurs :{self.player_score}\n")
+
+    def serialize_player_score(self, player):
+        serialize_score = {}
+        for player in self.players:
+            serialize_score[f"{player.last_name}, {player.first_name}"] = 0
+        return serialize_score

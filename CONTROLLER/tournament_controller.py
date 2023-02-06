@@ -32,8 +32,8 @@ class TournamentController:
         self.match_view = MatchView()
         self.match_list = match_list
         self.started_tournaments = []
-        self.serialized__list_of_players = []
-        self.serialized__list_of_score = []
+        self.serialized_list_of_players = []
+        self.serialized_list_of_score = []
 
     def add_tournament(self):
         """This function get dict from tournament_view
@@ -78,26 +78,26 @@ class TournamentController:
             tournament.players.append(player)
             # set player_score to 0 as soon as the player has been added in tournament
             tournament.player_score[player] = 0
-            print(tournament.player_score)
+
             # player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
 
             # c.print(self.tournament_list)
             #tournament_to_update = tournament.name
 
-            serialized_player = player.serialized_player(player)
-            self.serialized__list_of_players.append(serialized_player)
+            serialized_player = player.serialized_player()
 
-            self.serialized__list_of_score.append({
+            self.serialized_list_of_players.append(serialized_player)
 
-                f"{player.last_name} {player.first_name}": 0
-            }
-            )
+            self.serialized_list_of_score = tournament.serialize_player_score(
+                player)
 
-            tournament_tables.update(
-                {"players":  [self.serialized__list_of_players]}, query.name == tournament.name)
+            c.print(self.serialized_list_of_score)
 
             tournament_tables.update(
-                {"player_score":  self.serialized__list_of_score}, query.name == tournament.name)
+                {"players":  self.serialized_list_of_players}, query.name == tournament.name)
+
+            tournament_tables.update(
+                {"player_score":  self.serialized_list_of_score}, query.name == tournament.name)
 
     def swiss_logic_sorting_round_one(self, tournament_to_run):
         """This function is the first part of swiss logic.
