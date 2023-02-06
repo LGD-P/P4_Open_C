@@ -1,7 +1,9 @@
 from rich.console import Console
 from datetime import datetime
 from operator import itemgetter
+from tinydb import TinyDB, Query
 
+from CONTROLLER.player_controller import db
 
 from VIEW.tournament_view import TournamentView
 from VIEW.player_view import PlayerView
@@ -10,8 +12,11 @@ from VIEW.match_view import MatchView
 
 from MODEL.tournament_model import Tournament
 from MODEL.round_model import Round
-from MODEL.match_model import Match
 
+
+tournament_tables = db.table("TOURNAMENT")
+tournament_tables.truncate()
+query = Query()
 
 c = Console()
 
@@ -27,19 +32,27 @@ class TournamentController:
         self.match_view = MatchView()
         self.match_list = match_list
         self.started_tournaments = []
+        self.serialized__list_of_players = []
+        self.serialized__list_of_score = []
 
     def add_tournament(self):
         """This function get dict from tournament_view
         display_add_tournament_form() and instance a tournament in
-        tournament_list
+        tournament_list; add data in database
         """
 
-        tournament = self.tournament_view.display_add_tournament_form()
+        serialized_tournament = self.tournament_view.display_add_tournament_form()
 
-        self.tournament_list.append(Tournament(tournament["name"], tournament["place"],
-                                    tournament["date"], tournament["tours"],
-                                    tournament["players"], tournament["time_control"],
-                                    tournament["description"], tournament["player_score"]))
+        self.tournament_list.append(Tournament(serialized_tournament["name"],
+                                               serialized_tournament["place"],
+                                               serialized_tournament["date"],
+                                               serialized_tournament["tours"],
+                                               serialized_tournament["players"],
+                                               serialized_tournament["time_control"],
+                                               serialized_tournament["description"],
+                                               serialized_tournament["player_score"]))
+
+        tournament_tables.insert(serialized_tournament)
 
     def add_player_in_tournament(self):
         """If a tournament is instanced in touranment_list
@@ -47,6 +60,7 @@ class TournamentController:
         display_add_player_in_tournament_form(), and fill tournament 
         with selected player
         The player score is also set on 0 by default
+        Add data in database
 
         Returns:
             None_: return None if there is no tournament in list
@@ -64,9 +78,26 @@ class TournamentController:
             tournament.players.append(player)
             # set player_score to 0 as soon as the player has been added in tournament
             tournament.player_score[player] = 0
+            print(tournament.player_score)
             # player_in_tournament["chosen_tournament"].player_score[player_in_tournament] = 0
 
             # c.print(self.tournament_list)
+            #tournament_to_update = tournament.name
+
+            serialized_player = player.serialized_player(player)
+            self.serialized__list_of_players.append(serialized_player)
+
+            self.serialized__list_of_score.append({
+
+                f"{player.last_name} {player.first_name}": 0
+            }
+            )
+
+            tournament_tables.update(
+                {"players":  [self.serialized__list_of_players]}, query.name == tournament.name)
+
+            tournament_tables.update(
+                {"player_score":  self.serialized__list_of_score}, query.name == tournament.name)
 
     def swiss_logic_sorting_round_one(self, tournament_to_run):
         """This function is the first part of swiss logic.

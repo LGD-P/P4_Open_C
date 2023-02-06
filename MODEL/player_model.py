@@ -26,3 +26,12 @@ class Player:
                 f" Date de naissance : {self.birth} "
                 f" Sexe : {self.sex} "
                 f" rank : {self.rank} ")
+
+    def serialized_player(self, player):
+        return {
+            "last_name": player.last_name,
+            "first_name": player.first_name,
+            "birth": player.birth,
+            "sex": player.sex,
+            "sank": player.rank
+        }
