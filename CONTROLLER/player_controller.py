@@ -25,8 +25,12 @@ class PlayerController:
         # récupérer le dictionnaire et ajouter un joueur à player list
         serialized_player = self.players_list_view.display_player_form()
 
-        player_instance = Player(serialized_player["last_name"], serialized_player["first_name"],
-                                 serialized_player["birth"], serialized_player["sex"], serialized_player["rank"])
+        player_instance = Player(
+            serialized_player["last_name"],
+            serialized_player["first_name"],
+            serialized_player["birth"],
+            serialized_player["sex"],
+            serialized_player["rank"])
 
         self.player_list.append(player_instance)
 

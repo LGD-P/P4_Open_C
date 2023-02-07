@@ -1,6 +1,6 @@
 from rich.console import Console
 from datetime import datetime
-import sys
+
 
 from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
@@ -25,52 +25,57 @@ class MenuController:
             [], self.player_controller.player_list, [], self.match_model)
         self.menu_view_in_controller = MenuView({
             "1": {
-                "label": "[bold blue]- 1. Créer des tournois :pencil: [bold blue]",
+                "label": "[bold blue]- 1. Créer des tournois :pencil: "
+                "[bold blue]",
                 "action": self.tournament_controller.add_tournament,
             },
             "2": {
-                "label": "[bold blue]- 2. Créer des joueurs :pencil: [bold blue]",
+                "label": "[bold blue]- 2. Créer des joueurs :pencil: "
+                "[bold blue]",
                 "action": self.player_controller.add_player,
             },
             "3": {
-                "label": "[bold blue]- 3. Ajouter des joueurs à un tournois :pencil:[bold blue]",
+                "label": "[bold blue]- 3. Ajouter des joueurs à un tournois "
+                ":pencil:[bold blue]",
                 "action": self.tournament_controller.add_player_in_tournament,
             },
             "4": {
                 "label": "[bold blue]- 4. Lancer un Round :watch:[bold blue]",
-                "action": self.tournament_controller.fill_round_instance_creat_announcement
+                "action": self.tournament_controller.
+                fill_round_instance_creat_announcement
             },
             "5": {
-                "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
+                "label": "[bold blue]- 5. Ajouter des résultats :trophy: "
+                "[bold blue]",
                 "action": self.tournament_controller.fill_result,
             },
             "6": {
-                "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
+                "label": "[bold blue]- 6. Montrer le rapport :bar_chart: "
+                "[bold blue]",
                 "action": self.tournament_controller.report,
             },
             "7": {
-                "label": "[bold blue]- 7. Quitter :raising_hand: \n [bold blue]",
+                "label": "[bold blue]- 7. Quitter :raising_hand: \n "
+                "[bold blue]",
                 "action": self.quit_menu,
             },
 
             "8": {
-                "label": "[bold blue]- 8. Ajout rapide de tournois et joueurs \n"
-                "[bold blue]",
+                "label": "[bold blue]- 8. Ajout rapide de tournois et joueurs"
+                "\n[bold blue]",
                 "action": self.generate_data
             }
 
         })
 
     def run_program(self):
-        """This function creat the loop used to run main menu
-        """
+        """This function creat the loop used to run main menu"""
         while self.running_program:
             self.menu_view_in_controller.display_menu_and_get_choice()
 
     def generate_data(self):
-        """Use this feature to quickly set up a tournament with a list of players
-        so you can test the functionality of the program
-        """
+        """Use this feature to quickly set up a tournament with a list of
+        players so you can test the functionality of the program"""
 
         quick_players_list = [
             Player("DENIS", "Laurent", "11-12-2000", "h", 321),
