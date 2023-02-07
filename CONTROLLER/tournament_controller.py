@@ -372,7 +372,7 @@ class TournamentController:
         """This function will be user to add tournament.player_score result.
 
         Args:
-        winner_choice (int): will be input from
+            winner_choice (int): will be input from
                 match_view.display_tournament_to_fill_result()
             tournament_choice (instance): tournament
             match_list (instance attribute): tounrnament.tours
@@ -440,7 +440,7 @@ class TournamentController:
         for tournament in self.started_tournaments:
             for round in self.round_list:
                 if tournament.name == round.tournament_name:
-                    if round.ending_hour is None:
+                    if not round.ending_hour:
                         round.ending_hour = datetime.now()
 
     def report(self):

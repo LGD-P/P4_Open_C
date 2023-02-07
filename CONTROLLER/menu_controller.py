@@ -1,10 +1,10 @@
 from rich.console import Console
 from datetime import datetime
-
+from tinydb import TinyDB, Query
 
 from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
-from MODEL.match_model import Match
+
 
 from VIEW.menu_view import MenuView
 
@@ -20,9 +20,9 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
-        self.match_model = Match()
+        # self.match_model = Match()
         self.tournament_controller = TournamentController(
-            [], self.player_controller.player_list, [], self.match_model)
+            [], self.player_controller.player_list, [], [])
         self.menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: "
@@ -77,6 +77,13 @@ class MenuController:
         """Use this feature to quickly set up a tournament with a list of
         players so you can test the functionality of the program"""
 
+        db = TinyDB('db.json', indent=4, encoding='utf-8')
+        players_tables = db.table("PLAYERS")
+        players_tables.truncate()
+        tournament_tables = db.table("TOURNAMENT")
+        tournament_tables.truncate()
+        query = Query()
+
         quick_players_list = [
             Player("DENIS", "Laurent", "11-12-2000", "h", 321),
             Player("LAURENT", "Denis", "11-10-2005", "h", 123),
@@ -104,6 +111,47 @@ class MenuController:
         for tournament in quick_tounarment:
             for player in tournament.players:
                 tournament.player_score[player] = 0
+
+        serialize_tournament = {}
+
+        for tournament in quick_tounarment:
+            serialize_tournament["name"] = tournament.name,
+            serialize_tournament["date"] = tournament.date,
+            serialize_tournament["place"] = tournament.place,
+            serialize_tournament["tours"] = tournament.tours,
+            serialize_tournament["time_control"] = tournament.time_control,
+            serialize_tournament["description"] = tournament.description,
+
+            tournament_tables.insert(serialize_tournament)
+
+        serialize_player = {}
+
+        serialize_score = {}
+        tournament = quick_tounarment[0].name
+
+        for player in quick_players_list:
+
+            serialize_player["last_name"] = player.last_name,
+            serialize_player["first_name"] = player.first_name,
+            serialize_player["birth"] = player.birth,
+            serialize_player["sex"] = player.sex,
+            serialize_player["rank"] = player.rank
+
+            players_tables.insert(serialize_player)
+
+            serialize_score[f"{player.last_name}, {player.first_name}"] = 0
+
+        tournament_tables.update(
+            {
+                "player":  serialize_player,
+
+            }, query.name == tournament)
+
+        tournament_tables.update(
+            {
+                "player_score":  serialize_player,
+
+            }, query.name == tournament)
 
     def quit_menu(self):
         """Quit menu killing main loop
