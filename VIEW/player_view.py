@@ -1,8 +1,6 @@
 from rich.console import Console
 from datetime import datetime
 
-from MODEL.tournament_model import Tournament
-from MODEL.player_model import Player
 
 c = Console()
 
@@ -87,19 +85,23 @@ class PlayerView:
         }
 
     def display_players_to_choose(self, player_list, tournament_list):
-        """This function display players availables in global list to fill 
-        tournament with. If a player already is in tournament he will not be display.
+        """This function display players availables in global list to fill
+        tournament with. If a player already is in tournament he will not
+        be display.
 
         Args:
             player_list (list): _players list
             tournament_list (list): tournament list
         """
         if player_list:
-            c.print("[bold yellow] Liste des joueurs disponibles:\n[bold yellow]")
+            c.print("[bold yellow] Liste des joueurs disponibles:\n"
+                    "[bold yellow]")
 
             for player in player_list:
                 for tournament in tournament_list:
-                    if not player in tournament.players:
+                    if player not in tournament.players:
                         c.print(
-                            f"- {player_list.index(player)} [bold green] {player.last_name}"
-                            f" {player.first_name}, rang :  {player.rank}[bold green]")
+                            f"- {player_list.index(player)} [bold green] "
+                            f"{player.last_name}"
+                            f" {player.first_name}, rang :  "
+                            f"{player.rank}[bold green]")

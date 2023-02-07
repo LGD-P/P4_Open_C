@@ -9,14 +9,14 @@ class MenuView:
         self.menu_view = menu_view
 
     def display_menu_and_get_choice(self):
-        """This function displays the dict view for menu_controller, 
+        """This function displays the dict view for menu_controller,
         and allows the execution of each menu function
 
         Returns:
             function: function choosen by user choice
         """
-        c.print("\n[bold yellow] :clipboard: CHESS MENU Veuillez faire un choix "
-                "dans le menu: :clipboard: [bold yellow]\n")
+        c.print("\n[bold yellow] :clipboard: CHESS MENU Veuillez faire un "
+                "choix dans le menu: :clipboard: [bold yellow]\n")
         for element in self.menu_view:
             c.print(self.menu_view[element]["label"])
         menu_choice = c.input("[bold red]==> [bold red]")

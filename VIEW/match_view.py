@@ -5,7 +5,8 @@ c = Console()
 
 
 class MatchView:
-    def display_tournament_to_fill_result(self, started_tournaments, tournament_list):
+    def display_tournament_to_fill_result(self, started_tournaments,
+                                          tournament_list):
         """This function display tournament available to receive players_score
 
         Args:
@@ -32,12 +33,16 @@ class MatchView:
 
             c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
                     "des résultats ?[bold yellow]\n\n"
-                    f"- {started_tournaments.index(tournament)} : [bold green]{tournament.name}[bold green]\n")
+                    f"- {started_tournaments.index(tournament)} : "
+                    f"[bold green]{tournament.name}[bold green]\n")
+
             tournament_choice = c.input("==> ")
 
-            while not tournament_choice.isdigit() or not int(tournament_choice) in choice_list:
+            while not tournament_choice.isdigit() \
+                    or not int(tournament_choice) in choice_list:
                 c.print(
-                    '[bold red] Merci de faire un choix dans la liste[bold red]')
+                    '[bold red] Merci de faire un choix dans "\
+                        "la liste[bold red]')
                 tournament_choice = c.input("==> ")
 
             # c.print(started_tournaments[int(tournament_choice)])
@@ -51,8 +56,10 @@ class MatchView:
 
             return tournament_choice
 
-    def display_player_in_tournament_to_fill_score(self, tournament_choice, match_list):
-        """This function display players matchs and option to give players points
+    def display_player_in_tournament_to_fill_score(self, tournament_choice,
+                                                   match_list):
+        """This function display players matchs and option to give
+        players points
 
         Args:
             started_choice (instance): tournament choosen
