@@ -25,3 +25,12 @@ class Round:
                f"{self.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
                f"{self.number_of_round}\n"\
                f"{self.match_list}\n"
+
+        return {
+            "tournament_name": self.tournament_name,
+            "name": self.name,
+            "starting_hour": self.starting_hour,
+            "ending_hour": self.ending_hour,
+            "number_of_rounf": self.number_of_round,
+            "match_list": match_list_serialized
+        }

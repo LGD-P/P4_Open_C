@@ -34,6 +34,7 @@ class TournamentController:
         self.started_tournaments = []
         self.serialized_list_of_players = []
         self.serialized_list_of_score = []
+        self.serialized_list_of_tours = []
 
     def add_tournament(self):
         """This function get dict from tournament_view
@@ -214,6 +215,10 @@ class TournamentController:
         for element_1, element_2 in zip(first_part, second_part):
             first_list_of_match.append([element_1, element_2])
 
+            self.serialized_list_of_tours.append([
+                f" {element_1.last_name} {element_1.first_name} == CONTRE ==>"
+                f" {element_2.last_name} {element_2.first_name}"])
+
         # add  round list in tournament chosen
         tournament_to_run.tours.append(
             first_list_of_match)
@@ -304,6 +309,11 @@ class TournamentController:
                           starting_hour,
                           None, 1, tournament_running.name)
                 )
+
+                # self.serialized_list_of_tours = tournament_running.serialize_tours()
+
+                tournament_tables.update(
+                    {"tours":  self.serialized_list_of_tours}, query.name == tournament_running.name)
             else:
                 # if there is a round(s) in list
                 # check if there is ending hour else add new round  as 2nd  3rd etc..
@@ -313,6 +323,11 @@ class TournamentController:
                     Round(tournament_running.tours[match_concerned - 1], f"Round {len(self.round_list) + 1}",
                           starting_hour,
                           None, 1, tournament_running.name))
+
+                # self.serialized_list_of_tours = tournament_running.serialize_tours()
+
+                tournament_tables.update(
+                    {"tours":  self.serialized_list_of_tours}, query.name == tournament_running.name)
 
             # print de débug
             """c.print("[green]****************************[green]")
@@ -334,24 +349,33 @@ class TournamentController:
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0]:
-
                     tournament_choice.player_score[player] += 0.5
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] = 0.5
+
                 elif player == match_list[1]:
                     tournament_choice.player_score[player] += 0.5
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] += 0.5
 
         elif int(winner_choice) == 0:
             for player in tournament_choice.player_score:
                 if player == match_list[0]:
                     tournament_choice.player_score[player] += 1
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] = 1
                 elif player == match_list[1]:
                     tournament_choice.player_score[player] += 0
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] = 0
 
         elif int(winner_choice) == 1:
             for player in tournament_choice.player_score:
                 if player == match_list[0]:
                     tournament_choice.player_score[player] += 0
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] += 0
                 elif player == match_list[1]:
                     tournament_choice.player_score[player] += 1
+                    self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] += 1
+
+        tournament_tables.update(
+            {"player_score":  self.serialized_list_of_score}, query.name == tournament_choice.name)
 
     def fill_result(self):
         """This function using add_player_point() fill tournament instance.player_score 
