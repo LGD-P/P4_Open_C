@@ -1,8 +1,9 @@
 
 
 class Tournament:
-    def __init__(self, name: str, date: str, place: str, tours: list, players: list,
-                 time_control: str, description: str, player_score: dict, number_of_rounds: int = 4):
+    def __init__(self, name: str, date: str, place: str, tours: list,
+                 players: list, time_control: str, description: str,
+                 player_score: dict, number_of_rounds: int = 4):
         self.name = name
         self.date = date
         self.place = place

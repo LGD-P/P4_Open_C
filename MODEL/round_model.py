@@ -14,8 +14,10 @@ class Round:
 
     def __str__(self):
         return f"- {self.name}\n"\
-            f"- Début de round : {self.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
-            f"- Fin de round : {self.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
+            f"- Début de round : "\
+            f"{self.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
+            f"- Fin de round : "\
+            f"{self.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
             f"- Liste des match: {self.match_list}\n"
 
     def __repr__(self):
@@ -26,11 +28,13 @@ class Round:
                f"{self.number_of_round}\n"\
                f"{self.match_list}\n"
 
-        return {
-            "tournament_name": self.tournament_name,
-            "name": self.name,
-            "starting_hour": self.starting_hour,
-            "ending_hour": self.ending_hour,
-            "number_of_rounf": self.number_of_round,
-            "match_list": match_list_serialized
-        }
+    """
+    return {
+        "tournament_name": self.tournament_name,
+        "name": self.name,
+        "starting_hour": self.starting_hour,
+        "ending_hour": self.ending_hour,
+        "number_of_rounf": self.number_of_round,
+        "match_list": match_list_serialized
+    }
+    """
