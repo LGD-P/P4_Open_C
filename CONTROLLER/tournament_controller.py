@@ -212,16 +212,19 @@ class TournamentController:
         ###################################################
 
         first_list_of_match = []
+        serialized_match = []
         for element_1, element_2 in zip(first_part, second_part):
             first_list_of_match.append([element_1, element_2])
 
-            self.serialized_list_of_tours.append([
+            serialized_match.append([
                 f" {element_1.last_name} {element_1.first_name} == CONTRE ==>"
                 f" {element_2.last_name} {element_2.first_name}"])
 
         # add  round list in tournament chosen
         tournament_to_run.tours.append(
             first_list_of_match)
+
+        self.serialized_list_of_tours.append(serialized_match)
         # c.print(tournament_to_run.player_score)
 
         for tournament in self.started_tournaments:
