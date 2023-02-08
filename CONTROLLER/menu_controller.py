@@ -1,9 +1,4 @@
 from rich.console import Console
-from datetime import datetime
-from tinydb import TinyDB, Query
-
-from MODEL.tournament_model import Tournament
-from MODEL.player_model import Player
 
 
 from VIEW.menu_view import MenuView
@@ -20,7 +15,7 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
-        # self.match_model = Match()
+
         self.tournament_controller = TournamentController(
             [], self.player_controller.player_list, [], [])
         self.menu_view_in_controller = MenuView({

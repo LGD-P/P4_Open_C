@@ -235,20 +235,17 @@ class TournamentController:
         ###################################################
 
         first_list_of_match = []
-        serialized_match = []
+
         for element_1, element_2 in zip(first_part, second_part):
             first_list_of_match.append([element_1, element_2])
 
-            serialized_match.append([
+        """        serialized_match.append([
                 f" {element_1.last_name} {element_1.first_name} == CONTRE ==>"
-                f" {element_2.last_name} {element_2.first_name}"])
+                f" {element_2.last_name} {element_2.first_name}"])"""
 
         # add  round list in tournament chosen
         tournament_to_run.tours.append(
             first_list_of_match)
-
-        self.serialized_list_of_tours.append(serialized_match)
-        # c.print(tournament_to_run.player_score)
 
         for tournament in self.started_tournaments:
             if tournament_to_run.name in tournament.name:
@@ -303,11 +300,12 @@ class TournamentController:
                     if tournament_to_run.name in tournament.name:
                         tournament.tours = tournament_to_run.tours
 
-                c.print(
+                """    c.print(
                     "[bold red] *****************\n************\n[bold red]")
                 c.print(tournament_to_run.tours[-1])
                 c.print(
                     "[bold red] ******************\n************\n[bold red]")
+                """
 
                 return tournament_to_run
 
@@ -324,8 +322,23 @@ class TournamentController:
         if not tournament_running:
             return None
         else:
+
             self.round_view.display_round_view(
                 tournament_running)
+
+            serialized_match = []
+            for match in tournament_running.tours[-1]:
+                serialized_match.append([
+                    f" {match[0].last_name} {match[0].first_name}"
+                    " == CONTRE ==>"
+                    f" {match[1].last_name} {match[1].first_name}"])
+
+            self.serialized_list_of_tours.append(serialized_match)
+            # c.print(tournament_to_run.player_score)
+
+            tournament_tables.update(
+                {"tours":  self.serialized_list_of_tours},
+                query.name == tournament_running.name)
 
             # fill round instance with match
             # Check if there is a round else creat round
@@ -338,12 +351,9 @@ class TournamentController:
                           None, 1, tournament_running.name)
                 )
 
-                # self.serialized_list_of_tours = tournament_running \
-                # .serialize_tours()
-
-                tournament_tables.update(
+                """tournament_tables.update(
                     {"tours":  self.serialized_list_of_tours},
-                    query.name == tournament_running.name)
+                    query.name == tournament_running.name)"""
             else:
                 # if there is a round(s) in list
                 # check if there is ending hour else add new round
@@ -358,10 +368,10 @@ class TournamentController:
 
                 # self.serialized_list_of_tours = tournament_running \
                 # .serialize_tours()
-
+                """
                 tournament_tables.update(
                     {"tours":  self.serialized_list_of_tours},
-                    query.name == tournament_running.name)
+                    query.name == tournament_running.name)"""
 
             # print de débug
             """c.print("[green]****************************[green]")
@@ -380,7 +390,6 @@ class TournamentController:
             match_list (instance attribute): tounrnament.tours
         """
 
-        print(self.serialized_list_of_score)
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0]:
