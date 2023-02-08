@@ -5,6 +5,7 @@ from tinydb import Query
 
 from CONTROLLER.player_controller import db
 
+
 from VIEW.tournament_view import TournamentView
 from VIEW.player_view import PlayerView
 from VIEW.round_view import RoundView
@@ -33,7 +34,7 @@ class TournamentController:
         self.match_list = match_list
         self.started_tournaments = []
         self.serialized_list_of_players = []
-        self.serialized_list_of_score = []
+        self.serialized_list_of_score = {}
         self.serialized_list_of_tours = []
 
     def add_tournament(self):

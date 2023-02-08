@@ -112,34 +112,38 @@ class MenuController:
             for player in tournament.players:
                 tournament.player_score[player] = 0
 
-        serialize_tournament = {}
+        serialize_tournament = []
 
         for tournament in quick_tounarment:
-            serialize_tournament["name"] = tournament.name,
-            serialize_tournament["date"] = tournament.date,
-            serialize_tournament["place"] = tournament.place,
-            serialize_tournament["tours"] = tournament.tours,
-            serialize_tournament["time_control"] = tournament.time_control,
-            serialize_tournament["description"] = tournament.description,
+            serialize_tournament.append({
+                "name": tournament.name,
+                "date": tournament.date,
+                "place": tournament.place,
+                "tours": tournament.tours,
+                "time_control": tournament.time_control,
+                "description": tournament.description,
+            })
+        for tournament in serialize_tournament:
+            tournament_tables.insert(tournament)
 
-            tournament_tables.insert(serialize_tournament)
+        serialize_player = []
 
-        serialize_player = {}
-
-        serialize_score = {}
+        quick_serialize_score = {}
         tournament = quick_tounarment[0].name
 
         for player in quick_players_list:
+            serialize_player.append(
+                {"last_name": player.last_name,
+                 "first_name": player.first_name,
+                 "birth": player.birth,
+                 "sex": player.sex,
+                 "rank": player.rank
+                 })
 
-            serialize_player["last_name"] = player.last_name,
-            serialize_player["first_name"] = player.first_name,
-            serialize_player["birth"] = player.birth,
-            serialize_player["sex"] = player.sex,
-            serialize_player["rank"] = player.rank
+            quick_serialize_score[f"{player.last_name}, {player.first_name}"] = 0
 
-            players_tables.insert(serialize_player)
-
-            serialize_score[f"{player.last_name}, {player.first_name}"] = 0
+        for player in serialize_player:
+            players_tables.insert(player)
 
         tournament_tables.update(
             {
@@ -149,7 +153,7 @@ class MenuController:
 
         tournament_tables.update(
             {
-                "player_score":  serialize_player,
+                "player_score":  quick_serialize_score,
 
             }, query.name == tournament)
 
