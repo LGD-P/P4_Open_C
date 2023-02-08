@@ -13,6 +13,7 @@ from VIEW.match_view import MatchView
 
 from MODEL.tournament_model import Tournament
 from MODEL.round_model import Round
+from MODEL.player_model import Player
 
 
 tournament_tables = db.table("TOURNAMENT")
@@ -33,7 +34,7 @@ class TournamentController:
         self.match_view = MatchView()
         self.match_list = match_list
         self.started_tournaments = []
-        self.serialized_list_of_players = []
+        self.serialized_list_of_players = {}
         self.serialized_list_of_score = {}
         self.serialized_list_of_tours = []
 
@@ -379,6 +380,7 @@ class TournamentController:
             match_list (instance attribute): tounrnament.tours
         """
 
+        print(self.serialized_list_of_score)
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0]:
@@ -450,3 +452,83 @@ class TournamentController:
         """
         self.tournament_view.display_report(
             self.tournament_list, self.round_list)
+
+    def generate_data(self):
+        """Use this feature to quickly set up a tournament with a list of
+        players so you can test the functionality of the program"""
+
+        players_tables = db.table("PLAYERS")
+        players_tables.truncate()
+
+        quick_players_list = [
+            Player("DENIS", "Laurent", "11-12-2000", "h", 321),
+            Player("LAURENT", "Denis", "11-10-2005", "h", 123),
+            Player("MOINE", "Alice", "10-10-1990", "f", 100),
+            Player("VAULT", "Lise", "01-02-1980", "f", 10),
+            Player("CREPIN", "Maurice", "12-07-1950", "h", 40),
+            Player("TIAGO", "Daniela", "05-06-1977", "f", 35),
+            Player("EDON", "Gabrielle", "09-03-1985", "f", 25),
+            Player("PATTON", "Gabriel", "09-03-1970", "h", 20)]
+
+        for players in quick_players_list:
+            self.player_list.append(players
+                                    )
+
+        quick_tounarment = [
+            Tournament("PARIS Chess-Event", "Paris",
+                       datetime.now().strftime("%d-%m-%Y"),
+                       [], quick_players_list[0:9], "Blitz",
+                       "Description", {}, 4)
+        ]
+
+        for tournnaments in quick_tounarment:
+            self.tournament_list.append(tournnaments)
+
+        for tournament in quick_tounarment:
+            for player in tournament.players:
+                tournament.player_score[player] = 0
+
+        serialize_tournament = []
+
+        for tournament in quick_tounarment:
+            serialize_tournament.append({
+                "name": tournament.name,
+                "date": tournament.date,
+                "place": tournament.place,
+                "tours": tournament.tours,
+                "time_control": tournament.time_control,
+                "description": tournament.description,
+            })
+        for tournament in serialize_tournament:
+            tournament_tables.insert(tournament)
+
+        serialize_player = []
+
+        self.serialized_list_of_score = {}
+        tournament = quick_tounarment[0].name
+
+        for player in quick_players_list:
+            serialize_player.append(
+                {"last_name": player.last_name,
+                 "first_name": player.first_name,
+                 "birth": player.birth,
+                 "sex": player.sex,
+                 "rank": player.rank
+                 })
+
+            self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] = 0
+
+        for player in serialize_player:
+            players_tables.insert(player)
+
+        tournament_tables.update(
+            {
+                "player":  serialize_player,
+
+            }, query.name == tournament)
+
+        tournament_tables.update(
+            {
+                "player_score":  self.serialized_list_of_score,
+
+            }, query.name == tournament)

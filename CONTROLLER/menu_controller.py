@@ -63,7 +63,7 @@ class MenuController:
             "8": {
                 "label": "[bold blue]- 8. Ajout rapide de tournois et joueurs"
                 "\n[bold blue]",
-                "action": self.generate_data
+                "action": self.tournament_controller.generate_data
             }
 
         })
@@ -72,90 +72,6 @@ class MenuController:
         """This function creat the loop used to run main menu"""
         while self.running_program:
             self.menu_view_in_controller.display_menu_and_get_choice()
-
-    def generate_data(self):
-        """Use this feature to quickly set up a tournament with a list of
-        players so you can test the functionality of the program"""
-
-        db = TinyDB('db.json', indent=4, encoding='utf-8')
-        players_tables = db.table("PLAYERS")
-        players_tables.truncate()
-        tournament_tables = db.table("TOURNAMENT")
-        tournament_tables.truncate()
-        query = Query()
-
-        quick_players_list = [
-            Player("DENIS", "Laurent", "11-12-2000", "h", 321),
-            Player("LAURENT", "Denis", "11-10-2005", "h", 123),
-            Player("MOINE", "Alice", "10-10-1990", "f", 100),
-            Player("VAULT", "Lise", "01-02-1980", "f", 10),
-            Player("CREPIN", "Maurice", "12-07-1950", "h", 40),
-            Player("TIAGO", "Daniela", "05-06-1977", "f", 35),
-            Player("EDON", "Gabrielle", "09-03-1985", "f", 25),
-            Player("PATTON", "Gabriel", "09-03-1970", "h", 20)]
-
-        for players in quick_players_list:
-            self.player_controller.player_list.append(players
-                                                      )
-
-        quick_tounarment = [
-            Tournament("PARIS Chess-Event", "Paris",
-                       datetime.now().strftime("%d-%m-%Y"),
-                       [], quick_players_list[0:9], "Blitz",
-                       "Description", {}, 4)
-        ]
-
-        for tournnaments in quick_tounarment:
-            self.tournament_controller.tournament_list.append(tournnaments)
-
-        for tournament in quick_tounarment:
-            for player in tournament.players:
-                tournament.player_score[player] = 0
-
-        serialize_tournament = []
-
-        for tournament in quick_tounarment:
-            serialize_tournament.append({
-                "name": tournament.name,
-                "date": tournament.date,
-                "place": tournament.place,
-                "tours": tournament.tours,
-                "time_control": tournament.time_control,
-                "description": tournament.description,
-            })
-        for tournament in serialize_tournament:
-            tournament_tables.insert(tournament)
-
-        serialize_player = []
-
-        quick_serialize_score = {}
-        tournament = quick_tounarment[0].name
-
-        for player in quick_players_list:
-            serialize_player.append(
-                {"last_name": player.last_name,
-                 "first_name": player.first_name,
-                 "birth": player.birth,
-                 "sex": player.sex,
-                 "rank": player.rank
-                 })
-
-            quick_serialize_score[f"{player.last_name}, {player.first_name}"] = 0
-
-        for player in serialize_player:
-            players_tables.insert(player)
-
-        tournament_tables.update(
-            {
-                "player":  serialize_player,
-
-            }, query.name == tournament)
-
-        tournament_tables.update(
-            {
-                "player_score":  quick_serialize_score,
-
-            }, query.name == tournament)
 
     def quit_menu(self):
         """Quit menu killing main loop
