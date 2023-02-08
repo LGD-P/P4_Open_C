@@ -525,7 +525,8 @@ class TournamentController:
                  "rank": player.rank
                  })
 
-            self.serialized_list_of_score[f"{player.last_name}, {player.first_name}"] = 0
+            self.serialized_list_of_score[
+                f"{player.last_name}, {player.first_name}"] = 0
 
         for player in serialize_player:
             players_tables.insert(player)
