@@ -1,5 +1,9 @@
 from rich.console import Console
+from rich.table import Table
 from datetime import datetime
+
+
+from VIEW.round_view import RoundView
 
 
 c = Console()
@@ -231,6 +235,21 @@ class TournamentView:
                     "\n[bold red]")
             return None
 
+    def display_winner(self, player: list, player_score):
+
+        table = Table(title="",  style="red")
+
+        table.add_column(
+            f"[bold red]:1st_place_medal: Et le Vainqueur est : "
+            ":1st_place_medal:[bold red]", justify="center", style="cyan",
+            no_wrap=True,)
+
+        table.add_row(
+            f"{player.last_name} {player.first_name}"
+            f" avec un score de {player_score}")
+
+        c.print(table)
+
     def report_display_players_in_tournament_by_alphabetical_order(
             self, tournament_list):
         """
@@ -445,8 +464,11 @@ class TournamentView:
                 tournament_list, round_list)
 
             c.print("[green3]Voici les rounds du tournois : [green3]\n")
-            for round in list_of_tours:
-                c.print(str(round))
+
+            RoundView().debug_print(list_of_tours)
+
+            """for round in list_of_tours:
+                c.print(str(round))"""
 
         elif int(question) == 5:
             list_of_tours = self.report_display_match_in_tournament(

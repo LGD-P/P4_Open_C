@@ -46,24 +46,24 @@ class RoundView:
 
             c.print(table)
 
-    """
     def debug_print(self, round_list):
         for round in round_list:
             if round.ending_hour == None:
-                c.print(f"{round.tournament_name}\n"
-                        f"{round.name}\n"
-                        f"{round.starting_hour.strftime(
-                            '%d-%m-%Y - %H:%M:%S')}\n"
-                        f"{None}\n"
-                        f"{round.number_of_round}\n"
-                        f"{round.match_list}\n")
+                c.print(
+                    f"{round.tournament_name}\n"
+                    f"{round.name}\n"
+                    f"Commencé le :"
+                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"Pas encore terminé\n"
+                    f"{round.number_of_round}\n"
+                    f"{round.match_list}\n")
             else:
-                c.print(f"{round.tournament_name}\n"
-                        f"{round.name}\n"
-                        f"{round.starting_hour.strftime(
-                            '%d-%m-%Y - %H:%M:%S')}\n"
-                        f"{round.ending_hour.strftime(
-                            '%d-%m-%Y - %H:%M:%S')}\n"
-                        f"{round.number_of_round}\n"
-                        f"{round.match_list}\n")
-    """
+                c.print(
+                    f"{round.tournament_name}\n"
+                    f"{round.name}\n"
+                    f"Commencé le :"
+                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"Terminé le :"
+                    f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"{round.number_of_round}\n"
+                    f"{round.match_list}\n")

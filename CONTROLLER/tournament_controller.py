@@ -194,8 +194,6 @@ class TournamentController:
                                 player_to_move)
                             first_list_of_match[-1].append(
                                 player_to_replace)
-                            del (first_list_of_match[-2][0])
-                            del (first_list_of_match[-1][0])
 
                         else:
                             while match == match_1:
@@ -259,6 +257,7 @@ class TournamentController:
         Returns:
             instance: tournament instance filled with new tour
         """
+
         tournament_to_run = self.tournament_view \
             .display_choose_a_tournament_to_launch(
                 self.tournament_list)
@@ -267,6 +266,26 @@ class TournamentController:
             return None
         else:
             self.started_tournaments.append(tournament_to_run)
+
+            if len(tournament_to_run.tours) == 4:
+
+                winner_to_sort = []
+                for round in self.round_list[-1].match_list:
+                    winner_to_sort += round
+                c.print(
+                    "[bold red] ******************\n************\n[bold red]")
+                c.print(tournament_to_run.player_score)
+                c.print(
+                    "[bold red] ******************\n************\n[bold red]")
+                player_in_tournament_to_run = [
+                    element[0] for element in
+                    sorted(tournament_to_run.player_score.items(),
+                           key=lambda k: (-k[1], k[0].rank))]
+
+                winner = player_in_tournament_to_run[0]
+
+                return self.tournament_view.display_winner(
+                    winner, tournament_to_run.player_score[winner])
 
             #################################
             # DEBUG ZONE FOR SORTING
@@ -288,7 +307,7 @@ class TournamentController:
 
                 # continue swiss logic by rank
 
-            elif len(self.round_list) > 1:
+            elif len(self.round_list) > 1 and len(self.round_list) < 4:
                 first_list_of_match = self \
                     .swiss_logic_sorting_round_two_and_more(tournament_to_run)
 
@@ -319,7 +338,7 @@ class TournamentController:
         """
 
         tournament_running = self.creat_round()
-        if not tournament_running:
+        if not tournament_running in self.tournament_list:
             return None
         else:
 
@@ -470,14 +489,14 @@ class TournamentController:
         players_tables.truncate()
 
         quick_players_list = [
-            Player("DENIS", "Laurent", "11-12-2000", "h", 321),
-            Player("LAURENT", "Denis", "11-10-2005", "h", 123),
-            Player("MOINE", "Alice", "10-10-1990", "f", 100),
-            Player("VAULT", "Lise", "01-02-1980", "f", 10),
-            Player("CREPIN", "Maurice", "12-07-1950", "h", 40),
-            Player("TIAGO", "Daniela", "05-06-1977", "f", 35),
-            Player("EDON", "Gabrielle", "09-03-1985", "f", 25),
-            Player("PATTON", "Gabriel", "09-03-1970", "h", 20)]
+            Player("DENIS", "Laurent", "11-12-2000", "h", 1),
+            Player("CHARLES", "Denis", "11-10-2005", "h", 2),
+            Player("MOINE", "Alice", "10-10-1990", "f", 3),
+            Player("VAULT", "Lise", "01-02-1980", "f", 4),
+            Player("CREPIN", "Maurice", "12-07-1950", "h", 5),
+            Player("TIAGO", "Daniela", "05-06-1977", "f", 6),
+            Player("EDON", "Anna", "09-03-1985", "f", 7),
+            Player("PRIMO", "Angelo", "09-03-1970", "h", 8)]
 
         for players in quick_players_list:
             self.player_list.append(players
