@@ -4,6 +4,7 @@ from datetime import datetime
 from tinydb import Query
 
 from CONTROLLER.player_controller import db
+from CONTROLLER.match_controller import MatchController
 
 
 from VIEW.tournament_view import TournamentView
@@ -14,6 +15,7 @@ from VIEW.match_view import MatchView
 from MODEL.tournament_model import Tournament
 from MODEL.round_model import Round
 from MODEL.player_model import Player
+from MODEL.match_model import Match
 
 
 tournament_tables = db.table("TOURNAMENT")
@@ -33,6 +35,8 @@ class TournamentController:
         self.round_list = round_list
         self.match_view = MatchView()
         self.match_list = match_list
+        self.match_controller = MatchController()
+        self.unique_match_list = []
         self.started_tournaments = []
         self.serialized_list_of_players = {}
         self.serialized_list_of_score = {}
@@ -443,6 +447,9 @@ class TournamentController:
                     self.serialized_list_of_score[
                         f"{player.last_name}, {player.first_name}"] += 1
 
+        self.unique_match_list = self.match_controller.add_unique_match_list(
+            tournament_choice.tours, tournament_choice.player_score)
+
         tournament_tables.update(
             {"player_score":  self.serialized_list_of_score},
             query.name == tournament_choice.name)
@@ -479,7 +486,8 @@ class TournamentController:
         allow acces to report menu.
         """
         self.tournament_view.display_report(
-            self.tournament_list, self.round_list)
+            self.tournament_list, self.round_list, self.unique_match_list,
+            self.match_view, self.round_view)
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
@@ -490,7 +498,7 @@ class TournamentController:
 
         quick_players_list = [
             Player("DENIS", "Laurent", "11-12-2000", "h", 1),
-            Player("CHARLES", "Denis", "11-10-2005", "h", 2),
+            Player("CHARLES", "Henri", "11-10-2005", "h", 2),
             Player("MOINE", "Alice", "10-10-1990", "f", 3),
             Player("VAULT", "Lise", "01-02-1980", "f", 4),
             Player("CREPIN", "Maurice", "12-07-1950", "h", 5),

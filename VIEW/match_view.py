@@ -90,3 +90,20 @@ class MatchView:
                 "[bold red] Faites un choix valide : 1, 2 ou 3 [bold red]\n")
 
         return winner
+
+    def display_match_for_report(self, unique_match_list: list):
+        c.print("[bold magenta]Voici la liste matchs : \n[bold magenta]")
+        index = 0
+        for joueur in unique_match_list.match:
+            index += 1
+            c.print(f"[bold red]- Match N°{index}[bold red] ")
+            c.print(
+                "[bold cyan]Joueur : [bold cyan]"
+                f"{joueur[0][0]}, "
+                f"Score : "
+                f"{joueur[0][1]},"
+                "    == Contre ==>    "
+                f"Joueur : "
+                f"{joueur[1][0]}, "
+                f"Score :[bold cyan] "
+                f"{joueur[1][1]}\n")

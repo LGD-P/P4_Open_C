@@ -3,9 +3,6 @@ from rich.table import Table
 from datetime import datetime
 
 
-from VIEW.round_view import RoundView
-
-
 c = Console()
 
 
@@ -403,7 +400,8 @@ class TournamentView:
 
             return tournament_choosen.tours
 
-    def display_report(self, tournament_list, round_list):
+    def display_report(self, tournament_list, round_list,
+                       unique_match_list, match_view, round_view):
         """
         This report function user all precedents functions and displayer user
         choice
@@ -465,13 +463,16 @@ class TournamentView:
 
             c.print("[green3]Voici les rounds du tournois : [green3]\n")
 
-            RoundView().debug_print(list_of_tours)
+            round_view.debug_print(list_of_tours)
 
             """for round in list_of_tours:
                 c.print(str(round))"""
 
         elif int(question) == 5:
-            list_of_tours = self.report_display_match_in_tournament(
+
+            match_view.display_match_for_report(unique_match_list)
+
+            """list_of_tours = self.report_display_match_in_tournament(
                 tournament_list)
             index = 0
             for tour in list_of_tours:
@@ -482,3 +483,4 @@ class TournamentView:
                         f"{match[0].last_name} {match[0].first_name} "
                         "a affronté ==>"
                         f" {match[1].last_name} {match[1].first_name} \n")
+            """
