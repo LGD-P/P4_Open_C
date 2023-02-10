@@ -15,10 +15,9 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
-
         self.tournament_controller = TournamentController(
             [], self.player_controller.player_list, [], [])
-        self.menu_view_in_controller = MenuView({
+        self.main_menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: "
                 "[bold blue]",
@@ -66,10 +65,10 @@ class MenuController:
     def run_program(self):
         """This function creat the loop used to run main menu"""
         while self.running_program:
-            self.menu_view_in_controller.display_menu_and_get_choice()
+            self.main_menu_view_in_controller.display_menu_and_get_choice()
 
     def quit_menu(self):
         """Quit menu killing main loop
         """
-        self.menu_view_in_controller.quit_message()
+        self.main_menu_view_in_controller.quit_message()
         self.running_program = False
