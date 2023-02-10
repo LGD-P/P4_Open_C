@@ -14,6 +14,6 @@ class MatchController:
             tuple = ([joueur[0], f"{player_score[joueur[0]]}"],
                         [joueur[1], f"{player_score[joueur[1]]}"])
             """
-            instance.match.append([tuple])
+            instance.match.append(tuple)
 
         return instance

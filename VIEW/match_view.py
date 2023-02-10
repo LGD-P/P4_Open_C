@@ -74,9 +74,9 @@ class MatchView:
         c.print(
             f"- Dans le tournois {tournament_choice.name:}\n"
             f"  Qui a gagné ce match : "
-            f"{match_list[0][1][0]}\n"
-            f"- 0: {match_list[0][0][0]}\n"
-            f"- 1: {match_list[0][1][0]}\n"
+            f"{match_list[0][1]}\n"
+            f"- 0: {match_list[0][0]}\n"
+            f"- 1: {match_list[0][1]}\n"
             f"- 2: Egalité\n"
         )
 

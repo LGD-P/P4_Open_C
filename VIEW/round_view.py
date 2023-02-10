@@ -32,14 +32,14 @@ class RoundView:
             index = -1
             # for tournament in tournament_list:
             for players_match in tournament_running.tours[-1]:
-                index += 1
 
+                index += 1
                 table.add_row(
-                    f"\n{players_match[0][0][0]} "
-                    f"Score  : {players_match[0][0][1]}\n",
+                    f"\n{players_match[0][0]} "
+                    f"Score  : {players_match[0][1]}\n",
                     "\n== Jouera contre == >\n",
-                    f"\n{players_match[0][1][0]} "
-                    f"Score : {players_match[0][1][1]}\n",
+                    f"\n{players_match[1][0]} "
+                    f"Score : {players_match[1][1]}\n",
                     end_section=True)
 
             c.print(table)
