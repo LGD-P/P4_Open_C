@@ -1,3 +1,5 @@
+from VIEW.round_view import RoundView
+from VIEW.match_view import MatchView
 from rich.console import Console
 from rich.table import Table
 from datetime import datetime
@@ -279,7 +281,10 @@ class TournamentView:
             sorted_players = sorted(tournament_choosen.players,
                                     key=lambda player: player.last_name)
 
-            return sorted_players
+            c.print("[bold magenta]Voici la liste des joueurs par ordre "
+                    "alphabétique:\n[bold magenta]")
+            for player in sorted_players:
+                c.print(player)
 
     def report_display_players_in_tournament_by_rank(self, tournament_list):
         """
@@ -312,7 +317,10 @@ class TournamentView:
             sorted_players = sorted(tournament_choosen.players,
                                     key=lambda player: player.rank)
 
-            return sorted_players
+            c.print("[bold magenta]Voici la liste des joueurs par rang:"
+                    "\n[bold magenta]")
+            for player in sorted_players:
+                c.print(player)
 
     def report_display_tournament_list(self, tournament_list):
         """
@@ -367,9 +375,10 @@ class TournamentView:
 
                     round_list_to_display.append(round)
 
-            return round_list_to_display
+        RoundView().debug_print(round_list_to_display)
 
-    def report_display_match_in_tournament(self, tournament_list):
+    def report_display_match_in_tournament(self, tournament_list,
+                                           unique_match_list):
         """
         This function used in report return each matchs played between each
         players in tournament
@@ -398,10 +407,9 @@ class TournamentView:
 
             tournament_choosen = tournament_list[int(question)]
 
-            return tournament_choosen.tours
+            MatchView().display_match_for_report(unique_match_list)
 
-    def display_report(self, tournament_list, round_list,
-                       unique_match_list, match_view, round_view):
+    def display_report(self, secondary_menu, ):
         """
         This report function user all precedents functions and displayer user
         choice
@@ -410,6 +418,17 @@ class TournamentView:
             round_list (list): list of each round instance created in
             tournament
         """
+
+        for element in secondary_menu:
+            c.print(secondary_menu[element]["label"])
+        menu_choice = c.input("[bold red]==> [bold red]")
+
+        if menu_choice in secondary_menu:
+            return secondary_menu[menu_choice]["action"]()
+        c.print("\n[bold red]Merci de faire un choix présent"
+                " dans le menu[bold red]\n")
+
+        '''
         question = c.input("[bold yellow]  Que souhaitez-vous consulter ?"
                            "[bold yellow]\n\n "
                            "[bold blue]- 01. Liste de tous les joueurs d'un "
@@ -483,4 +502,4 @@ class TournamentView:
                         f"{match[0].last_name} {match[0].first_name} "
                         "a affronté ==>"
                         f" {match[1].last_name} {match[1].first_name} \n")
-            """
+        '''

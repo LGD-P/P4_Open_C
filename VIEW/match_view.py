@@ -92,18 +92,23 @@ class MatchView:
         return winner
 
     def display_match_for_report(self, unique_match_list: list):
+
+        while not unique_match_list:
+            return c.print("[bold red]Il n'y a pas encore de match dans a liste"
+                           "[bold red]")
+
         c.print("[bold magenta]Voici la liste matchs : \n[bold magenta]")
         index = 0
         for joueur in unique_match_list.match:
             index += 1
             c.print(f"[bold red]- Match N°{index}[bold red] ")
             c.print(
-                "[bold cyan]Joueur : [bold cyan]"
+                "[bold cyan]Joueur :\n [bold cyan]"
                 f"{joueur[0][0]}, "
                 f"Score : "
-                f"{joueur[0][1]},"
-                "    == Contre ==>    "
+                f"{joueur[0][1]},\n\n"
+                "    == Contre ==>    \n\n"
                 f"Joueur : "
                 f"{joueur[1][0]}, "
-                f"Score :[bold cyan] "
+                f"Score :\n[bold cyan] "
                 f"{joueur[1][1]}\n")
