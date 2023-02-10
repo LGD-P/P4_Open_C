@@ -377,8 +377,7 @@ class TournamentView:
 
         RoundView().debug_print(round_list_to_display)
 
-    def report_display_match_in_tournament(self, tournament_list,
-                                           unique_match_list):
+    def report_display_match_in_tournament(self, tournament_list):
         """
         This function used in report return each matchs played between each
         players in tournament
@@ -407,7 +406,7 @@ class TournamentView:
 
             tournament_choosen = tournament_list[int(question)]
 
-            MatchView().display_match_for_report(unique_match_list)
+            MatchView().display_match_for_report(tournament_choosen.tours)
 
     def display_report(self, secondary_menu, ):
         """

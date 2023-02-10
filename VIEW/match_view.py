@@ -73,10 +73,9 @@ class MatchView:
 
         c.print(
             f"- Dans le tournois {tournament_choice.name:}\n"
-            f"  Qui a gagné ce match : "
-            f"{match_list[0][1]}\n"
+            f"  Qui a gagné ce match : \n"
             f"- 0: {match_list[0][0]}\n"
-            f"- 1: {match_list[0][1]}\n"
+            f"- 1: {match_list[1][0]}\n"
             f"- 2: Egalité\n"
         )
 
@@ -89,25 +88,34 @@ class MatchView:
 
         return winner
 
-    def display_match_for_report(self, unique_match_list: list):
+    def display_match_for_report(self, tournament_match_list):
 
-        while not unique_match_list:
+        while not tournament_match_list:
             return c.print("[bold red]Il n'y a pas encore de match dans "
                            "la liste[bold red]")
 
         c.print("[bold magenta]Voici la liste matchs pour lesquels un score a"
-                "été ajouté : \n[bold magenta]")
-        index = 0
-        for joueur in unique_match_list.match:
-            index += 1
-            c.print(f"[bold red]- Match N°{index}[bold red] ")
+                " été ajouté : \n[bold magenta]")
+
+        index_round = 0
+        print(len(tournament_match_list))
+        for _ in tournament_match_list:
+            index_round += 1
             c.print(
-                "[bold cyan]Joueur :\n [bold cyan]"
-                f"{joueur[0][0]}, "
-                f"Score : "
-                f"{joueur[0][1]},\n\n"
-                "    == Contre ==>    \n\n"
-                f"Joueur : "
-                f"{joueur[1][0]}, "
-                f"Score :\n[bold cyan] "
-                f"{joueur[1][1]}\n")
+                f"\n[bold red]- Dans le Round N°{index_round}[bold red] ")
+
+            print("\n\n")
+
+            for match in tournament_match_list[-1]:
+
+                c.print(
+                    "[bold cyan]Joueur : [bold cyan]"
+                    f"{match[0][0]}, "
+                    f"Score : "
+                    f"{match[0][1]},\n\n"
+                    "    == Contre ==>    \n\n"
+                    f"Joueur : "
+                    f"{match[1][0]}, "
+                    f"Score : [bold cyan] "
+                    f"{match[1][1]}\n")
+                c.print("[bodl red]**************[bold red]")

@@ -470,7 +470,7 @@ class TournamentController:
 
     def report_match_in_tournament(self):
         self.tournament_view.report_display_match_in_tournament(
-            self.tournament_list, self.unique_match_list)
+            self.tournament_list)
 
     def report(self):
         """This function using tournament.view.display_report()
