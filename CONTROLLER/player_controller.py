@@ -1,16 +1,11 @@
 from rich.console import Console
-from tinydb import TinyDB
+
 
 from VIEW.player_view import PlayerView
 from MODEL.player_model import Player
 
 
 c = Console()
-
-db = TinyDB('db.json', indent=4, encoding='utf-8')
-
-players_tables = db.table("PLAYERS")
-players_tables.truncate()
 
 
 class PlayerController:
@@ -34,5 +29,4 @@ class PlayerController:
 
         self.player_list.append(player_instance)
 
-        players_tables.insert(serialized_player)
         # print(self.player_list)

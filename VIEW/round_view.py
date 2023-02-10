@@ -35,13 +35,11 @@ class RoundView:
                 index += 1
 
                 table.add_row(
-                    f"\n{players_match[0].last_name} "
-                    f"{players_match[0].first_name}\n"
-                    f"classement : {players_match[0].rank}\n",
+                    f"\n{players_match[0][0][0]} "
+                    f"Score  : {players_match[0][0][1]}\n",
                     "\n== Jouera contre == >\n",
-                    f"\n{players_match[1].last_name} "
-                    f"{players_match[1].first_name}\n"
-                    f"classement : {players_match[1].rank}\n",
+                    f"\n{players_match[0][1][0]} "
+                    f"Score : {players_match[0][1][1]}\n",
                     end_section=True)
 
             c.print(table)

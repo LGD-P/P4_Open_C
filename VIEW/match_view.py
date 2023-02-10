@@ -73,12 +73,10 @@ class MatchView:
 
         c.print(
             f"- Dans le tournois {tournament_choice.name:}\n"
-            f"  Qui a gagné ce match : {match_list[0].last_name} "
-            f"{match_list[0].first_name} contre "
-            f"{match_list[1].last_name} "
-            f"{match_list[1].first_name}\n"
-            f"- 0: {match_list[0].last_name}\n"
-            f"- 1: {match_list[1].last_name}\n"
+            f"  Qui a gagné ce match : "
+            f"{match_list[0][1][0]}\n"
+            f"- 0: {match_list[0][0][0]}\n"
+            f"- 1: {match_list[0][1][0]}\n"
             f"- 2: Egalité\n"
         )
 
@@ -94,10 +92,11 @@ class MatchView:
     def display_match_for_report(self, unique_match_list: list):
 
         while not unique_match_list:
-            return c.print("[bold red]Il n'y a pas encore de match dans a liste"
-                           "[bold red]")
+            return c.print("[bold red]Il n'y a pas encore de match dans "
+                           "la liste[bold red]")
 
-        c.print("[bold magenta]Voici la liste matchs : \n[bold magenta]")
+        c.print("[bold magenta]Voici la liste matchs pour lesquels un score a"
+                "été ajouté : \n[bold magenta]")
         index = 0
         for joueur in unique_match_list.match:
             index += 1
