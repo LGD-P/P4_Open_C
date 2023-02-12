@@ -6,6 +6,7 @@ class MatchController:
 
     def add_unique_match_list(self, match_list, player_score):
         instance = Match([])
+
         for joueur in match_list:
 
             tuple = ([f"{joueur[0].last_name} {joueur[0].first_name}", int(player_score[joueur[0]])],

@@ -49,14 +49,25 @@ class MenuController:
                 "action": self.tournament_controller.report,
             },
             "7": {
-                "label": "[bold blue]- 7. Quitter :raising_hand: \n "
-                "[bold blue]",
+                "label": "[bold blue]- 7. Enregistrer les données "
+                ":dvd:  [bold blue]",
+                "action": self.tournament_controller.creat_db,
+            },
+            "8": {
+                "label": "[bold blue]- 8. Télécharger les données "
+                "🔄    [bold blue]",
+                "action": "",
+            },
+            "9": {
+                "label": "[bold blue]- 9. Quitter :raising_hand:  "
+                "[bold blue]\n",
                 "action": self.quit_menu,
             },
 
-            "8": {
-                "label": "[bold blue]- 8. Ajout rapide de tournois et joueurs"
-                "\n[bold blue]",
+
+            "10": {
+                "label": "[bold blue]- 10. Ajout rapide de tournois et joueurs"
+                ":rocket:\n  [bold blue]",
                 "action": self.tournament_controller.generate_data
             }
 
