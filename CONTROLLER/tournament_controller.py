@@ -574,6 +574,7 @@ class TournamentController:
                 player["rank"]))
 
         opener.close()
+        return self.player_list
 
     def load_touranment_first_part(self):
         opener = open('db.json')
@@ -596,6 +597,22 @@ class TournamentController:
                 tournament["time_control"],
                 tournament["description"],
                 tournament["player_score"]))
+
+            player_to_get = []
+            for player in self.player_list:
+                if player.last_name == data["PLAYERS"][str(self.player_list.index(player)+1)]['last_name']:
+                    player_to_get.append(player)
+                    for element in self.tournament_list:
+                        if tournament["name"] == element.name:
+                            element.players = player_to_get
+                        #element.players = player
+
+        opener.close()
+        return self.tournament_list
+
+    def load_data(self):
+        self.load_player()
+        self.load_touranment_first_part()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
