@@ -551,9 +551,12 @@ class TournamentController:
         if not created:
             self.tournament_view.bug_in_db()
 
-    def load_player(self):
+    def load_global_player_list(self):
         """this function open .json file and put players from PLAYERS table
         in tournament_controller. It allow user to fill tournament with it
+
+         Returns:
+            list: self.player_list in tournament_controller
         """
         opener = open('db.json')
 
@@ -576,7 +579,50 @@ class TournamentController:
         opener.close()
         return self.player_list
 
-    def load_touranment_first_part(self):
+    def load_player_in_tournament(self, tournament, data):
+        """This function will get in database player liste checking index
+        to identify the right player and put them in controller
+        Args:
+            tournament (instance): from a loop of self.tournament_lit
+            data (.json): from database .json available
+        """
+        player_to_get = []
+        for player in self.player_list:
+            if player.last_name == data["PLAYERS"][
+                    str(self.player_list.index(player)+1)]['last_name']:
+                player_to_get.append(player)
+                for element in self.tournament_list:
+                    if tournament["name"] == element.name:
+                        element.players = player_to_get
+
+    def load_players_tournament_p_score(self, tournament, data):
+        """This function will get player_score in data base identifying player
+        with index, and put this dict with player instance as key in controller
+
+        Args:
+            tournament (instance): from self.tournement_list loop
+            data (.json): from database .json available
+        """
+
+        new_dict = {}
+
+        for tournament in self.tournament_list:
+            if tournament.name == data["TOURNAMENT"][
+                    str(self.tournament_list.index(tournament)+1)]['name']:
+                for values in data["TOURNAMENT"][
+                        str(self.tournament_list.index(tournament)+1)][
+                            'player_score'].items():
+                    for player in tournament.players:
+                        new_dict[player] = values[1]
+            tournament.player_score = new_dict
+
+    def load_touranment(self):
+        """This function will load tournament from database in controller
+        and allows user to run tournament or uses players already registered
+
+        Returns:
+            list: self.tournament_list in tournament_controller
+        """
         opener = open('db.json')
 
         data = json.load(opener)
@@ -598,21 +644,19 @@ class TournamentController:
                 tournament["description"],
                 tournament["player_score"]))
 
-            player_to_get = []
-            for player in self.player_list:
-                if player.last_name == data["PLAYERS"][str(self.player_list.index(player)+1)]['last_name']:
-                    player_to_get.append(player)
-                    for element in self.tournament_list:
-                        if tournament["name"] == element.name:
-                            element.players = player_to_get
-                        #element.players = player
+            self.load_player_in_tournament(tournament, data)
+
+            self.load_players_tournament_p_score(tournament, data)
 
         opener.close()
         return self.tournament_list
 
     def load_data(self):
-        self.load_player()
-        self.load_touranment_first_part()
+        """Function used to get player and tournament in tournament controller
+        # from .json database
+        """
+        self.load_global_player_list()
+        self.load_touranment()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of

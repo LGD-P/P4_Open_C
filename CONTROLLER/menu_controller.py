@@ -56,7 +56,7 @@ class MenuController:
             "8": {
                 "label": "[bold blue]- 8. Télécharger les données "
                 "🔄    [bold blue]",
-                "action": self.tournament_controller.load_touranment_first_part,
+                "action": self.tournament_controller.load_data,
             },
             "9": {
                 "label": "[bold blue]- 9. Quitter :raising_hand:  "
