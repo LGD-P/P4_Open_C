@@ -504,5 +504,5 @@ class TournamentView:
         '''
 
     def bug_in_db(self):
-        return c.print("[bold red]créer d'abord un tournois ou des joueurs"
+        return c.print("[bold red]Créer d'abord un tournois ou des joueurs"
                        "[bold red]")
