@@ -12,11 +12,10 @@ class DataBase:
 
         return db
 
-    def record_tournament(self, tournament_list, db):
+    def serialised_tournament(self, tournament_list):
 
-        db = self.creat_data_base()
-        db.truncate()
-        table_tournament = db.table("TOURNAMENT")
+        if not tournament_list:
+            return None
 
         for tournament in tournament_list:
             serialized_tournament = {
@@ -27,19 +26,42 @@ class DataBase:
                 "players": [],
                 "time_control": tournament.time_control,
                 "description": tournament.description,
-                # "player_score": tournament.player_score
+                "player_score": {}
             }
+        return serialized_tournament
 
-        table_tournament.truncate()
-        table_tournament.insert(serialized_tournament)
-
+    def serialized_player_and_score_t_table(self, tournament_list, table_tournament):
         player_list_index = []
+        player_score_dict_in_tournament_table = {}
+
         for tournament in tournament_list:
             for player in tournament.players:
                 player_list_index.append(tournament.players.index(player))
+                player_score_dict_in_tournament_table[tournament.players.index(
+                    player)] = tournament.player_score[player]
 
-        table_tournament.update({
+        table_tournament.upsert({
             "players": player_list_index}, where('players') == [])
+
+        table_tournament.upsert(
+            {"player_score": player_score_dict_in_tournament_table}, where("player_score") == {})
+
+    def record_data(self, tournament_list, player_list, db):
+
+        db = self.creat_data_base()
+        # db.drop_table("_default")
+        while not tournament_list or not player_list:
+            return None
+
+        table_tournament = db.table("TOURNAMENT")
+        table_tournament.truncate()
+
+        tournament_in_table = self.serialised_tournament(tournament_list)
+
+        table_tournament.insert(tournament_in_table)
+
+        self.serialized_player_and_score_t_table(
+            tournament_list, table_tournament)
 
 
 if __name__ == "__main__":

@@ -542,7 +542,10 @@ class TournamentController:
         self.tournament_view.display_report(secondary_report_menu)
 
     def creat_db(self):
-        self.db.record_tournament(self.tournament_list, self.db)
+        created = self.db.record_data(self.tournament_list, self.player_list,
+                                      self.db)
+        if not created:
+            self.tournament_view.bug_in_db()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of

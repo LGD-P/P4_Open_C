@@ -502,3 +502,7 @@ class TournamentView:
                         "a affronté ==>"
                         f" {match[1].last_name} {match[1].first_name} \n")
         '''
+
+    def bug_in_db(self):
+        return c.print("[bold red]créer d'abord un tournois ou des joueurs"
+                       "[bold red]")
