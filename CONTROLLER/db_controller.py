@@ -7,12 +7,26 @@ query = Query()
 class DataBase:
 
     def creat_data_base(self):
+        """This function creats json file for future data
+
+        Returns:
+            .json_: .json file to record data in
+        """
         db = TinyDB('db.json', indent=4, encoding='utf-8')
         # player_table = db.table("PLAYERS")
 
         return db
 
     def serialised_tournament(self, tournament):
+        """This function will be used in a loop
+        to put all tournaments recorded in data base
+
+        Args:
+            tournament (tournament): instance of tournament
+
+        Returns:
+            dict: dict of a tournament
+        """
 
         serialized_tournament = {
             "name": tournament.name,
@@ -27,6 +41,14 @@ class DataBase:
         return serialized_tournament
 
     def serialized_player_and_score_in_t_table(self, tournament_list, table_tournament):
+        """this function will be specificly used to fill player_score and 
+        list of player in tournament. To identify player, this function uses
+        index of players_table
+
+        Args:
+            tournament_list (list): list of each touranment
+            table_tournament (dict): tournament table in .json file
+        """
         player_list_index = []
         player_score_dict_in_tournament_table = {}
 
@@ -44,6 +66,15 @@ class DataBase:
             {"player_score": player_score_dict_in_tournament_table}, where("player_score") == {})
 
     def serialize_players(self, player):
+        """This function will be used in a loop
+        to put all players recorded in data base 
+
+        Args:
+            player (instance): from tournament.players 
+
+        Returns:
+            dict : dict of a player
+        """
 
         serialized_players = {
             'last_name': player.last_name,
@@ -56,6 +87,18 @@ class DataBase:
         return serialized_players
 
     def record_data(self, tournament_list, player_list, db):
+        """This function uses previous ones to record all data
+        in .json file 
+
+
+        Args:
+            tournament_list (list): list of each touranment
+            player_list (_type_): list of each player
+            db (.json): .json file created
+
+        Returns:
+            _type_: _description_
+        """
 
         db = self.creat_data_base()
         # db.drop_table("_default")

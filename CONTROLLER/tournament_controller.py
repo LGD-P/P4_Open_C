@@ -542,6 +542,9 @@ class TournamentController:
         self.tournament_view.display_report(secondary_report_menu)
 
     def creat_db(self):
+        """This function use db_controller to creat .json file
+            If there is no data send appropriate user message.
+        """
         created = self.db.record_data(self.tournament_list, self.player_list,
                                       self.db)
         if not created:
