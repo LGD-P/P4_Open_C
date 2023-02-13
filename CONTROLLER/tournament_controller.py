@@ -1,6 +1,7 @@
 from rich.console import Console
 from datetime import datetime
 from tinydb import TinyDB
+import json
 
 from CONTROLLER.match_controller import MatchController
 from CONTROLLER.db_controller import DataBase
@@ -549,6 +550,41 @@ class TournamentController:
                                       self.db)
         if not created:
             self.tournament_view.bug_in_db()
+
+    def load_player(self):
+        """this function open .json file and put players from PLAYERS table
+        in tournament_controller. It allow user to fill tournament with it
+        """
+        opener = open('db.json')
+
+        data = json.load(opener)
+
+        player_deserializer = []
+        index = 0
+        for _ in data["PLAYERS"]:
+            index += 1
+            player_deserializer.append(data["PLAYERS"][str(index)])
+
+        for player in player_deserializer:
+            self.player_list.append(Player(
+                player["last_name"],
+                player["first_name"],
+                player["birth"],
+                player["sex"],
+                player["rank"]))
+
+        opener.close()
+
+    def load_touranment(self):
+        opener = open('db.json')
+
+        data = json.load(opener)
+
+        tournament_deserializer = []
+        index = 0
+        for _ in data["PLAYERS"]:
+            index += 1
+            tournament_deserializer.append(data["TOURNAMENT"][str(index)])
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of

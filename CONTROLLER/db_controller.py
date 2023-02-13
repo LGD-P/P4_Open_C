@@ -1,7 +1,6 @@
-from tinydb import TinyDB, Query, where
-
-
-query = Query()
+from pathlib import Path
+import json
+from tinydb import TinyDB, where
 
 
 class DataBase:
