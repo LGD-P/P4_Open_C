@@ -575,16 +575,27 @@ class TournamentController:
 
         opener.close()
 
-    def load_touranment(self):
+    def load_touranment_first_part(self):
         opener = open('db.json')
 
         data = json.load(opener)
 
         tournament_deserializer = []
         index = 0
-        for _ in data["PLAYERS"]:
+        for _ in data["TOURNAMENT"]:
             index += 1
             tournament_deserializer.append(data["TOURNAMENT"][str(index)])
+
+        for tournament in tournament_deserializer:
+            self.tournament_list.append(Tournament(
+                tournament["name"],
+                tournament["place"],
+                tournament["date"],
+                tournament["tours"],
+                tournament["players"],
+                tournament["time_control"],
+                tournament["description"],
+                tournament["player_score"]))
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
