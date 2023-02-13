@@ -32,9 +32,10 @@ class DataBase:
 
         for tournament in tournament_list:
             for player in tournament.players:
-                player_list_index.append(tournament.players.index(player))
+                player_list_index.append(
+                    tournament.players.index(player)+1)
                 player_score_dict_in_tournament_table[tournament.players.index(
-                    player)] = tournament.player_score[player]
+                    player)+1] = tournament.player_score[player]
 
         table_tournament.upsert({
             "players": player_list_index}, where('players') == [])
@@ -66,11 +67,11 @@ class DataBase:
         table_players = db.table("PLAYERS")
         table_players.truncate()
 
+        for player in player_list:
+            table_players.insert(self.serialize_players(player))
+
         for tournament in tournament_list:
             table_tournament.insert(self.serialised_tournament(tournament))
 
         self.serialized_player_and_score_in_t_table(
             tournament_list, table_tournament)
-
-        for player in player_list:
-            table_players.insert(self.serialize_players(player))
