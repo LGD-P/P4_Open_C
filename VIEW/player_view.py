@@ -84,7 +84,7 @@ class PlayerView:
             "rank": rank
         }
 
-    def display_players_to_choose(self, player_list, tournament_list):
+    def display_players_to_choose(self, player_list, tournament):
         """This function display players availables in global list to fill
         tournament with. If a player already is in tournament he will not
         be display.
@@ -95,24 +95,22 @@ class PlayerView:
         """
 
         player_available = []
+        unique_player_available = []
         if player_list:
             c.print("[bold yellow] Liste des joueurs disponibles:\n"
                     "[bold yellow]")
 
             for player in player_list:
-                for tournament in tournament_list:
-                    if player not in tournament.players:
-                        player_available.append(player)
-
-            unique_player_available = []
+                if not player in tournament.players:
+                    player_available.append(player)
 
             [unique_player_available.append(
                 player) for player in player_available if player not in unique_player_available]
 
             for player in unique_player_available:
-                # if not player in tournament.players:
-                c.print(
-                    f"- {player_list.index(player)} [bold green] "
-                    f"{player.last_name}"
-                    f" {player.first_name}, rang :  "
-                    f"{player.rank}[bold green]")
+                if not player in tournament.players:
+                    c.print(
+                        f"- {player_list.index(player)} [bold green] "
+                        f"{player.last_name}"
+                        f" {player.first_name}, rang :  "
+                        f"{player.rank}[bold green]")

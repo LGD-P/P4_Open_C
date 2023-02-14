@@ -138,6 +138,7 @@ class TournamentView:
 
             tournament = self.display_tournament_to_fill(
                 tournament_list, player_list)
+            print(tournament.name)
 
             if not tournament:
                 return None
@@ -145,7 +146,7 @@ class TournamentView:
             else:
 
                 player_view.display_players_to_choose(
-                    player_list, tournament_list)
+                    player_list, tournament)
 
                 player_choice = c.input("[bold yellow]Choisissez votre "
                                         "joueur\n ==> [bold yellow]")
@@ -190,12 +191,8 @@ class TournamentView:
             tournament_available = []
 
             for tournament in tournament_list:
-                if not tournament.players:
-                    c.print(
-                        "[bold red]Vous devez ajouter des joueurs d'abord..."
-                        "\n[bold red]")
 
-                elif len(tournament.players) != 0\
+                if len(tournament.players) != 0\
                         and not len(tournament.players) % 2:
                     tournament_available.append(tournament)
 
