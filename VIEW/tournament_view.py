@@ -78,13 +78,26 @@ class TournamentView:
                     choice_tournament_available.append(
                         tournament_list.index(tournament))
                 # if not len(tournament.players) % 2:
-                    c.print(f"{tournament_list.index(tournament)} [bold green]"
-                            f"{tournament.name}, {tournament.place}[bold green]\n")
+
+            while choice_tournament_available == []:
+                c.print((
+                    "[bold red]Il faut d'abord créer un tournois pour y ajouter "
+                        "des joueurs [bold red]"
+                        ))
+                return None
+
+            for tournament in choice_tournament_available:
+                c.print(f"{tournament_list.index(tournament)} [bold green]"
+                        f"{tournament_list.index(tournament).tournament.name},"
+                        f"{tournament_list.index(tournament).tournament.place}[bold green]\n")
+
             tournament_choice = c.input(
                 "[bold blue]Faites votre choix :  [bold blue]"
             )
-            print(choice_tournament_available)
 
+            c.print("[bold blue]Choisissez un tournois dans lequel"
+                    " ajouter un joueur: [bold blue]\n"
+                    )
             while not tournament_choice.isdigit() or not \
                     int(tournament_choice) in choice_tournament_available:
                 tournament_choice = c.input(
@@ -113,7 +126,6 @@ class TournamentView:
                 }
         """
         if not tournament_list:
-
             c.print("[bold red]Veuillez créer un tournois pour "
                     "pouvoir l'alimenter en joueurs..\n [bold red]")
             return None
@@ -125,12 +137,11 @@ class TournamentView:
 
         else:
 
-            c.print("[bold blue]Choisissez un tournois dans lequel"
-                    " ajouter un joueur: [bold blue]\n"
-                    )
-
             tournament = self.display_tournament_to_fill(
                 tournament_list)
+
+            if not tournament:
+                return None
 
             if len(tournament.players) == len(player_list):
                 c.print(
