@@ -58,7 +58,7 @@ class TournamentView:
             "player_score": {}
         }
 
-    def display_tournament_to_fill(self, tournament_list):
+    def display_tournament_to_fill(self, tournament_list, player_list):
         """
         This function display tournament available
         User choose one and can fill it with players
@@ -72,15 +72,16 @@ class TournamentView:
         choice_tournament_available = []
         if tournament_list:
             for tournament in tournament_list:
-                if len(tournament.tours) == 0:
+                if len(tournament.tours) == 0\
+                        and not len(tournament_list[tournament_list.index(tournament)].players) == len(player_list):
                     choice_tournament_available.append(
                         tournament_list.index(tournament))
                 # if not len(tournament.players) % 2:
 
             while choice_tournament_available == []:
                 c.print((
-                    "[bold red]Il faut d'abord créer un tournois pour y ajouter "
-                        "des joueurs [bold red]"
+                    "[bold red]- 1 Soit vous n'avez pas encore de créer de tournois "
+                        "des joueurs\n - 2 Soit le tournois contient déjà tous les joueurs enregistrés.[bold red]"
                         ))
                 return None
 
@@ -136,15 +137,9 @@ class TournamentView:
         else:
 
             tournament = self.display_tournament_to_fill(
-                tournament_list)
+                tournament_list, player_list)
 
             if not tournament:
-                return None
-
-            if len(tournament.players) == len(player_list):
-                c.print(
-                    "[bold red] Il n'y a pas de joueur disponible pour "
-                    "ce tournois.\n[bold red]")
                 return None
 
             else:
@@ -200,44 +195,37 @@ class TournamentView:
                         "[bold red]Vous devez ajouter des joueurs d'abord..."
                         "\n[bold red]")
 
-                else:
+                elif len(tournament.players) != 0\
+                        and not len(tournament.players) % 2:
+                    tournament_available.append(tournament)
 
-                    if len(tournament.players) != 0 \
-                            and not len(tournament.players) % 2:
-                        tournament_available.append(tournament)
+            for tournament in tournament_available:
+                c.print(
+                    f"{tournament_available.index(tournament)} [bold green]"
+                    f"{tournament.name}, {tournament.place}"
+                    "[bold green]\n")
 
-                        c.print(
-                            f"{tournament_list.index(tournament)} [bold green]"
-                            f"{tournament.name}, {tournament.place}"
-                            "[bold green]\n")
-                        tournament_choice = c.input(
-                            "[bold blue]Faites votre choix :  [bold blue]"
-                        )
+            tournament_choice = c.input(
+                "[bold blue]Faites votre choix :  [bold blue]"
+            )
 
-                        choice_player = []
-                        index = -1
-                        for _ in tournament_available:
-                            index += 1
-                            choice_player.append(index)
+            choice_player = []
+            index = -1
+            for _ in tournament_available:
+                index += 1
+                choice_player.append(index)
 
-                        while not tournament_choice.isdigit() or not \
-                                int(tournament_choice) in choice_player:
-                            c.print(
-                                "[bold red] Merci de faire un choix dans "
-                                "la liste[bold red]")
-                            tournament_choice = c.input("==> ")
+            while not tournament_choice.isdigit() or not \
+                    int(tournament_choice) in choice_player:
+                c.print(
+                    "[bold red] Merci de faire un choix dans "
+                    "la liste[bold red]")
+                tournament_choice = c.input("==> ")
 
-                        tournament_to_launch = tournament_available[int(
-                            tournament_choice)]
+            tournament_to_launch = tournament_available[int(
+                tournament_choice)]
 
-                        return tournament_to_launch
-
-                    else:
-                        c.print(f"{tournament_list.index(tournament)} "
-                                f"[bold green] {tournament.name}, "
-                                f"{tournament.place} "
-                                "[bold green][bold red] Pas assez de joueurs"
-                                "dans le tournois [bold red]\n")
+            return tournament_to_launch
 
         else:
             c.print("[bold red]Vous devez créer un tournois d'abord..."

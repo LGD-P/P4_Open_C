@@ -458,8 +458,10 @@ class TournamentController:
 
         round = tournament_choice.tours[round_index - 1]
 
+        """
         c.print("[bold red]ATTENTION[oold red]")
         print(round)
+        """
 
         for match_list in round:
             winner_choice = self.match_view \
@@ -673,8 +675,7 @@ class TournamentController:
             Player("PRIMO", "Angelo", "09-03-1970", "h", 8)]
 
         for players in quick_players_list:
-            self.player_list.append(players
-                                    )
+            self.player_list.append(players)
 
         quick_tounarment = [
             Tournament("PARIS Chess-Event", "Paris",
@@ -683,9 +684,9 @@ class TournamentController:
                        "Description", {}, 4)
         ]
 
-        for tournnaments in quick_tounarment:
-            self.tournament_list.append(tournnaments)
-
         for tournament in quick_tounarment:
             for player in tournament.players:
                 tournament.player_score[player] = 0
+
+        for tournnaments in quick_tounarment:
+            self.tournament_list.append(tournnaments)
