@@ -93,6 +93,8 @@ class PlayerView:
             player_list (list): _players list
             tournament_list (list): tournament list
         """
+
+        player_available = []
         if player_list:
             c.print("[bold yellow] Liste des joueurs disponibles:\n"
                     "[bold yellow]")
@@ -100,8 +102,18 @@ class PlayerView:
             for player in player_list:
                 for tournament in tournament_list:
                     if player not in tournament.players:
-                        c.print(
-                            f"- {player_list.index(player)} [bold green] "
-                            f"{player.last_name}"
-                            f" {player.first_name}, rang :  "
-                            f"{player.rank}[bold green]")
+                        player_available.append(player)
+
+            # player_available = list(set(player_available))
+            unique_player_available = []
+
+            [unique_player_available.append(
+                player) for player in player_available if player not in unique_player_available]
+
+            for player in unique_player_available:
+
+                c.print(
+                    f"- {player_list.index(player)} [bold green] "
+                    f"{player.last_name}"
+                    f" {player.first_name}, rang :  "
+                    f"{player.rank}[bold green]")
