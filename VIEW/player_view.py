@@ -104,7 +104,6 @@ class PlayerView:
                     if player not in tournament.players:
                         player_available.append(player)
 
-            # player_available = list(set(player_available))
             unique_player_available = []
 
             [unique_player_available.append(
