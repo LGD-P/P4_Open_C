@@ -69,23 +69,24 @@ class TournamentView:
         Returns:
             instance: tournament
         """
-
+        choice_tournament_available = []
         if tournament_list:
             index = -1
             for tournament in tournament_list:
-                choice_tournament_available = []
-                index += 1
-                choice_tournament_available.append(index)
+                if tournament.player_score == {}:
+                    index += 1
+                    choice_tournament_available.append(
+                        tournament_list.index(tournament))
                 # if not len(tournament.players) % 2:
-                c.print(f"{tournament_list.index(tournament)} [bold green]"
-                        f"{tournament.name}, {tournament.place}[bold green]\n")
-                tournament_choice = c.input(
-                    "[bold blue]Faites votre choix :  [bold blue]"
-                )
+                    c.print(f"{tournament_list.index(tournament)} [bold green]"
+                            f"{tournament.name}, {tournament.place}[bold green]\n")
+            tournament_choice = c.input(
+                "[bold blue]Faites votre choix :  [bold blue]"
+            )
+            print(choice_tournament_available)
 
-            while not tournament_choice.isdigit() \
-                    or not int(tournament_choice) \
-                    in choice_tournament_available:
+            while not tournament_choice.isdigit() or not \
+                    int(tournament_choice) in choice_tournament_available:
                 tournament_choice = c.input(
                     "[bold red]Veillez faire un choix dans la liste[bold red]"
                 )
