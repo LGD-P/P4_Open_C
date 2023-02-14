@@ -609,14 +609,17 @@ class TournamentController:
         new_dict = {}
 
         for tournament in self.tournament_list:
-            if tournament.name == data["TOURNAMENT"][
-                    str(self.tournament_list.index(tournament)+1)]['name']:
-                for values in data["TOURNAMENT"][
-                        str(self.tournament_list.index(tournament)+1)][
-                            'player_score'].items():
-                    for player in tournament.players:
-                        new_dict[player] = values[1]
-            tournament.player_score = new_dict
+            try:
+                if tournament.name == data["TOURNAMENT"][
+                        str(self.tournament_list.index(tournament)+1)]['name']:
+                    for values in data["TOURNAMENT"][
+                            str(self.tournament_list.index(tournament)+1)][
+                                'player_score'].items():
+                        for player in tournament.players:
+                            new_dict[player] = values[1]
+                    tournament.player_score = new_dict
+            except KeyError:
+                pass
 
     def load_touranment(self):
         """This function will load tournament from database in controller
