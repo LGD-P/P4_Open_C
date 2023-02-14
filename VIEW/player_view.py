@@ -110,9 +110,9 @@ class PlayerView:
                 player) for player in player_available if player not in unique_player_available]
 
             for player in unique_player_available:
-                if player not in tournament.players:
-                    c.print(
-                        f"- {player_list.index(player)} [bold green] "
-                        f"{player.last_name}"
-                        f" {player.first_name}, rang :  "
-                        f"{player.rank}[bold green]")
+                # if not player in tournament.players:
+                c.print(
+                    f"- {player_list.index(player)} [bold green] "
+                    f"{player.last_name}"
+                    f" {player.first_name}, rang :  "
+                    f"{player.rank}[bold green]")
