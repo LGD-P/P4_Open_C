@@ -452,7 +452,7 @@ class TournamentController:
         instance.player_score and round instance.
         """
         tournament_choice = self.match_view.display_tournament_to_fill_result(
-            self.started_tournaments, self.tournament_list)
+            self.started_tournaments, self.tournament_list, self.round_list)
 
         round_index = (len(tournament_choice.tours))
 

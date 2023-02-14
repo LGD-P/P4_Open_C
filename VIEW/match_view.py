@@ -6,7 +6,7 @@ c = Console()
 
 class MatchView:
     def display_tournament_to_fill_result(self, started_tournaments,
-                                          tournament_list):
+                                          tournament_list, round_list):
         """This function display tournament available to receive players_score
 
         Args:
@@ -25,24 +25,32 @@ class MatchView:
             pass
 
         else:
+            choice_list = []
 
+            c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
+                    "des résultats ***?[bold yellow]\n\n")
+            for tournament in tournament_list:
+                for round in round_list:
+                    if tournament.name == round.tournament_name and round.ending_hour == None:
+                        print("ok")
+                        choice_list.append(tournament_list.index(tournament))
+
+                """
             for tournament in started_tournaments:
                 choice_list = []
 
                 choice_list = [started_tournaments.index(tournament)]
+            """
+                c.print(f"- {tournament_list.index(tournament)} : "
+                        f"[bold green]{tournament.name}[bold green]\n")
 
-            c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
-                    "des résultats ?[bold yellow]\n\n"
-                    f"- {started_tournaments.index(tournament)} : "
-                    f"[bold green]{tournament.name}[bold green]\n")
-
+            print(choice_list)
             tournament_choice = c.input("==> ")
 
             while not tournament_choice.isdigit() \
                     or not int(tournament_choice) in choice_list:
-                c.print(
-                    '[bold red] Merci de faire un choix dans "\
-                        "la liste[bold red]')
+                c.print("[bold red] Merci de faire un choix dans "
+                        "la liste[bold red]")
                 tournament_choice = c.input("==> ")
 
             # c.print(started_tournaments[int(tournament_choice)])
