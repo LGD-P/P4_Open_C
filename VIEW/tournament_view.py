@@ -138,7 +138,7 @@ class TournamentView:
 
             tournament = self.display_tournament_to_fill(
                 tournament_list, player_list)
-            print(tournament.name)
+            # print(tournament.name)
 
             if not tournament:
                 return None

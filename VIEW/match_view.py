@@ -28,23 +28,16 @@ class MatchView:
             choice_list = []
 
             c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
-                    "des résultats ***?[bold yellow]\n\n")
+                    "des résultats ?[bold yellow]\n\n")
             for tournament in tournament_list:
                 for round in round_list:
                     if tournament.name == round.tournament_name and round.ending_hour == None:
-                        print("ok")
+
                         choice_list.append(tournament_list.index(tournament))
 
-                """
-            for tournament in started_tournaments:
-                choice_list = []
-
-                choice_list = [started_tournaments.index(tournament)]
-            """
                 c.print(f"- {tournament_list.index(tournament)} : "
                         f"[bold green]{tournament.name}[bold green]\n")
 
-            print(choice_list)
             tournament_choice = c.input("==> ")
 
             while not tournament_choice.isdigit() \

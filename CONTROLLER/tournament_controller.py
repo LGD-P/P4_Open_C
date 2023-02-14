@@ -314,7 +314,7 @@ class TournamentController:
                 player_in_tournament_to_run = self\
                     .swiss_logic_sorting_round_two_and_more(tournament_to_run)
 
-                print(player_in_tournament_to_run)
+                # print(player_in_tournament_to_run)
                 """
                 player_in_tournament_to_run = self \
                     .swiss_logic_sorting_round_two_and_more(tournament_to_run)

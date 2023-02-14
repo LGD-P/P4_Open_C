@@ -20,7 +20,7 @@ class RoundView:
             return None
         else:
             table = Table(
-                title="[bold yellow]-Premier Round du tournois-[bold yellow]",
+                title=f"[bold yellow]-Round N°{len(tournament_running.tours)} du tournois-[bold yellow]",
                 style="red")
 
             table.add_column("Joueur Un", justify="center",
