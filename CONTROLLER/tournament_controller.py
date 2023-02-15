@@ -511,43 +511,48 @@ class TournamentController:
             self.match_view, self.round_view)
         '''
 
-        secondary_report_menu = {
-            "1": {
-                "label": "[bold blue]- 01. Liste de tous les joueurs "
-                "d'un tournoi par ordre alphabétique[bold blue]",
-                "action": self.report_players_alpahatical_order
-            },
-            "2": {
-                "label": "[bold blue]- 02. Liste de tous les joueurs d'un "
-                "tournoi "
-                "par classement[bold blue]",
-                "action": self.report_player_by_rank
-            },
-            "3": {
-                "label": "[bold blue]- 03. Liste de tous les tournois."
-                "[bold blue]",
-                "action": self.report_tournament_list
-            },
-            "4": {
-                "label": "[bold blue]- 04. Liste de tous les tours d'un "
-                "tournoi.[bold blue]",
-                "action": self.report_tour_in_tournament
-            },
-            "5": {
-                "label": "[bold blue]- 05. Liste de tous les matchs d'un "
-                "tournoi."
-                "[bold blue]",
-                "action": self.report_match_in_tournament
-            },
+        if len(self.tournament_list) == 0:
+            c.print("[bold red] Vous n'avez aucune données à consulter.[bold red]")
+        else:
 
-        }
+            secondary_report_menu = {
+                "1": {
+                    "label": "[bold blue]- 01. Liste de tous les joueurs "
+                    "d'un tournoi par ordre alphabétique[bold blue]",
+                    "action": self.report_players_alpahatical_order
+                },
+                "2": {
+                    "label": "[bold blue]- 02. Liste de tous les joueurs d'un "
+                    "tournoi "
+                    "par classement[bold blue]",
+                    "action": self.report_player_by_rank
+                },
+                "3": {
+                    "label": "[bold blue]- 03. Liste de tous les tournois."
+                    "[bold blue]",
+                    "action": self.report_tournament_list
+                },
+                "4": {
+                    "label": "[bold blue]- 04. Liste de tous les tours d'un "
+                    "tournoi.[bold blue]",
+                    "action": self.report_tour_in_tournament
+                },
+                "5": {
+                    "label": "[bold blue]- 05. Liste de tous les matchs d'un "
+                    "tournoi."
+                    "[bold blue]",
+                    "action": self.report_match_in_tournament
+                },
 
-        self.tournament_view.display_report(secondary_report_menu)
+            }
+
+            self.tournament_view.display_report(secondary_report_menu)
 
     def creat_db(self):
         """This function use db_controller to creat .json file
             If there is no data send appropriate user message.
         """
+
         created = self.db.record_data(self.tournament_list, self.player_list,
                                       self.db)
         if not created:
@@ -560,26 +565,30 @@ class TournamentController:
          Returns:
             list: self.player_list in tournament_controller
         """
-        opener = open('db.json')
+        try:
+            opener = open('db.json')
 
-        data = json.load(opener)
+            data = json.load(opener)
 
-        player_deserializer = []
-        index = 0
-        for _ in data["PLAYERS"]:
-            index += 1
-            player_deserializer.append(data["PLAYERS"][str(index)])
+            player_deserializer = []
+            index = 0
+            for _ in data["PLAYERS"]:
+                index += 1
+                player_deserializer.append(data["PLAYERS"][str(index)])
 
-        for player in player_deserializer:
-            self.player_list.append(Player(
-                player["last_name"],
-                player["first_name"],
-                player["birth"],
-                player["sex"],
-                player["rank"]))
+            for player in player_deserializer:
+                self.player_list.append(Player(
+                    player["last_name"],
+                    player["first_name"],
+                    player["birth"],
+                    player["sex"],
+                    player["rank"]))
 
-        opener.close()
-        return self.player_list
+            opener.close()
+            return self.player_list
+        except FileNotFoundError:
+            c.print("[bold red]Vous n'avez pas de base de données[bold red]")
+            return None
 
     def load_player_in_tournament(self, tournament, data):
         """This function will get in database player liste checking index
@@ -628,6 +637,7 @@ class TournamentController:
         Returns:
             list: self.tournament_list in tournament_controller
         """
+
         opener = open('db.json')
 
         data = json.load(opener)
@@ -660,8 +670,12 @@ class TournamentController:
         """Function used to get player and tournament in tournament controller
         # from .json database
         """
-        self.load_global_player_list()
-        self.load_touranment()
+
+        load_players = self.load_global_player_list()
+        if not load_players:
+            pass
+        else:
+            self.load_touranment()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
