@@ -61,8 +61,11 @@ class DataBase:
         table_tournament.upsert({
             "players": player_list_index}, where('players') == [])
 
-        table_tournament.upsert(
-            {"player_score": player_score_dict_in_tournament_table}, where("player_score") == {})
+        if not tournament_list:
+            pass
+        else:
+            table_tournament.upsert(
+                {"player_score": player_score_dict_in_tournament_table}, where("player_score") == {})
 
     def serialize_players(self, player):
         """This function will be used in a loop
@@ -101,7 +104,7 @@ class DataBase:
 
         db = self.creat_data_base()
         # db.drop_table("_default")
-        while not tournament_list or not player_list:
+        while not tournament_list and not player_list:
             return None
 
         table_tournament = db.table("TOURNAMENT")
@@ -109,11 +112,20 @@ class DataBase:
         table_players = db.table("PLAYERS")
         table_players.truncate()
 
-        for player in player_list:
-            table_players.insert(self.serialize_players(player))
+        if not player_list:
+            pass
+        else:
+            for player in player_list:
+                table_players.insert(self.serialize_players(player))
 
-        for tournament in tournament_list:
-            table_tournament.insert(self.serialised_tournament(tournament))
+        if not tournament_list:
+            pass
+        else:
+            for tournament in tournament_list:
+                table_tournament.insert(self.serialised_tournament(tournament))
 
-        self.serialized_player_and_score_in_t_table(
-            tournament_list, table_tournament)
+            if not player_list:
+                pass
+            else:
+                self.serialized_player_and_score_in_t_table(
+                    tournament_list, table_tournament)

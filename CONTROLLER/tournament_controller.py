@@ -553,9 +553,9 @@ class TournamentController:
             If there is no data send appropriate user message.
         """
 
-        created = self.db.record_data(self.tournament_list, self.player_list,
-                                      self.db)
-        if not created:
+        self.db.record_data(self.tournament_list, self.player_list,
+                            self.db)
+        if not self.tournament_list and not self.player_list:
             self.tournament_view.bug_in_db()
 
     def load_global_player_list(self):
