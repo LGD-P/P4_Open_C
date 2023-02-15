@@ -672,9 +672,10 @@ class TournamentController:
         """
 
         load_players = self.load_global_player_list()
-        if not load_players:
+        if not load_players == self.player_list:
             pass
         else:
+
             self.load_touranment()
 
     def generate_data(self):
