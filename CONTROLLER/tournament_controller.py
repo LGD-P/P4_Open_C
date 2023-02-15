@@ -262,7 +262,7 @@ class TournamentController:
 
         tournament_to_run = self.tournament_view \
             .display_choose_a_tournament_to_launch(
-                self.tournament_list)
+                self.tournament_list, self.round_list)
 
         if not tournament_to_run:
             return None
