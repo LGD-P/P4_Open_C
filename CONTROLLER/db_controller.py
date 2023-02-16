@@ -5,6 +5,7 @@ from tinydb import TinyDB, where
 
 from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
+from VIEW.error_messages import ErrorMessages
 
 
 c = Console()
@@ -65,8 +66,9 @@ class DataBase:
             for player in tournament.players:
                 player_list_index.append(
                     tournament.players.index(player)+1)
-                player_score_dict_in_tournament_table[tournament.players.index(
-                    player)+1] = tournament.player_score[player]
+                player_score_dict_in_tournament_table[
+                    tournament.players.index(
+                        player)+1] = tournament.player_score[player]
 
         table_tournament.upsert({
             "players": player_list_index}, where('players') == [])
@@ -75,7 +77,8 @@ class DataBase:
             pass
         else:
             table_tournament.upsert(
-                {"player_score": player_score_dict_in_tournament_table}, where("player_score") == {})
+                {"player_score": player_score_dict_in_tournament_table},
+                where("player_score") == {})
 
     def serialize_players(self, player):
         """This function will be used in a loop
@@ -146,7 +149,7 @@ class DataBase:
 
         self.save_data(self.tournament_list, self.player_list)
         if not self.tournament_list and not self.player_list:
-            self.bug_in_db()
+            ErrorMessages().bug_in_db()
 
     def load_global_player_list(self):
         """this function open .json file and put players from PLAYERS table
@@ -271,12 +274,3 @@ class DataBase:
         else:
 
             self.load_touranment(self.tournament_list)
-
-    def bug_in_db(self):
-        """Simple message to report that there is no data to record
-
-        Returns:
-            str: information message
-        """
-        return c.print("[bold red]Créer d'abord un tournois ou des joueurs"
-                       "[bold red]")

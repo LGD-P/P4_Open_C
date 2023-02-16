@@ -4,7 +4,6 @@ from tinydb import TinyDB
 import json
 
 from CONTROLLER.match_controller import MatchController
-from CONTROLLER.db_controller import DataBase
 
 
 from VIEW.tournament_view import TournamentView
@@ -550,18 +549,6 @@ class TournamentController:
             }
 
             self.tournament_view.display_report(secondary_report_menu)
-
-    def load_data(self):
-        """Function used to get player and tournament in tournament controller
-        # from .json database
-        """
-
-        load_players = self.load_global_player_list()
-        if not load_players == self.player_list:
-            pass
-        else:
-
-            self.load_touranment()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
