@@ -49,12 +49,12 @@ class MenuController:
                 "action": self.tournament_controller.report,
             },
             "7": {
-                "label": "[bold blue]- 7. Enregistrer les données "
+                "label": "[bold blue]- 7. Sauvegarder les données "
                 ":dvd:  [bold blue]",
                 "action": self.tournament_controller.creat_db,
             },
             "8": {
-                "label": "[bold blue]- 8. Télécharger les données "
+                "label": "[bold blue]- 8. Charger les données "
                 "🔄    [bold blue]",
                 "action": self.tournament_controller.load_data,
             },
