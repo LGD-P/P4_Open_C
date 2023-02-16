@@ -456,6 +456,9 @@ class TournamentController:
         tournament_choice = self.match_view.display_tournament_to_fill_result(
             self.started_tournaments, self.tournament_list, self.round_list)
 
+        if not tournament_choice:
+            return None
+
         round_index = (len(tournament_choice.tours))
 
         round = tournament_choice.tours[round_index - 1]

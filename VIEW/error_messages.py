@@ -5,7 +5,7 @@ c = Console()
 
 class ErrorMessages:
 
-    def bug_in_db(self):
+    def bug_to_creat_db(self):
         """Simple message to report that there is no data to record
 
         Returns:
@@ -15,7 +15,7 @@ class ErrorMessages:
                        "[bold red]")
 
     def bug_in_report(self):
-        """Simple message to say that there is no data to data to shox in 
+        """Simple message to say that there is no data to data to show in 
         report section
 
         Returns:
@@ -23,3 +23,12 @@ class ErrorMessages:
         """
         return c.print(
             "[bold red] Vous n'avez aucune données à consulter.[bold red]")
+
+    def bug_cannot_load_db(self):
+        """Simple message to say that there is no db to load
+
+        Returns:
+            str: information message
+        """
+        return c.print("[bold red]Vous n'avez pas de base de données à \
+            charger[bold red]")
