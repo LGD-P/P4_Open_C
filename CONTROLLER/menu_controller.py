@@ -60,7 +60,7 @@ class MenuController:
             "8": {
                 "label": "[bold blue]- 8. Charger les données "
                 "🔄    [bold blue]",
-                "action": self.tournament_controller.load_data,
+                "action": self.db_controller.load_data,
             },
             "9": {
                 "label": "[bold blue]- 9. Quitter :raising_hand:  "

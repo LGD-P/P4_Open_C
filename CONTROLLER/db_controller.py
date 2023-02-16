@@ -180,7 +180,8 @@ class DataBase:
             c.print("[bold red]Vous n'avez pas de base de données[bold red]")
             return None
 
-    def load_player_in_tournament(self, tournament, data, player_list, tournament_list):
+    def load_player_in_tournament(self, tournament, data, player_list,
+                                  tournament_list):
         """This function will get in database player liste checking index
         to identify the right player and put them in controller
         Args:
@@ -196,7 +197,8 @@ class DataBase:
                     if tournament["name"] == element.name:
                         element.players = player_to_get
 
-    def load_players_tournament_p_score(self, tournament, data, tournament_list):
+    def load_players_tournament_p_score(self, tournament, data,
+                                        tournament_list):
         """This function will get player_score in data base identifying player
         with index, and put this dict with player instance as key in controller
 
@@ -249,12 +251,26 @@ class DataBase:
                 tournament["description"],
                 tournament["player_score"]))
 
-            self.load_player_in_tournament(tournament, data)
+            self.load_player_in_tournament(tournament, data, self.player_list,
+                                           self.tournament_list)
 
-            self.load_players_tournament_p_score(tournament, data)
+            self.load_players_tournament_p_score(
+                tournament, data, self.tournament_list)
 
         opener.close()
         return tournament_list
+
+    def load_data(self):
+        """Function used to get player and tournament in tournament controller
+        # from .json database
+        """
+
+        load_players = self.load_global_player_list()
+        if not load_players == self.player_list:
+            pass
+        else:
+
+            self.load_touranment(self.tournament_list)
 
     def bug_in_db(self):
         """Simple message to report that there is no data to record
