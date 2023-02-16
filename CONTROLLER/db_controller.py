@@ -1,9 +1,19 @@
 from pathlib import Path
+from rich.console import Console
 import json
 from tinydb import TinyDB, where
 
+from MODEL.tournament_model import Tournament
+from MODEL.player_model import Player
+
+
+c = Console()
+
 
 class DataBase:
+    def __init__(self, player_list, tournament_list):
+        self.player_list = player_list
+        self.tournament_list = tournament_list
 
     def creat_data_base(self):
         """This function creats json file for future data
@@ -39,7 +49,7 @@ class DataBase:
         }
         return serialized_tournament
 
-    def serialized_player_and_score_in_t_table(self, tournament_list, table_tournament):
+    def serialized_player_and_score_in_t_table(self, table_tournament):
         """this function will be specificly used to fill player_score and 
         list of player in tournament. To identify player, this function uses
         index of players_table
@@ -51,7 +61,7 @@ class DataBase:
         player_list_index = []
         player_score_dict_in_tournament_table = {}
 
-        for tournament in tournament_list:
+        for tournament in self.tournament_list:
             for player in tournament.players:
                 player_list_index.append(
                     tournament.players.index(player)+1)
@@ -61,7 +71,7 @@ class DataBase:
         table_tournament.upsert({
             "players": player_list_index}, where('players') == [])
 
-        if not tournament_list:
+        if not self.tournament_list:
             pass
         else:
             table_tournament.upsert(
@@ -88,7 +98,7 @@ class DataBase:
 
         return serialized_players
 
-    def record_data(self, tournament_list, player_list, db):
+    def save_data(self, tournament_list, player_list):
         """This function uses previous ones to record all data
         in .json file 
 
@@ -104,7 +114,7 @@ class DataBase:
 
         db = self.creat_data_base()
         # db.drop_table("_default")
-        while not tournament_list and not player_list:
+        if not tournament_list and not player_list:
             return None
 
         table_tournament = db.table("TOURNAMENT")
@@ -127,5 +137,130 @@ class DataBase:
             if not player_list:
                 pass
             else:
-                self.serialized_player_and_score_in_t_table(
-                    tournament_list, table_tournament)
+                self.serialized_player_and_score_in_t_table(table_tournament)
+
+    def creat_db(self):
+        """This function use db_controller to creat .json file
+            If there is no data send appropriate user message.
+        """
+
+        self.save_data(self.tournament_list, self.player_list)
+        if not self.tournament_list and not self.player_list:
+            self.bug_in_db()
+
+    def load_global_player_list(self):
+        """this function open .json file and put players from PLAYERS table
+        in tournament_controller. It allow user to fill tournament with it
+
+         Returns:
+            list: self.player_list in tournament_controller
+        """
+        try:
+            opener = open('db.json')
+
+            data = json.load(opener)
+
+            player_deserializer = []
+            index = 0
+            for _ in data["PLAYERS"]:
+                index += 1
+                player_deserializer.append(data["PLAYERS"][str(index)])
+
+            for player in player_deserializer:
+                self.player_list.append(Player(
+                    player["last_name"],
+                    player["first_name"],
+                    player["birth"],
+                    player["sex"],
+                    player["rank"]))
+
+            opener.close()
+            return self.player_list
+        except FileNotFoundError:
+            c.print("[bold red]Vous n'avez pas de base de données[bold red]")
+            return None
+
+    def load_player_in_tournament(self, tournament, data, player_list, tournament_list):
+        """This function will get in database player liste checking index
+        to identify the right player and put them in controller
+        Args:
+            tournament (instance): from a loop of self.tournament_lit
+            data (.json): from database .json available
+        """
+        player_to_get = []
+        for player in player_list:
+            if player.last_name == data["PLAYERS"][
+                    str(player_list.index(player)+1)]['last_name']:
+                player_to_get.append(player)
+                for element in tournament_list:
+                    if tournament["name"] == element.name:
+                        element.players = player_to_get
+
+    def load_players_tournament_p_score(self, tournament, data, tournament_list):
+        """This function will get player_score in data base identifying player
+        with index, and put this dict with player instance as key in controller
+
+        Args:
+            tournament (instance): from self.tournement_list loop
+            data (.json): from database .json available
+        """
+
+        new_dict = {}
+
+        for tournament in tournament_list:
+            try:
+                if tournament.name == data["TOURNAMENT"][
+                        str(tournament_list.index(tournament)+1)]['name']:
+                    for values in data["TOURNAMENT"][
+                            str(tournament_list.index(tournament)+1)][
+                                'player_score'].items():
+                        for player in tournament.players:
+                            new_dict[player] = values[1]
+                    tournament.player_score = new_dict
+            except KeyError:
+                pass
+
+    def load_touranment(self, tournament_list):
+        """This function will load tournament from database in controller
+        and allows user to run tournament or uses players already registered
+
+        Returns:
+            list: self.tournament_list in tournament_controller
+        """
+
+        opener = open('db.json')
+
+        data = json.load(opener)
+
+        tournament_deserializer = []
+        index = 0
+        for _ in data["TOURNAMENT"]:
+            index += 1
+            tournament_deserializer.append(data["TOURNAMENT"][str(index)])
+
+        for tournament in tournament_deserializer:
+            tournament_list.append(Tournament(
+                tournament["name"],
+                tournament["place"],
+                tournament["date"],
+                tournament["tours"],
+                tournament["players"],
+                tournament["time_control"],
+                tournament["description"],
+                tournament["player_score"]))
+
+            self.load_player_in_tournament(tournament, data)
+
+            self.load_players_tournament_p_score(tournament, data)
+
+        opener.close()
+        return tournament_list
+
+    def bug_in_db(self):
+        """Simple message to report that there is no data to record
+
+        Returns:
+            str: information message
+        """
+        return c.print("[bold red]Créer d'abord un tournois ou des joueurs"
+                       "[bold red]")

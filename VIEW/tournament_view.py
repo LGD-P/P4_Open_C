@@ -517,12 +517,3 @@ class TournamentView:
                         "a affronté ==>"
                         f" {match[1].last_name} {match[1].first_name} \n")
         '''
-
-    def bug_in_db(self):
-        """Simple message to report that there is no data to record
-
-        Returns:
-            str: information message
-        """
-        return c.print("[bold red]Créer d'abord un tournois ou des joueurs"
-                       "[bold red]")

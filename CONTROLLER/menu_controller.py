@@ -6,6 +6,7 @@ from VIEW.menu_view import MenuView
 
 from CONTROLLER.player_controller import PlayerController
 from CONTROLLER.tournament_controller import TournamentController
+from CONTROLLER.db_controller import DataBase
 
 
 c = Console()
@@ -17,6 +18,9 @@ class MenuController:
         self.player_controller = PlayerController([])
         self.tournament_controller = TournamentController(
             [], self.player_controller.player_list, [], [])
+        self.db_controller = DataBase(self.tournament_controller.player_list,
+                                      self.tournament_controller
+                                          .tournament_list)
         self.main_menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: "
@@ -51,7 +55,7 @@ class MenuController:
             "7": {
                 "label": "[bold blue]- 7. Sauvegarder les données "
                 ":dvd:  [bold blue]",
-                "action": self.tournament_controller.creat_db,
+                "action": self.db_controller.creat_db
             },
             "8": {
                 "label": "[bold blue]- 8. Charger les données "
