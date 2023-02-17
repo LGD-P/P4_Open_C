@@ -48,8 +48,8 @@ class TournamentController:
 
         self.tournament_list.append(Tournament(
             serialized_tournament["name"],
-            serialized_tournament["place"],
             serialized_tournament["date"],
+            serialized_tournament["place"],
             serialized_tournament["tours"],
             serialized_tournament["players"],
             serialized_tournament["time_control"],

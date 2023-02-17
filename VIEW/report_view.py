@@ -1,5 +1,6 @@
 from rich.console import Console
 
+
 from VIEW.match_view import MatchView
 from VIEW.round_view import RoundView
 
@@ -79,8 +80,58 @@ class Report_View:
 
             c.print("[bold magenta]Voici la liste des joueurs par rang:"
                     "\n[bold magenta]")
+
             for player in sorted_players:
+
+                c.print(
+                    f"[white]- {player.last_name} {player.first_name}[white] "
+                    "[bold yellow] Classement :[bold yellow] "
+                    f"[white]{player.rank}[white]")
+
+    def display_player_in_row(self, tournament_list):
+        for tournament in tournament_list:
+            for player in tournament.players:
                 c.print(player)
+
+    def display_player_score(self, tournament):
+
+        for player_score in tournament.player_score:
+            c.print(
+                f"[bold cyan]{player_score.last_name} {player_score.first_name}[bold cyan][bold yellow], SCORE ==>  [bold yellow]"
+                f"[bold cyan]{tournament.player_score[player_score]}[bold cyan]")
+
+    def display_tournament(self, tournament_list):
+
+        for tournament in tournament_list:
+            c.print("[bold red]         ---TOUNOIS N°"
+                    f"{int(tournament_list.index(tournament)+1)}---\n[bold red]")
+
+            c.print("[bold green3]Nom du tournois : [bold green3]"
+                    f"[bold yellow]{tournament.name}[bold yellow]")
+
+            c.print("[bold green3]Lieu du tournois :[bold green3]"
+                    f"[bold yellow]{tournament.place}[bold yellow]")
+
+            c.print("[bold green3]Date du tournois : [bold green3]"
+                    f"[bold yellow]{tournament.date}[bold yellow]0")
+
+            c.print("[bold green3]Nombres de tours : [bold green3]"
+                    f"[bold yellow]{tournament.number_of_rounds}[bold yellow]")
+
+            c.print("[bold green3]Time control : [bold green3]"
+                    f"[bold yellow]{tournament.time_control}[bold yellow]")
+
+            c.print("[bold green3]Description : [bold green3]"
+                    f"[bold yellow]{tournament.description}[bold yellow]")
+
+            c.print("[bold green3]Liste des joueurs: [bold green3]")
+            self.display_player_in_row(tournament_list)
+
+            c.print("[bold green3]Liste des scores par joueurs: [bold green3]")
+            self.display_player_score(tournament)
+
+            c.print(f"[bold green3]Liste des tours :[bold green3]")
+            MatchView().display_match_for_report(tournament)
 
     def report_display_tournament_list(self, tournament_list):
         """

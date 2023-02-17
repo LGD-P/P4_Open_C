@@ -13,11 +13,11 @@ class Player:
         self.rank = rank
 
     def __str__(self):
-        return (f"- Nom: {self.last_name}\n"
-                f"- Prénom: {self.first_name}\n"
-                f"- Date de naissance: {self.birth}\n"
-                f"- Sexe: {self.sex}\n"
-                f"- rank: {self.rank}\n"
+        return (f"- Nom: {self.last_name} "
+                f"- Prénom: {self.first_name} "
+                f"- Date de naissance: {self.birth} "
+                f"- Sexe: {self.sex} "
+                f"- rank: {self.rank}"
                 )
 
     def __repr__(self):

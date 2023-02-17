@@ -19,7 +19,7 @@ class ReportController:
                 self.tournament_list)
 
     def report_tournament_list(self):
-        Report_View().report_display_tournament_list(
+        Report_View().display_tournament(
             self.tournament_list)
 
     def report_tour_in_tournament(self):

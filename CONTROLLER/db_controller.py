@@ -218,6 +218,7 @@ class DataBase:
         """
 
         new_dict = {}
+        index = -1
 
         for tournament in self.tournament_list:
             try:
@@ -226,9 +227,10 @@ class DataBase:
                     for values in data["TOURNAMENT"][
                             str(self.tournament_list.index(tournament)+1)][
                                 'player_score'].items():
-                        for player in tournament.players:
-                            new_dict[player] = values[1]
+                        index += 1
+                        new_dict[tournament.players[index]] = values[1]
                     tournament.player_score = new_dict
+
             except KeyError:
                 pass
 

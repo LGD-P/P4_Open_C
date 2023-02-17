@@ -96,9 +96,6 @@ class MatchView:
             return c.print("[bold red]Il n'y a pas encore de match dans "
                            "la liste[bold red]")
 
-        c.print("[bold yellow]Voici la liste matchs pour lesquels un score a"
-                " été ajouté : \n[bold yellow]")
-
         index_round = 0
 
         for match in tournament.tours:
