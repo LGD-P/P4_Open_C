@@ -89,18 +89,36 @@ class Report_View:
                     f"[white]{player.rank}[white]")
 
     def display_player_in_row(self, tournament_list):
+        """Display players from tournament list
+
+        Args:
+            tournament_list (list):  tournament list 
+        """
         for tournament in tournament_list:
             for player in tournament.players:
                 c.print(player)
 
     def display_player_score(self, tournament):
+        """Displayer player score from tournament
+
+        Args:
+            tournament (instance): from loop on tournament_list
+        """
 
         for player_score in tournament.player_score:
             c.print(
-                f"[bold cyan]{player_score.last_name} {player_score.first_name}[bold cyan][bold yellow], SCORE ==>  [bold yellow]"
-                f"[bold cyan]{tournament.player_score[player_score]}[bold cyan]")
+                f"[bold cyan]{player_score.last_name} "
+                f"{player_score.first_name}[bold cyan][bold yellow], "
+                "SCORE ==>  [bold yellow]"
+                f"[bold cyan]{tournament.player_score[player_score]}"
+                "[bold cyan]")
 
     def display_tournament(self, tournament_list):
+        """Pretty display of each tournament
+
+        Args:
+            tournament_list (list): tournament_list from 
+        """
 
         for tournament in tournament_list:
             c.print("[bold red]         ---TOUNOIS N°"
@@ -132,22 +150,6 @@ class Report_View:
 
             c.print(f"[bold green3]Liste des tours :[bold green3]")
             MatchView().display_match_for_report(tournament)
-
-    def report_display_tournament_list(self, tournament_list):
-        """
-        This function used in report return tournament list
-
-        Args:
-            tournament_list (_type_): list of each tournament instance created
-        """
-        c.print("[bold magenta]Voici la liste des tournois : \n"
-                "[bold magenta]")
-
-        index = 0
-        for tournament in tournament_list:
-            index += 1
-            c.print(
-                f"Tournois N°{index}: \n {tournament.__repr__()}")
 
     def report_display_tour_in_tournament(self, tournament_list, round_list):
         """

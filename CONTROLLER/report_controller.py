@@ -9,37 +9,44 @@ class ReportController:
         self.round_list = round_list
 
     def report_players_alpahatical_order(self):
+        """This function use ReportView to display
+        players by alphabetic order
+        """
         Report_View()\
             .report_display_players_in_tournament_by_alphabetical_order(
                 self.tournament_list)
 
     def report_player_by_rank(self):
+        """This function use ReportView to display player by rank
+        """
         Report_View()\
             .report_display_players_in_tournament_by_rank(
                 self.tournament_list)
 
     def report_tournament_list(self):
+        """This function use ReportView to display tournaments 
+        of tournament_list
+        """
         Report_View().display_tournament(
             self.tournament_list)
 
     def report_tour_in_tournament(self):
+        """This function use ReportView to display each touch 
+        in tournament_list
+        """
         Report_View().report_display_tour_in_tournament(
             self.tournament_list, self.round_list)
 
     def report_match_in_tournament(self):
+        """This function use ReportView to display each match 
+        in tournament list
+        """
         Report_View().report_display_match_in_tournament(
             self.tournament_list)
 
     def report(self):
-        """This function using tournament.view.display_report()
-        allow acces to report menu.
+        """This function using ReportView allow acces to report menu.
         """
-        '''                        
-        self.tournament_view.display_report(
-            self.tournament_list, self.round_list, self.unique_match_list,
-            self.match_view, self.round_view)
-        '''
-        #
 
         if len(self.tournament_list) == 0:
             ErrorMessages().bug_in_report()
