@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.table import Table
 
 
 c = Console()
@@ -22,7 +23,7 @@ class MatchView:
                 "[bold red]Il faut d'abord créer et commencer "
                 "un tournois[bold red]"
             )
-            pass
+            return None
 
         else:
             choice_list = []
@@ -89,34 +90,43 @@ class MatchView:
 
         return winner
 
-    def display_match_for_report(self, tournament_match_list):
+    def display_match_for_report(self, tournament):
 
-        while not tournament_match_list:
+        if not tournament:
             return c.print("[bold red]Il n'y a pas encore de match dans "
                            "la liste[bold red]")
 
-        c.print("[bold magenta]Voici la liste matchs pour lesquels un score a"
-                " été ajouté : \n[bold magenta]")
+        c.print("[bold yellow]Voici la liste matchs pour lesquels un score a"
+                " été ajouté : \n[bold yellow]")
 
         index_round = 0
-        print(len(tournament_match_list))
-        for _ in tournament_match_list:
+
+        for match in tournament.tours:
+
             index_round += 1
-            c.print(
-                f"\n[bold red]- Dans le Round N°{index_round}[bold red] ")
 
-            print("\n\n")
+            table = Table(
+                title=f'[bold red]- Dans le Round N°{index_round}[bold red]',
+                show_lines=True, style="green3")
 
-            for match in tournament_match_list[-1]:
+            table.add_column("[bold yellow1]Joueur 1:[bold yellow1]", justify="center",
+                             no_wrap=True)
+            table.add_column("[bold red] ===CONTRE===> [bold red]", justify="center",
+                             style="red", no_wrap=True)
+            table.add_column("[bold yellow1]Joueur 2:[bold yellow1]", justify="center",
+                             no_wrap=True)
 
-                c.print(
-                    "[bold cyan]Joueur : [bold cyan]"
-                    f"{match[0][0]}, "
+            for round in match:
+
+                table.add_row(
+                    "[bold cyan]"
+                    f"{round[0][0]},\n "
                     f"Score : "
-                    f"{match[0][1]},\n\n"
-                    "    == Contre ==>    \n\n"
-                    f"Joueur : "
-                    f"{match[1][0]}, "
+                    f"{round[0][1]},\n",
+                    "\n== Contre ==>\n",
+                    f"[bold cyan]"
+                    f"{round[1][0]},\n "
                     f"Score : [bold cyan] "
-                    f"{match[1][1]}\n")
-                c.print("[bodl red]**************[bold red]")
+                    f"{round[1][1]}\n")
+
+            c.print(table)

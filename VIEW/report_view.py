@@ -167,7 +167,7 @@ class Report_View:
 
             tournament_choosen = tournament_list[int(question)]
 
-            MatchView().display_match_for_report(tournament_choosen.tours)
+        MatchView().display_match_for_report(tournament_choosen)
 
     def display_report(self, secondary_menu, ):
         """

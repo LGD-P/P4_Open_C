@@ -193,8 +193,7 @@ class DataBase:
         player_to_get = []
         for tournament in self.tournament_list:
             for player in tournament.players:
-                if player.last_name == data["PLAYERS"][
-                        str(self.player_list.index(player)+1)]['last_name']:
+                if player == data["PLAYERS"][str(player)]:
                     player_to_get.append(player)
                     for element in self.tournament_list:
                         if tournament["name"] == element.name:
