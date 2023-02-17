@@ -245,7 +245,28 @@ class TournamentController:
         match_list = self.match_controller.add_unique_match_list(
             first_list_of_match, tournament_to_run.player_score)
 
-        tournament_to_run.tours.append(match_list.match)
+        self.match_list.append(match_list.match)
+
+        starting_hour = datetime.now()
+
+        round = Round(self.match_list[-1], f"Round {1}",
+                      starting_hour, None, 1, tournament_to_run.name)
+
+        tournament_to_run.tours.append(round)
+
+        self.round_list.append(
+            Round(self.match_list[-1], f"Round {1}",
+                  starting_hour,
+                  None, 1, tournament_to_run.name)
+        )
+
+        #  COMMENCER L'AJOUT DU ROUND ICI !!!!!
+
+        # tournament_to_run.tours.append(match_list.match)
+
+        #  Tour = à alimenter avec un round
+        #  round_list = également avec un round
+        # match_list = a alimenter avec les tuples
 
         # c.print(tournament_to_run.tours)
 
@@ -376,7 +397,7 @@ class TournamentController:
             if not self.round_list:
                 starting_hour = datetime.now()
                 self.round_list.append(
-                    Round(tournament_running.tours[-1], f"Round {1}",
+                    Round(self.match_list[-1], f"Round {1}",
                           starting_hour,
                           None, 1, tournament_running.name)
                 )
@@ -461,9 +482,10 @@ class TournamentController:
         if not tournament_choice:
             return None
 
-        round_index = (len(tournament_choice.tours))
+        round_index = (len(self.match_list))
+        print(round_index)
 
-        round = tournament_choice.tours[round_index - 1]
+        round = self.match_list[round_index - 1]
 
         """
         c.print("[bold red]ATTENTION[oold red]")

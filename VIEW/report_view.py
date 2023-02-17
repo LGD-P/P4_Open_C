@@ -149,7 +149,7 @@ class Report_View:
             self.display_player_score(tournament)
 
             c.print(f"[bold green3]Liste des tours :[bold green3]")
-            MatchView().display_match_for_report(tournament)
+            RoundView().display_for_tournament(tournament)
 
     def report_display_tour_in_tournament(self, tournament_list, round_list):
         """
@@ -181,15 +181,16 @@ class Report_View:
                     f" - {tournament_list.index(tournament)} : {tournament}")
 
             tournament_choosen = tournament_list[int(question)]
-
+            """
             round_list_to_display = []
             for round in round_list:
 
                 if tournament_choosen.name in round.tournament_name:
 
                     round_list_to_display.append(round)
+            """
 
-        RoundView().debug_print(round_list_to_display)
+        RoundView().display_for_tournament(tournament_choosen)
 
     def report_display_match_in_tournament(self, tournament_list):
         """

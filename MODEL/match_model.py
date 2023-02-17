@@ -7,7 +7,9 @@ class Match:
         self.match = match
 
     def __str__(self):
-        return print(f"{self.match}")
+        for element in self.match:
+            return print(f"{element}")
 
     def __repre__(self):
-        return print(f"{self.match}")
+        for element in self.match:
+            return print(f"{element}")

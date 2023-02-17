@@ -98,12 +98,12 @@ class MatchView:
 
         index_round = 0
 
-        for match in tournament.tours:
+        for round in tournament.tours:
 
             index_round += 1
 
             table = Table(
-                title=f'[bold red]- Dans le Round N°{index_round}[bold red]',
+                title=f'[bold red]- Matchs dans le Round N°{index_round}[bold red]',
                 show_lines=True, style="green3")
 
             table.add_column("[bold yellow1]Joueur 1:[bold yellow1]", justify="center",
@@ -113,17 +113,17 @@ class MatchView:
             table.add_column("[bold yellow1]Joueur 2:[bold yellow1]", justify="center",
                              no_wrap=True)
 
-            for round in match:
+            for match in round.match_list:
 
                 table.add_row(
                     "[bold cyan]"
-                    f"{round[0][0]},\n "
+                    f"{match[0][0]},\n "
                     f"Score : "
-                    f"{round[0][1]},\n",
+                    f"{match[0][1]},\n",
                     "\n== Contre ==>\n",
                     f"[bold cyan]"
-                    f"{round[1][0]},\n "
+                    f"{match[1][0]},\n "
                     f"Score : [bold cyan] "
-                    f"{round[1][1]}\n")
+                    f"{match[1][1]}\n")
 
             c.print(table)
