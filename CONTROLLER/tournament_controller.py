@@ -1,7 +1,7 @@
 from rich.console import Console
 from datetime import datetime
-from tinydb import TinyDB
-import json
+# from tinydb import TinyDB
+# import json
 
 from CONTROLLER.match_controller import MatchController
 
@@ -31,11 +31,11 @@ class TournamentController:
         self.match_view = MatchView()
         self.match_list = match_list
         self.match_controller = MatchController()
-        self.unique_match_list = []
+        # self.unique_match_list = []
         self.started_tournaments = []
-        self.serialized_list_of_players = {}
-        self.serialized_list_of_score = {}
-        self.serialized_list_of_tours = []
+        # self.serialized_list_of_players = {}
+        # self.serialized_list_of_score = {}
+        # self.serialized_list_of_tours = []
 
     def add_tournament(self):
         """This function get dict from tournament_view
@@ -105,7 +105,7 @@ class TournamentController:
                 tournament_to_run.player_score.items(),
                 key=lambda k: (-k[1], k[0].rank))
         ]
-        print(player_in_tournament_to_run)
+        # print(player_in_tournament_to_run)
         return player_in_tournament_to_run
 
     def swiss_logic_sorting_round_two_and_more(self, tournament_to_run):
@@ -276,11 +276,13 @@ class TournamentController:
                 winner_to_sort = []
                 for round in self.round_list[-1].match_list:
                     winner_to_sort += round
+                """
                 c.print(
                     "[bold red] ******************\n************\n[bold red]")
                 c.print(tournament_to_run.player_score)
                 c.print(
                     "[bold red] ******************\n************\n[bold red]")
+                """
                 player_in_tournament_to_run = [
                     element[0] for element in
                     sorted(tournament_to_run.player_score.items(),
@@ -296,7 +298,7 @@ class TournamentController:
             #################################
 
             if not self.round_list:
-                c.print("[bold red]pas encore de round [bold red]\n")
+                # c.print("[bold red]pas encore de round [bold red]\n")
 
                 player_in_tournament_to_run = sorted(
                     tournament_to_run.player_score.keys(),

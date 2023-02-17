@@ -193,11 +193,20 @@ class DataBase:
         player_to_get = []
         for tournament in self.tournament_list:
             for player in tournament.players:
-                if player == data["PLAYERS"][str(player)]:
-                    player_to_get.append(player)
-                    for element in self.tournament_list:
-                        if tournament["name"] == element.name:
-                            element.players = player_to_get
+                if player:
+
+                    player_to_get.append(Player(
+                        data["PLAYERS"][str(player)]["last_name"],
+                        data["PLAYERS"][str(player)]["first_name"],
+                        data["PLAYERS"][str(player)]["birth"],
+                        data["PLAYERS"][str(player)]["sex"],
+                        data["PLAYERS"][str(player)]["rank"]))
+                    for tournament_to_fill in self.tournament_list:
+                        if data["TOURNAMENT"][
+                            str(self.tournament_list
+                                .index(tournament_to_fill)+1)][
+                                    "name"] == tournament_to_fill.name:
+                            tournament_to_fill.players = player_to_get
 
     def load_players_tournament_p_score(self, tournament, data):
         """This function will get player_score in data base identifying player

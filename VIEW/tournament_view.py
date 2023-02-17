@@ -208,7 +208,7 @@ class TournamentView:
                     tournament_available.pop(
                         tournament_not_available.index(tournament))
 
-            print(tournament_available)
+            # print(tournament_available)
 
             if len(tournament_available) == 0:
                 c.print("[bold red]Votre tournois est déjà en cours veuillez "
