@@ -27,6 +27,30 @@ class DataBase:
 
         return db
 
+    def serialised_tournament_tours(self, tournament, table_tournament):
+        if not tournament.tours:
+            return None
+        else:
+
+            serialized_tournament_tour = []
+            index = 0
+            for tour in tournament.tours:
+                index += 1
+                serialized_tournament_tour.append(
+                    {str(index): {
+
+                        "tournament_name": tournament.name,
+                        "name": tour.name,
+                        "starting_hour": str(tour.starting_hour),
+                        "ending_hour": str(tour.ending_hour),
+                        "number_of_round": tour.number_of_round,
+                        "match_list": tour.match_list
+                    }
+                    })
+
+            table_tournament.update({
+                "tours": serialized_tournament_tour})
+
     def serialised_tournament(self, tournament):
         """This function will be used in a loop
         to put all tournaments recorded in data base
@@ -42,7 +66,7 @@ class DataBase:
             "name": tournament.name,
             "place": tournament.place,
             "date": tournament.date,
-            "tours": tournament.tours,
+            "tours": None,
             "players": [],
             "time_control": tournament.time_control,
             "description": tournament.description,
@@ -135,8 +159,9 @@ class DataBase:
             pass
         else:
             for tournament in tournament_list:
-                table_tournament.insert(self.serialised_tournament(tournament))
-
+                table_tournament.insert(
+                    self.serialised_tournament(tournament))
+                self.serialised_tournament_tours(tournament, table_tournament)
             if not player_list:
                 pass
             else:

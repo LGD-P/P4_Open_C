@@ -483,7 +483,7 @@ class TournamentController:
             return None
 
         round_index = (len(self.match_list))
-        print(round_index)
+        # print(round_index)
 
         round = self.match_list[round_index - 1]
 
@@ -507,6 +507,11 @@ class TournamentController:
                 if tournament.name == round.tournament_name:
                     if not round.ending_hour:
                         round.ending_hour = datetime.now()
+
+        for tours in tournament_choice.tours:
+            if tours.tournament_name == tournament_choice.name:
+                if not tours.ending_hour:
+                    tours.ending_hour = datetime.now()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
