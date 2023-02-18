@@ -1,6 +1,6 @@
 from rich.console import Console
 from rich.table import Table
-
+from rich import inspect
 
 c = Console()
 
@@ -113,17 +113,34 @@ class MatchView:
             table.add_column("[bold yellow1]Joueur 2:[bold yellow1]", justify="center",
                              no_wrap=True)
 
+            """
+            if type(round) == dict:
+
+                for match in round['match_list']:
+
+                    table.add_row(f"[bold cyan]"
+                                  f"{match[0][0]},\n "
+                                  f"Score : "
+                                  f"{match[0][1]},\n",
+                                  "\n== Contre ==>\n",
+                                  f"[bold cyan]"
+                                  f"{match[1][0]},\n "
+                                  f"Score : [bold cyan] "
+                                  f"{match[1][1]}\n")
+
+                c.print(table)
+            else:
+            """
             for match in round.match_list:
 
-                table.add_row(
-                    "[bold cyan]"
-                    f"{match[0][0]},\n "
-                    f"Score : "
-                    f"{match[0][1]},\n",
-                    "\n== Contre ==>\n",
-                    f"[bold cyan]"
-                    f"{match[1][0]},\n "
-                    f"Score : [bold cyan] "
-                    f"{match[1][1]}\n")
+                table.add_row(f"[bold cyan]"
+                              f"{match[0][0]},\n "
+                              f"Score : "
+                              f"{match[0][1]},\n",
+                              "\n== Contre ==>\n",
+                              f"[bold cyan]"
+                              f"{match[1][0]},\n "
+                              f"Score : [bold cyan] "
+                              f"{match[1][1]}\n")
 
             c.print(table)

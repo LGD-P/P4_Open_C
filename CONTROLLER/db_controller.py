@@ -1,10 +1,14 @@
 from pathlib import Path
 from rich.console import Console
+from rich import inspect
 import json
 from tinydb import TinyDB, where
+from datetime import datetime
 
 from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
+from MODEL.round_model import Round
+
 from VIEW.error_messages import ErrorMessages
 
 
@@ -34,11 +38,29 @@ class DataBase:
 
             serialized_tournament_tour = []
             index = 0
-            for tour in tournament.tours:
-                index += 1
-                serialized_tournament_tour.append(
-                    {str(index): {
 
+            for tour in tournament.tours:
+
+                index += 1
+                """
+                if type(tour) == dict:
+                    serialized_tournament_tour.append(
+                        {
+                            "tournament_name": tour["tournament_name"],
+                            "name": tour["name"],
+                            "starting_hour": tour["starting_hour"],
+                            "ending_hour": tour["ending_hour"],
+                            "number_of_round": tour["number_of_round"],
+                            "match_list": tour["match_list"]
+                        }
+
+                    )
+                    table_tournament.update({
+                        "tours": serialized_tournament_tour})
+                else:
+                    """
+                serialized_tournament_tour.append(
+                    {
                         "tournament_name": tournament.name,
                         "name": tour.name,
                         "starting_hour": str(tour.starting_hour),
@@ -46,7 +68,7 @@ class DataBase:
                         "number_of_round": tour.number_of_round,
                         "match_list": tour.match_list
                     }
-                    })
+                )
 
             table_tournament.update({
                 "tours": serialized_tournament_tour})
@@ -148,6 +170,8 @@ class DataBase:
         table_tournament.truncate()
         table_players = db.table("PLAYERS")
         table_players.truncate()
+
+        print(self.tournament_list)
 
         if not player_list:
             pass
@@ -259,6 +283,23 @@ class DataBase:
             except KeyError:
                 pass
 
+    def load_tours_in_tournament(self, tournament_deserializer):
+
+        deserialized_tournament = []
+
+        for tournament in tournament_deserializer:
+            for tours in tournament["tours"]:
+                deserialized_tournament.append(
+                    Round(tours["match_list"], tours["name"],
+                          datetime.strptime(
+                              tours['starting_hour'][0:19], '%Y-%m-%d  %H:%M:%S'),
+                          datetime.strptime(
+                              tours['ending_hour'][0:19], '%Y-%m-%d  %H:%M:%S'),
+                          tours["number_of_round"], tours["tournament_name"])
+                )
+
+        return deserialized_tournament
+
     def load_touranment(self):
         """This function will load tournament from database in controller
         and allows user to run tournament or uses players already registered
@@ -277,12 +318,14 @@ class DataBase:
             index += 1
             tournament_deserializer.append(data["TOURNAMENT"][str(index)])
 
+        tours = self.load_tours_in_tournament(tournament_deserializer)
+
         for tournament in tournament_deserializer:
             self.tournament_list.append(Tournament(
                 tournament["name"],
                 tournament["place"],
                 tournament["date"],
-                tournament["tours"],
+                tours,
                 tournament["players"],
                 tournament["time_control"],
                 tournament["description"],
@@ -292,6 +335,8 @@ class DataBase:
 
             self.load_players_tournament_p_score(
                 tournament, data)
+
+        print(self.tournament_list)
 
         opener.close()
         return self.tournament_list

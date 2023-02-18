@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich import inspect
 from datetime import datetime
 # from tinydb import TinyDB
 # import json
@@ -31,7 +32,7 @@ class TournamentController:
         self.match_view = MatchView()
         self.match_list = match_list
         self.match_controller = MatchController()
-        # self.unique_match_list = []
+        # self.unique_match_list = []
         self.started_tournaments = []
         # self.serialized_list_of_players = {}
         # self.serialized_list_of_score = {}
@@ -249,23 +250,23 @@ class TournamentController:
 
         starting_hour = datetime.now()
 
-        round = Round(self.match_list[-1], f"Round {1}",
-                      starting_hour, None, 1, tournament_to_run.name)
+        round = Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
+                      starting_hour, None, len(tournament_to_run.tours)+1, tournament_to_run.name)
 
         tournament_to_run.tours.append(round)
 
         self.round_list.append(
-            Round(self.match_list[-1], f"Round {1}",
+            Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
                   starting_hour,
-                  None, 1, tournament_to_run.name)
+                  None, len(tournament_to_run.tours)+1, tournament_to_run.name)
         )
 
-        #  COMMENCER L'AJOUT DU ROUND ICI !!!!!
+        #  COMMENCER L'AJOUT DU ROUND ICI !!!!!
 
         # tournament_to_run.tours.append(match_list.match)
 
-        #  Tour = à alimenter avec un round
-        #  round_list = également avec un round
+        #  Tour = à alimenter avec un round
+        #  round_list = également avec un round
         # match_list = a alimenter avec les tuples
 
         # c.print(tournament_to_run.tours)
@@ -319,7 +320,7 @@ class TournamentController:
             #################################
 
             if not self.round_list:
-                # c.print("[bold red]pas encore de round [bold red]\n")
+                # c.print("[bold red]pas encore de round [bold red]\n")
 
                 player_in_tournament_to_run = sorted(
                     tournament_to_run.player_score.keys(),
@@ -509,9 +510,14 @@ class TournamentController:
                         round.ending_hour = datetime.now()
 
         for tours in tournament_choice.tours:
-            if tours.tournament_name == tournament_choice.name:
-                if not tours.ending_hour:
-                    tours.ending_hour = datetime.now()
+            try:
+                if tours.tournament_name == tournament_choice.name:
+                    if not tours.ending_hour:
+                        tours.ending_hour = datetime.now()
+            except:
+                if tours["tournament_name"] == tournament_choice.name:
+                    if not tours["ending_hour"]:
+                        tours["ending_hour"] = datetime.now()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
