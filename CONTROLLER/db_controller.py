@@ -1,6 +1,4 @@
-from pathlib import Path
 from rich.console import Console
-from rich import inspect
 import json
 from tinydb import TinyDB, where
 from datetime import datetime
@@ -27,11 +25,18 @@ class DataBase:
             .json_: .json file to record data in
         """
         db = TinyDB('db.json', indent=4, encoding='utf-8')
-        # player_table = db.table("PLAYERS")
 
         return db
 
     def serialised_tournament_tours(self, tournament, table_tournament):
+        """This function allow to serialize class Round as 
+        Tournament().tours
+
+        Args:
+            tournament (instance): tournament
+            table_tournament (json table): TOURNAMENT table
+
+        """
         if not tournament.tours:
             return None
         else:
@@ -42,23 +47,7 @@ class DataBase:
             for tour in tournament.tours:
 
                 index += 1
-                """
-                if type(tour) == dict:
-                    serialized_tournament_tour.append(
-                        {
-                            "tournament_name": tour["tournament_name"],
-                            "name": tour["name"],
-                            "starting_hour": tour["starting_hour"],
-                            "ending_hour": tour["ending_hour"],
-                            "number_of_round": tour["number_of_round"],
-                            "match_list": tour["match_list"]
-                        }
 
-                    )
-                    table_tournament.update({
-                        "tours": serialized_tournament_tour})
-                else:
-                    """
                 serialized_tournament_tour.append(
                     {
                         "tournament_name": tournament.name,
@@ -284,6 +273,14 @@ class DataBase:
                 pass
 
     def load_tours_in_tournament(self, tournament_deserializer):
+        """This function all to deserialise Round() from db
+
+        Args:
+            tournament_deserializer (list): Tournament from TOURNAMENT table
+
+        Returns:
+            list: List of Round()
+        """
 
         deserialized_tournament = []
 
@@ -292,9 +289,11 @@ class DataBase:
                 deserialized_tournament.append(
                     Round(tours["match_list"], tours["name"],
                           datetime.strptime(
-                              tours['starting_hour'][0:19], '%Y-%m-%d  %H:%M:%S'),
+                              tours['starting_hour'][0:19],
+                              '%Y-%m-%d  %H:%M:%S'),
                           datetime.strptime(
-                              tours['ending_hour'][0:19], '%Y-%m-%d  %H:%M:%S'),
+                              tours['ending_hour'][0:19],
+                              '%Y-%m-%d  %H:%M:%S'),
                           tours["number_of_round"], tours["tournament_name"])
                 )
 

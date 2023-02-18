@@ -33,23 +33,7 @@ class RoundView:
 
             index = -1
             # for tournament in tournament_list:
-            """
-            if type(tournament_running.tours[-1]) == dict:
-                for players_match in tournament_running.tours[-1]['match_list']:
 
-                    index += 1
-                    table.add_row(
-                        f"\n{players_match[0][0]} "
-                        f"Score  : {players_match[0][1]}\n",
-                        "\n== Jouera contre == >\n",
-                        f"\n{players_match[1][0]} "
-                        f"Score : {players_match[1][1]}\n",
-                        end_section=True)
-
-                c.print(table)
-
-            else:
-            """
             for players_match in tournament_running.tours[-1].match_list:
 
                 index += 1
@@ -89,43 +73,27 @@ class RoundView:
     def display_for_tournament(self, tournament):
         for round in tournament.tours:
 
-            """
-            if type(round) == dict:
-
-                if not round["ending_hour"]:
-                    c.print(
-                        f"[bold yellow]- Round N°{tournament.tours.index(round) + 1 }[bold yellow]\n")
-                    c.print(
-                        f"Commencé le :"
-                        f"{datetime.strptime(round['starting_hour'][0:19], '%Y-%m-%d  %H:%M:%S')}\n")
-                    self.display_round_view(tournament)
-                    c.print(f"Ce round n'est pas encore terminé\n")
-
-                else:
-                    c.print(
-                        f"[bold yellow]- Round N°{tournament.tours.index(round) + 1}[bold yellow]\n")
-                    c.print(
-                        f"Commencé le :"
-                        f"{datetime.strptime(round['starting_hour'][0:19], '%Y-%m-%d  %H:%M:%S')}\n")
-                    self.display_round_view(tournament)
-                    c.print(f"Terminé le :"
-                            f"{datetime.strptime(round['ending_hour'][0:19], '%Y-%m-%d  %H:%M:%S')}\n")
-            else:
-            """
             if not round.ending_hour:
                 c.print(
-                    f"[bold yellow]- Round N°{tournament.tours.index(round) + 1}[bold yellow]\n")
+                    f"[bold yellow]- Round "
+                    f"N°{tournament.tours.index(round) + 1}[bold yellow]\n")
                 c.print(
                     f"Commencé le :"
-                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n")
+                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}"
+                    "\n")
                 self.display_round_view(tournament)
                 c.print(f"Ce round n'est pas encore terminé\n")
 
             else:
                 c.print(
-                    f"[bold yellow]- Round N°{tournament.tours.index(round) + 1}[bold yellow]\n")
-                c.print(f"Commencé le :"
-                        f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n")
+                    f"[bold yellow]- Round "
+                    f"N°{tournament.tours.index(round) + 1}[bold yellow]"
+                    "\n")
+                c.print(
+                    f"Commencé le :"
+                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}"
+                    "\n")
                 self.display_round_view(tournament)
-                c.print(f"Terminé le :"
-                        f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n")
+                c.print(
+                    f"Terminé le :"
+                    f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n")

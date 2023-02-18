@@ -32,7 +32,8 @@ class MatchView:
                     "des résultats ?[bold yellow]\n\n")
             for tournament in tournament_list:
                 for round in round_list:
-                    if tournament.name == round.tournament_name and round.ending_hour == None:
+                    if tournament.name == round.tournament_name and \
+                            round.ending_hour == None:
 
                         choice_list.append(tournament_list.index(tournament))
 
@@ -71,8 +72,6 @@ class MatchView:
             int: winner choosen
         """
 
-        # tournament_list[started_tournaments[int(tournament_choice)]]
-
         c.print(
             f"- Dans le tournois {tournament_choice.name:}\n"
             f"  Qui a gagné ce match : \n"
@@ -103,34 +102,17 @@ class MatchView:
             index_round += 1
 
             table = Table(
-                title=f'[bold red]- Matchs dans le Round N°{index_round}[bold red]',
+                title=f'[bold red]- Matchs dans le Round "\
+                    N°{index_round}[bold red]',
                 show_lines=True, style="green3")
 
-            table.add_column("[bold yellow1]Joueur 1:[bold yellow1]", justify="center",
-                             no_wrap=True)
-            table.add_column("[bold red] ===CONTRE===> [bold red]", justify="center",
-                             style="red", no_wrap=True)
-            table.add_column("[bold yellow1]Joueur 2:[bold yellow1]", justify="center",
-                             no_wrap=True)
+            table.add_column("[bold yellow1]Joueur 1:[bold yellow1]",
+                             justify="center", no_wrap=True)
+            table.add_column("[bold red] ===CONTRE===> [bold red]",
+                             justify="center", style="red", no_wrap=True)
+            table.add_column("[bold yellow1]Joueur 2:[bold yellow1]",
+                             justify="center", no_wrap=True)
 
-            """
-            if type(round) == dict:
-
-                for match in round['match_list']:
-
-                    table.add_row(f"[bold cyan]"
-                                  f"{match[0][0]},\n "
-                                  f"Score : "
-                                  f"{match[0][1]},\n",
-                                  "\n== Contre ==>\n",
-                                  f"[bold cyan]"
-                                  f"{match[1][0]},\n "
-                                  f"Score : [bold cyan] "
-                                  f"{match[1][1]}\n")
-
-                c.print(table)
-            else:
-            """
             for match in round.match_list:
 
                 table.add_row(f"[bold cyan]"
