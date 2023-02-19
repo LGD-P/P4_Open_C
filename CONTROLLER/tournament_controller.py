@@ -1,6 +1,8 @@
 from rich.console import Console
 from rich import inspect
 from datetime import datetime
+import operator
+from itertools import permutations
 
 
 from CONTROLLER.match_controller import MatchController
@@ -123,8 +125,87 @@ class TournamentController:
         # créer un dict avec en clef joueur et en valeur liste des joueurs déja rencontrés
         # dict en tant qu'attribus du tournois
         # autoriser si a déjà joué contre toute la liste des joueurs
+        """
+        first_list_of_match = []
+        for _ in player_in_tournament_to_run:
+            first_list_of_match.append(
+                [
+                    player_in_tournament_to_run[0],
+                    player_in_tournament_to_run[1]
+                ])
+            player_in_tournament_to_run.remove(
+                player_in_tournament_to_run[0])
+            player_in_tournament_to_run.remove(
+                player_in_tournament_to_run[0])
 
+        first_list_of_match.append(
+            [
+                player_in_tournament_to_run[-2],
+                player_in_tournament_to_run[-1]
+            ])
+
+        for match_1 in first_list_of_match:
+            for match_list in tournament_to_run.tours:
+                for match in match_list:
+                    if first_list_of_match[-1] == tournament_to_run \
+                            .tours[-1][-1]:
+                        position = first_list_of_match.index(
+                            match_1)
+                        player_to_move = first_list_of_match[-1][0]
+                        player_to_replace = first_list_of_match[-2][0]
+                        first_list_of_match[-2].append(
+                            player_to_move)
+                        first_list_of_match[-1].append(
+                            player_to_replace)
+
+                    else:
+                        while match == match_1:
+                            position = first_list_of_match.index(
+                                match_1)
+                            player_to_move = first_list_of_match[
+                                position][0]
+                            player_to_replace = first_list_of_match[
+                                position+1][0]
+                            first_list_of_match[
+                                position + 1].append(player_to_move)
+                            first_list_of_match[
+                                position].append(player_to_replace)
+                            del (first_list_of_match[position+1][0])
+                            del (first_list_of_match[position][0])
+
+        result = []
+        for match in first_list_of_match:
+            for player in match:
+                result.append(player)
+
+        player_in_tournament_to_run = result
+        """
         return player_in_tournament_to_run
+
+    ###################################################
+    ###################################################
+
+    def every_match_available(self, sorted_player_in_tournament):
+        creat_every_pairs = list(permutations(
+            sorted(sorted_player_in_tournament), 2))
+        print(creat_every_pairs)
+        all_available_match = []
+        for element in creat_every_pairs:
+            all_available_match .append(sorted(element))
+        print(all_available_match)
+        all_available_unique_match = []
+
+        for element in all_available_match:
+            if element not in all_available_unique_match:
+                all_available_unique_match.append(element)
+
+        #  Une fois qu'on est là chaque fois qu'un round est crée un enlève la
+        # list des possible la liste des paires de joueurs.
+
+        print(len(all_available_unique_match))
+        print(all_available_unique_match)
+    ###################################################
+    ###################################################
 
     def swiss_logic_result(
             self, player_in_tournament_to_run,
@@ -142,28 +223,49 @@ class TournamentController:
 
         half_list = len(player_in_tournament_to_run)//2
 
-        first_part = player_in_tournament_to_run[0:half_list]
+        first_part = player_in_tournament_to_run[:half_list]
         # print(first_part)
 
-        second_part = player_in_tournament_to_run[half_list:9]
+        second_part = player_in_tournament_to_run[half_list:]
         # print(second_part)
         ###################################################
 
+        prepared_list = []
         first_list_of_match = []
 
         for element_1, element_2 in zip(first_part, second_part):
-            first_list_of_match.append([element_1, element_2])
+            prepared_list.append([element_1, element_2])
 
-        """        serialized_match.append([
-                f" {element_1.last_name} {element_1.first_name} == CONTRE ==>"
-                f" {element_2.last_name} {element_2.first_name}"])"""
+        ###################################################
+        ###################################################
+        # !!! partie a exécutée avant le résult !!!
+        # sort player pairs by last_name of new round
+        for match in prepared_list:
+            first_list_of_match.append(
+                sorted(match, key=operator.attrgetter('last_name')))
 
-        # add  round list in tournament chosen
+        # sort all playter list in tournament by last_name
+        sorted_player_in_tournament = []
+        sorted_player_in_tournament.append(
+            (sorted(tournament_to_run.players, key=operator.attrgetter("last_name"))))
+
+        """
+        c.print(
+            "[bold red] *********************\n************\n[bold red]")
+        c.print(player_in_tournament_to_run)
+        c.print(
+            "[bold red] *********************\n************\n[bold red]")
+        """
+
         """
         print("OK")
         print(first_list_of_match)
         print("ok")
         """
+        ###################################################
+        ###################################################
+
+        # add  round list in tournament chosen
         match_list = self.match_controller.add_unique_match_list(
             first_list_of_match, tournament_to_run.player_score)
 
