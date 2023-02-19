@@ -7,7 +7,7 @@ from MODEL.tournament_model import Tournament
 from MODEL.player_model import Player
 from MODEL.round_model import Round
 
-from VIEW.error_messages import ErrorMessages
+from VIEW.error_and_user_messages import ErrorAndUserMessages
 
 
 c = Console()
@@ -187,7 +187,7 @@ class DataBase:
 
         self.save_data(self.tournament_list, self.player_list)
         if not self.tournament_list and not self.player_list:
-            ErrorMessages().bug_to_creat_db()
+            ErrorAndUserMessages().bug_to_creat_db()
 
     def load_global_player_list(self):
         """this function open .json file and put players from PLAYERS table
@@ -218,7 +218,7 @@ class DataBase:
             opener.close()
             return self.player_list
         except FileNotFoundError:
-            ErrorMessages().bug_cannot_load_db()
+            ErrorAndUserMessages().bug_cannot_load_db()
             return None
 
     def load_player_in_tournament(self, tournament, data):

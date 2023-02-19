@@ -1,5 +1,5 @@
 from VIEW.report_view import Report_View
-from VIEW.error_messages import ErrorMessages
+from VIEW.error_and_user_messages import ErrorAndUserMessages
 
 
 class ReportController:
@@ -49,7 +49,7 @@ class ReportController:
         """
 
         if len(self.tournament_list) == 0:
-            ErrorMessages().bug_in_report()
+            ErrorAndUserMessages().bug_in_report()
 
         else:
 

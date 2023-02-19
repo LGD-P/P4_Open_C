@@ -45,6 +45,7 @@ class TournamentView:
 
         description = c.input("[bold green3]Indiquez la description du "
                               "tournois [bold green3]")
+        c.print("\n[bold red]Tournois ajouté 👍 [bold red]")
 
         return {
             "name": name,

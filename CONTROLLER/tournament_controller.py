@@ -10,6 +10,7 @@ from VIEW.tournament_view import TournamentView
 from VIEW.player_view import PlayerView
 from VIEW.round_view import RoundView
 from VIEW.match_view import MatchView
+from VIEW.error_and_user_messages import ErrorAndUserMessages
 
 from MODEL.tournament_model import Tournament
 from MODEL.round_model import Round
@@ -481,3 +482,5 @@ class TournamentController:
 
         for tournnaments in quick_tounarment:
             self.tournament_list.append(tournnaments)
+
+        ErrorAndUserMessages().operation_done()
