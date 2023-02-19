@@ -13,6 +13,7 @@ class Tournament:
         self.description = description
         self.number_of_rounds = number_of_rounds
         self.player_score = player_score
+        self.memory_of_enconters = {}
 
     def __str__(self):
         return (
@@ -25,7 +26,8 @@ class Tournament:
             f"- Mode de contrôle du temps: {self.time_control}\n"
             f"- Description: {self.description}\n"
             f"- Nombre de round: {self.number_of_rounds}\n"
-            f"- Score des joueurs:{self.player_score}\n")
+            f"- Score des joueurs:{self.player_score}\n"
+            f"- Joueurs déjà rencontré: {self.memory_of_enconters}")
 
     def __repr__(self):
         return (

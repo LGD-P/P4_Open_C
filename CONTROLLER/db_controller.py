@@ -160,7 +160,7 @@ class DataBase:
         table_players = db.table("PLAYERS")
         table_players.truncate()
 
-        print(self.tournament_list)
+        # print(self.tournament_list)
 
         if not player_list:
             pass
@@ -335,7 +335,7 @@ class DataBase:
             self.load_players_tournament_p_score(
                 tournament, data)
 
-        print(self.tournament_list)
+        #        print(self.tournament_list)
 
         opener.close()
         return self.tournament_list

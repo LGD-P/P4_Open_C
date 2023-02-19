@@ -102,8 +102,8 @@ class MatchView:
             index_round += 1
 
             table = Table(
-                title=f'[bold red]- Matchs dans le Round "\
-                    N°{index_round}[bold red]',
+                title=f'[bold red]- Matchs dans le Round '
+                f'N°{index_round}[bold red]',
                 show_lines=True, style="green3")
 
             table.add_column("[bold yellow1]Joueur 1:[bold yellow1]",
