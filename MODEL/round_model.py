@@ -1,9 +1,9 @@
 
 
 class Round:
-    def __init__(self, match_list: list, name: str,
-                 starting_hour: str, ending_hour: str,
-                 number_of_round: str, tournament_name: str):
+    def __init__(self, match_list, name,
+                 starting_hour, ending_hour,
+                 number_of_round, tournament_name):
 
         self.match_list = match_list
         self.name = name
