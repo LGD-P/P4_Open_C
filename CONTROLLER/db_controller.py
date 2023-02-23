@@ -28,6 +28,27 @@ class DataBase:
 
         return db
 
+    def serialissed_match_list(self, tournament):
+        match_list = []
+        for tour in tournament.tours:
+            for player in tour.match_list:
+                match_list.append(([{
+                    'last_name': player[0][0].last_name,
+                    'first_name': player[0][0].first_name,
+                    'birth': player[0][0].birth,
+                    'sex': player[0][0].sex,
+                    'rank': player[0][0].rank}, {
+                    'score': player[0][1]}],
+                    [{
+                        'last_name': player[1][0].last_name,
+                        'first_name': player[1][0].first_name,
+                        'birth': player[1][0].birth,
+                        'sex': player[1][0].sex,
+                        'rank': player[1][0].rank}, {
+                        'score': player[1][1]}])
+                )
+        return match_list
+
     def serialised_tournament_tours(self, tournament, table_tournament):
         """This function allow to serialize class Round as 
         Tournament().tours
@@ -55,7 +76,7 @@ class DataBase:
                         "starting_hour": str(tour.starting_hour),
                         "ending_hour": str(tour.ending_hour),
                         "number_of_round": tour.number_of_round,
-                        "match_list": tour.match_list
+                        "match_list": self.serialissed_match_list(tournament)
                     }
                 )
 
@@ -272,6 +293,20 @@ class DataBase:
             except KeyError:
                 pass
 
+    def load_match_list_in_round(self, tournament_deserializer):
+        match_list_loaded = []
+        for tournament in tournament_deserializer:
+            for match_list in tournament["tours"]:
+                for player in match_list["match_list"]:
+                    match_list_loaded.append(
+                        (
+                            [Player(player[0][0]['last_name'], player[0][0]['first_name'], player[0][0]
+                                    ['birth'], player[0][0]['sex'], player[0][0]['rank']), player[0][1]["score"]],
+                            [Player(player[1][0]['last_name'], player[1][0]['first_name'], player[1][0]
+                                    ['birth'], player[1][0]['sex'], player[1][0]['rank']), player[1][1]["score"]]
+                        ))
+        return match_list_loaded
+
     def load_tours_in_tournament(self, tournament_deserializer):
         """This function all to deserialise Round() from db
 
@@ -286,16 +321,28 @@ class DataBase:
 
         for tournament in tournament_deserializer:
             for tours in tournament["tours"]:
-                deserialized_tournament.append(
-                    Round(tours["match_list"], tours["name"],
-                          datetime.strptime(
-                              tours['starting_hour'][0:19],
-                              '%Y-%m-%d  %H:%M:%S'),
-                          datetime.strptime(
-                              tours['ending_hour'][0:19],
-                              '%Y-%m-%d  %H:%M:%S'),
-                          tours["number_of_round"], tours["tournament_name"])
-                )
+                if tours["ending_hour"] == "None":
+                    deserialized_tournament.append(
+                        Round(self.load_match_list_in_round(tournament_deserializer), tours["name"],
+                              datetime.strptime(
+                            tours['starting_hour'][0:19],
+                            '%Y-%m-%d  %H:%M:%S'),
+                            None,
+                            tours["number_of_round"], tours["tournament_name"])
+                    )
+
+                else:
+
+                    deserialized_tournament.append(
+                        Round(self.load_match_list_in_round(tournament_deserializer), tours["name"],
+                              datetime.strptime(
+                            tours['starting_hour'][0:19],
+                            '%Y-%m-%d  %H:%M:%S'),
+                            datetime.strptime(
+                            tours['ending_hour'][0:19],
+                            '%Y-%m-%d  %H:%M:%S'),
+                            tours["number_of_round"], tours["tournament_name"])
+                    )
 
         return deserialized_tournament
 

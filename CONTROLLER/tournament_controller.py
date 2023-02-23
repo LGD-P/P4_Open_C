@@ -1,40 +1,29 @@
-from rich.console import Console
-from rich import inspect
 from datetime import datetime
-import operator
-from itertools import permutations
 
+from rich.console import Console
 
 from CONTROLLER.match_controller import MatchController
-
-
-from VIEW.tournament_view import TournamentView
+from MODEL.player_model import Player
+from MODEL.round_model import Round
+from MODEL.tournament_model import Tournament
+from VIEW.error_and_user_messages import ErrorAndUserMessages
+from VIEW.match_view import MatchView
 from VIEW.player_view import PlayerView
 from VIEW.round_view import RoundView
-from VIEW.match_view import MatchView
-from VIEW.error_and_user_messages import ErrorAndUserMessages
-
-from MODEL.tournament_model import Tournament
-from MODEL.round_model import Round
-from MODEL.player_model import Player
-from MODEL.match_model import Match
-
+from VIEW.tournament_view import TournamentView
 
 c = Console()
 
 
 class TournamentController:
-    def __init__(self, tournament_list, player_list, round_list, match_list):
+    def __init__(self, tournament_list, player_list):
         self.tournament_view = TournamentView()
         self.tournament_list = tournament_list
         self.player_view = PlayerView()
         self.player_list = player_list
         self.round_view = RoundView()
-        self.round_list = round_list
         self.match_view = MatchView()
-        self.match_list = match_list
         self.match_controller = MatchController()
-        self.started_tournaments = []
 
     def add_tournament(self):
         """This function get dict from tournament_view
@@ -56,7 +45,7 @@ class TournamentController:
             serialized_tournament["player_score"]))
 
     def add_player_in_tournament(self):
-        """If a tournament is instanced in touranment_list
+        """If a tournament is instanced in tournament_list
         This function get dict from tournament_view,
         display_add_player_in_tournament_form(), and fill tournament
         with selected player
@@ -69,7 +58,7 @@ class TournamentController:
 
         player_in_tournament = self.tournament_view \
             .display_add_player_in_tournament_form(
-                self.tournament_list, self.player_list, self.player_view)
+            self.tournament_list, self.player_list, self.player_view)
 
         if not player_in_tournament:
             return None
@@ -85,39 +74,23 @@ class TournamentController:
             for player in tournament.players:
                 tournament.memory_of_enconters[player] = []
 
-    def swiss_logic_sorting_round_one(self, tournament_to_run):
-        """This function is the first part of swiss logic.
-        list of players in tournament to run is sorted by rank and returned
-
-        Args:
-            tournament_to_run (instance): tournament choosen by user
-
-        Returns:
-            list: players sorted list
-        """
-
-        player_in_tournament_to_run = [
-            element[0] for element in sorted(
-                tournament_to_run.player_score.items(),
-                key=lambda k: (-k[1], k[0].rank))
-        ]
-        # print(player_in_tournament_to_run)
-        return player_in_tournament_to_run
-
-    def sort_players_pairs_by_last_name(
-            self, player_in_tournament_to_run):
+    def matchmaking_round_one(self, tournament_to_run):
         """This function is the last part of swiss logic. Sorted players list
-        is cut in half and ina  loop matchs are created.
+        is cut in half and ina loop matches are created.
 
         Args:
-            player_in_tournament_to_run (list): player sorted
-            tournament_to_run (instance): tournament choosen by user
+            tournament_to_run (instance): tournament chose by user
 
         Returns:
-            instance: tournament choosen with tours attribute filled.
+            instance: tournament chose with tours attribute filled.
         """
 
-        half_list = len(player_in_tournament_to_run)//2
+        player_in_tournament_to_run = sorted(
+            tournament_to_run.player_score.keys(),
+            key=lambda k: k.rank
+        )
+
+        half_list = len(player_in_tournament_to_run) // 2
 
         first_part = player_in_tournament_to_run[:half_list]
         # print(first_part)
@@ -126,231 +99,82 @@ class TournamentController:
         # print(second_part)
         ###################################################
 
-        prepared_list = []
-        first_list_of_match = []
+        list_of_match = []
 
         for element_1, element_2 in zip(first_part, second_part):
-            prepared_list.append([element_1, element_2])
-
-        ###################################################
-        ###################################################
-        # !!! partie a exécutée avant le résult !!!
-        # sort player pairs by last_name of new round
-        for match in prepared_list:
-            first_list_of_match.append(
-                sorted(match, key=operator.attrgetter('last_name')))
-        return prepared_list
-
-    def swiss_logic_result(
-            self, player_in_tournament_to_run,
-            tournament_to_run):
-        """This function is the last part of swiss logic. Sorted players list
-        is cut in half and ina  loop matchs are created.
-
-        Args:
-            player_in_tournament_to_run (list): player sorted
-            tournament_to_run (instance): tournament choosen by yser
-
-        Returns:
-            instance: tournament choosen with tours attribute filled.
-        """
-
-        half_list = len(player_in_tournament_to_run)//2
-
-        first_part = player_in_tournament_to_run[:half_list]
-        # print(first_part)
-
-        second_part = player_in_tournament_to_run[half_list:]
-        # print(second_part)
-        ###################################################
-
-        prepared_list = []
-        first_list_of_match = []
-
-        for element_1, element_2 in zip(first_part, second_part):
-            prepared_list.append([element_1, element_2])
-
-        ###################################################
-        ###################################################
-        # !!! partie a exécutée avant le résult !!!
-        # sort player pairs by last_name of new round
-        for match in prepared_list:
-            first_list_of_match.append(
-                sorted(match, key=operator.attrgetter('last_name')))
-
-        # sort all playter list in tournament by last_name
-        sorted_player_in_tournament = []
-        sorted_player_in_tournament.append(
-            (sorted(tournament_to_run.players, key=operator.attrgetter("last_name"))))
-
-        """
-        c.print(
-            "[bold red] *********************\n************\n[bold red]")
-        c.print(player_in_tournament_to_run)
-        c.print(
-            "[bold red] *********************\n************\n[bold red]")
-        """
-
-        """
-        print("OK")
-        print(first_list_of_match)
-        print("ok")
-        """
-        ###################################################
-        ###################################################
+            list_of_match.append([element_1, element_2])
 
         # add  round list in tournament chosen
         match_list = self.match_controller.add_unique_match_list(
-            first_list_of_match, tournament_to_run.player_score)
-
-        self.match_list.append(match_list.match)
+            list_of_match, tournament_to_run.player_score)
 
         starting_hour = datetime.now()
 
-        round = Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
-                      starting_hour, None, len(tournament_to_run.tours)+1, tournament_to_run.name)
+        tour = Round(match_list, f"Round {len(tournament_to_run.tours) + 1}",
+                     starting_hour, None, len(tournament_to_run.tours) + 1, tournament_to_run.name)
 
-        tournament_to_run.tours.append(round)
+        tournament_to_run.tours.append(tour)
 
-        self.round_list.append(
-            Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
-                  starting_hour,
-                  None, len(tournament_to_run.tours)+1, tournament_to_run.name)
-        )
-
-        #  COMMENCER L'AJOUT DU ROUND ICI !!!!!
-
-        # tournament_to_run.tours.append(match_list.match)
-
-        #  Tour = à alimenter avec un round
-        #  round_list = également avec un round
-        # match_list = a alimenter avec les tuples
-
-        # c.print(tournament_to_run.tours)
-
-        for tournament in self.started_tournaments:
-            if tournament_to_run.name in tournament.name:
-                tournament.tours = tournament_to_run.tours
-
-        return tournament_to_run
-
-    def RoundTow(self, tournament_to_run):
-
-        # classement liste joueur par score et rank
+    def matchmaking_next_round(self, tournament_to_run):
         player_in_tournament_to_run = [
             element[0] for element in
             sorted(tournament_to_run.player_score.items(),
                    key=lambda k: (-k[1], k[0].rank))]
 
-        # creation des paires elle même bientôt classée dans les tuples
-        # par nom.
+        list_of_match = []
 
-        pairs_sorted = self.sort_players_pairs_by_last_name(
-            player_in_tournament_to_run)
+        associated_players = []
+        for player in player_in_tournament_to_run:
+            if player in associated_players:
+                continue
 
-        # in pair sorted !!!
-        inspect(pairs_sorted)
+            list_of_opponent = [p for p in player_in_tournament_to_run if p != player and p not in associated_players]
+            for opponent in list_of_opponent:
+                if self.has_players_already_played_together(tournament_to_run, player, opponent):
+                    continue
+                list_of_match.append([player, opponent])
+                associated_players.append(player)
+                associated_players.append(opponent)
+                break
 
-        first_list_of_match = []
-        for _ in pairs_sorted:
-            first_list_of_match.append(
-                [
-                    pairs_sorted[0],
-                    pairs_sorted[1]
-                ])
+            if player not in associated_players:
+                list_of_match.append([player, list_of_opponent[0]])
+                associated_players.append(player)
+                associated_players.append(list_of_opponent[0])
 
-            player_in_tournament_to_run.remove(
-                pairs_sorted[0])
-            player_in_tournament_to_run.remove(
-                pairs_sorted[0])
-
-        first_list_of_match.append(
-            [
-                pairs_sorted[-2],
-                pairs_sorted[-1]
-            ])
-
-        for match_1 in first_list_of_match:
-            for match_list in tournament_to_run.tours:
-                for match in match_list.match_list:
-                    if first_list_of_match[-1] == tournament_to_run \
-                            .tours[-1].match_list[-1]:
-                        position = first_list_of_match.index(
-                            match_1)
-                        player_to_move = first_list_of_match[-1][0]
-                        player_to_replace = first_list_of_match[-2][0]
-                        first_list_of_match[-2].append(
-                            player_to_move)
-                        first_list_of_match[-1].append(
-                            player_to_replace)
-
-                    else:
-                        while match == match_1:
-                            position = first_list_of_match.index(
-                                match_1)
-                            player_to_move = first_list_of_match[
-                                position][0]
-                            player_to_replace = first_list_of_match[
-                                position+1][0]
-                            first_list_of_match[
-                                position + 1].append(player_to_move)
-                            first_list_of_match[
-                                position].append(player_to_replace)
-                            del (first_list_of_match[position+1][0])
-                            del (first_list_of_match[position][0])
-
-        result = []
-        for match in first_list_of_match:
-            for player in match:
-                result.append(player)
-
-        player_in_tournament_to_run = result
-
+        # add  round list in tournament chosen
         match_list = self.match_controller.add_unique_match_list(
-            pairs_sorted, tournament_to_run.player_score)
-
-        self.match_list.append(match_list.match)
+            list_of_match, tournament_to_run.player_score)
 
         starting_hour = datetime.now()
 
-        round = Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
-                      starting_hour, None, len(tournament_to_run.tours)+1, tournament_to_run.name)
+        tour = Round(match_list, f"Round {len(tournament_to_run.tours) + 1}",
+                     starting_hour, None, len(tournament_to_run.tours) + 1, tournament_to_run.name)
 
-        tournament_to_run.tours.append(round)
+        tournament_to_run.tours.append(tour)
 
-        self.round_list.append(
-            Round(self.match_list[-1], f"Round {len(tournament_to_run.tours)+1}",
-                  starting_hour,
-                  None, len(tournament_to_run.tours)+1, tournament_to_run.name)
-        )
+    def has_players_already_played_together(self, tournament, player, opponent):
+        for tour in tournament.tours:
+            for match in tour.match_list:
+                if match[0][0] == player and match[1][0] == opponent:
+                    return True
+                if match[1][0] == player and match[0][0] == opponent:
+                    return True
+        return False
 
-        for tournament in self.started_tournaments:
-            if tournament_to_run.name in tournament.name:
-                tournament.tours = tournament_to_run.tours
-
-        return tournament_to_run
-
-    def creat_round(self):
-        """This function used swiss logic to creat a tour
+    def create_round(self):
+        """This function used swiss logic to create a tour
 
         Returns:
             instance: tournament instance filled with new tour
         """
 
-        tournament_to_run = self.tournament_view \
-            .display_choose_a_tournament_to_launch(
-                self.tournament_list, self.round_list)
+        tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(self.tournament_list)
 
         if not tournament_to_run:
             return None
         else:
-            self.started_tournaments.append(tournament_to_run)
-
             if len(tournament_to_run.tours) == 4:
-
-                winner_to_sort = []
-                for round in self.round_list[-1].match_list:
-                    winner_to_sort += round
                 """
                 c.print(
                     "[bold red] ******************\n************\n[bold red]")
@@ -372,119 +196,18 @@ class TournamentController:
             # DEBUG ZONE FOR SORTING
             #################################
 
-            if not self.round_list:
-                # c.print("[bold red]pas encore de round [bold red]\n")
+            if len(tournament_to_run.tours) == 0:
+                self.matchmaking_round_one(tournament_to_run)
+            else:
+                self.matchmaking_next_round(tournament_to_run)
+            return tournament_to_run
 
-                player_in_tournament_to_run = sorted(
-                    tournament_to_run.player_score.keys(),
-                    key=lambda k: (k.rank)
-                )
-
-                """   elif len(self.round_list) == 0:
-                player_in_tournament_to_run = self \
-                    .swiss_logic_sorting_round_one(tournament_to_run)"""
-
-                # c.print(tournament_to_run.player_score)
-
-                # continue swiss logic by rank
-
-            elif len(self.round_list) >= 1 and len(self.round_list) < 4:
-
-                # besoin de cette fonction avant
-                #  self.sort_players_pairs_by_last_name(player_in_tournament_to_run):
-
-                tournament_with_new_round = self.RoundTow(tournament_to_run)
-
-                return tournament_with_new_round
-                """
-                player_in_tournament_to_run = self \
-                    .swiss_logic_sorting_round_two_and_more(tournament_to_run)
-
-                match_list = self.match_controller.add_unique_match_list(
-                    player_in_tournament_to_run, tournament_to_run.player_score)
-
-                # add first round list in tournament chosen
-                tournament_to_run.tours.append(
-                    match_list)
-                print(tournament_to_run.tours)
-
-                for tournament in self.started_tournaments:
-                    if tournament_to_run.name in tournament.name:
-                        tournament.tours = tournament_to_run.tours
-
-                """
-                """    c.print(
-                    "[bold red] *****************\n************\n[bold red]")
-                c.print(tournament_to_run.tours[-1])
-                c.print(
-                    "[bold red] ******************\n************\n[bold red]")
-                """
-
-                # return tournament_to_run
-
-        tournament_with_new_round = self.swiss_logic_result(
-            player_in_tournament_to_run, tournament_to_run)
-        return tournament_with_new_round
-
-    def fill_round_instance_creat_announcement(self):
-        """This function use create_round() to creat instance of round
+    def fill_round_instance_create_announcement(self):
+        """This function use create_round() to create instance of round
         """
 
-        tournament_running = self.creat_round()
-        if not tournament_running in self.tournament_list:
-            return None
-        else:
-
-            self.round_view.display_launching_round_view(
-                tournament_running)
-
-            """
-            serialized_match = []
-            for match in tournament_running.tours[-1]:
-                serialized_match.append([
-                    f" {match[0].last_name} {match[0].first_name}"
-                    " == CONTRE ==>"
-                    f" {match[1].last_name} {match[1].first_name}"])
-            """
-            # fill round instance with match
-            # Check if there is a round else creat round
-
-            if not self.round_list:
-                starting_hour = datetime.now()
-                self.round_list.append(
-                    Round(self.match_list[-1], f"Round {1}",
-                          starting_hour,
-                          None, 1, tournament_running.name)
-                )
-
-                """tournament_tables.update(
-                    {"tours":  self.serialized_list_of_tours},
-                    query.name == tournament_running.name)"""
-            else:
-                # if there is a round(s) in list
-                # check if there is ending hour else add new round
-                # as 2nd  3rd etc..
-                match_concerned = len(tournament_running.tours)
-                starting_hour = datetime.now()
-                self.round_list.append(
-                    Round(tournament_running.tours[match_concerned - 1],
-                          f"Round {len(self.round_list) + 1}",
-                          starting_hour,
-                          None, 1, tournament_running.name))
-
-                # self.serialized_list_of_tours = tournament_running \
-                # .serialize_tours()
-                """
-                tournament_tables.update(
-                    {"tours":  self.serialized_list_of_tours},
-                    query.name == tournament_running.name)"""
-
-            # print de débug
-            """c.print("[green]****************************[green]")
-            c.print("[red]******************************[red]")
-            c.print(self.round_view.debug_print(self.round_list))
-            c.print("[green]****************************[green]")
-            c.print("[red]******************************[red]")"""
+        tournament_running = self.create_round()
+        self.round_view.display_launching_round_view(tournament_running)
 
     def add_player_point(self, winner_choice, tournament_choice, match_list):
         """This function will be user to add tournament.player_score result.
@@ -493,18 +216,18 @@ class TournamentController:
             winner_choice (int): will be input from
                 match_view.display_tournament_to_fill_result()
             tournament_choice (instance): tournament
-            match_list (instance attribute): tounrnament.tours
+            match_list (instance attribute): tournament.tours
         """
 
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
-                if f"{player.last_name} {player.first_name}" == match_list[0][0]:
+                if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 0.5
                     match_list[0][1] += 0.5
                     tournament_choice.memory_of_enconters[player].append(
                         match_list[1][0])
 
-                elif f"{player.last_name} {player.first_name}" == match_list[1][0]:
+                elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0.5
                     match_list[1][1] += 0.5
                     tournament_choice.memory_of_enconters[player].append(
@@ -512,13 +235,13 @@ class TournamentController:
 
         elif int(winner_choice) == 0:
             for player in tournament_choice.player_score:
-                if f"{player.last_name} {player.first_name}" == match_list[0][0]:
+                if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 1
                     match_list[0][1] += 1
                     tournament_choice.memory_of_enconters[player].append(
                         match_list[1][0])
 
-                elif f"{player.last_name} {player.first_name}" == match_list[1][0]:
+                elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0
                     match_list[1][1] += 0
                     tournament_choice.memory_of_enconters[player].append(
@@ -526,13 +249,13 @@ class TournamentController:
 
         elif int(winner_choice) == 1:
             for player in tournament_choice.player_score:
-                if f"{player.last_name} {player.first_name}" == match_list[0][0]:
+                if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 0
                     match_list[0][1] += 0
                     tournament_choice.memory_of_enconters[player].append(
                         match_list[1][0])
 
-                elif f"{player.last_name} {player.first_name}" == match_list[1][0]:
+                elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 1
                     match_list[1][1] = 1
                     tournament_choice.memory_of_enconters[player].append(
@@ -542,51 +265,29 @@ class TournamentController:
         """This function using add_player_point() fill tournament
         instance.player_score and round instance.
         """
-        tournament_choice = self.match_view.display_tournament_to_fill_result(
-            self.started_tournaments, self.tournament_list, self.round_list)
+        tournament_choice = self.match_view.display_tournament_to_fill_result(self.tournament_list)
 
         if not tournament_choice:
             return None
 
-        round_index = (len(self.match_list))
-        # print(round_index)
-
-        round = self.match_list[round_index - 1]
-
-        """
-        c.print("[bold red]ATTENTION[oold red]")
-        print(round)
-        """
-
-        for match_list in round:
+        tour = tournament_choice.tours[-1]
+        for match_list in tour.match_list:
             winner_choice = self.match_view \
                 .display_player_in_tournament_to_fill_score(
-                    tournament_choice, match_list)
+                tournament_choice, match_list)
 
             self.add_player_point(winner_choice, tournament_choice,
                                   match_list)
 
             # c.print(tournament_choice)
 
-        for tournament in self.started_tournaments:
-            for round in self.round_list:
-                if tournament.name == round.tournament_name:
-                    if not round.ending_hour:
-                        round.ending_hour = datetime.now()
-
-        for tours in tournament_choice.tours:
-            try:
-                if tours.tournament_name == tournament_choice.name:
-                    if not tours.ending_hour:
-                        tours.ending_hour = datetime.now()
-            except:
-                if tours["tournament_name"] == tournament_choice.name:
-                    if not tours["ending_hour"]:
-                        tours["ending_hour"] = datetime.now()
+        tour.ending_hour = datetime.now()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of
         players so you can test the functionality of the program"""
+        self.player_list.clear()
+        self.tournament_list.clear()
 
         quick_players_list = [
             Player("DENIS", "Laurent", "11-12-2000", "h", 1),
@@ -601,19 +302,19 @@ class TournamentController:
         for players in quick_players_list:
             self.player_list.append(players)
 
-        quick_tounarment = [
+        quick_tournament = [
             Tournament("PARIS Chess-Event", "Paris",
                        datetime.now().strftime("%d-%m-%Y"),
                        [], quick_players_list[0:9], "Blitz",
                        "Description", {}, 4)
         ]
 
-        for tournament in quick_tounarment:
+        for tournament in quick_tournament:
             for player in tournament.players:
                 tournament.player_score[player] = 0
                 tournament.memory_of_enconters[player] = []
 
-        for tournnaments in quick_tounarment:
-            self.tournament_list.append(tournnaments)
+        for tournament in quick_tournament:
+            self.tournament_list.append(tournament)
 
         ErrorAndUserMessages().operation_done()

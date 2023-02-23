@@ -3,10 +3,9 @@ from VIEW.error_and_user_messages import ErrorAndUserMessages
 
 
 class ReportController:
-    def __init__(self, tournament_list, player_list, round_list):
+    def __init__(self, tournament_list, player_list):
         self.tournament_list = tournament_list
         self.player_list = player_list
-        self.round_list = round_list
 
     def report_players_alpahatical_order(self):
         """This function use ReportView to display
@@ -35,7 +34,7 @@ class ReportController:
         in tournament_list
         """
         Report_View().report_display_tour_in_tournament(
-            self.tournament_list, self.round_list)
+            self.tournament_list)
 
     def report_match_in_tournament(self):
         """This function use ReportView to display each match 

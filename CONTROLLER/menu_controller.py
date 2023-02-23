@@ -18,16 +18,14 @@ class MenuController:
         self.running_program = True
         self.player_controller = PlayerController([])
         self.tournament_controller = TournamentController(
-            [], self.player_controller.player_list, [], [])
+            [], self.player_controller.player_list)
         self.db_controller = DataBase(self.tournament_controller.player_list,
                                       self.tournament_controller
                                           .tournament_list)
         self.report_view = ReportController(self.tournament_controller
                                             .tournament_list,
                                             self.tournament_controller
-                                                .player_list,
-                                            self.tournament_controller
-                                            .round_list)
+                                                .player_list)
         self.main_menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: "
@@ -47,7 +45,7 @@ class MenuController:
             "4": {
                 "label": "[bold blue]- 4. Lancer un Round :watch:[bold blue]",
                 "action": self.tournament_controller.
-                fill_round_instance_creat_announcement
+                fill_round_instance_create_announcement
             },
             "5": {
                 "label": "[bold blue]- 5. Ajouter des résultats :trophy: "
