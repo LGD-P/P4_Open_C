@@ -209,7 +209,7 @@ class TournamentController:
         """
 
         tournament_running = self.create_round()
-        self.round_view.display_launching_round_view(tournament_running)
+        self.round_view.display_launching_roungitd_view(tournament_running)
 
     def add_player_point(self, winner_choice, tournament_choice, match_list):
         """This function will be user to add tournament.player_score result.
