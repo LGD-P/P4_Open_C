@@ -38,10 +38,10 @@ class RoundView:
 
                 index += 1
                 table.add_row(
-                    f"\n{players_match[0][0]} "
+                    f"\n{players_match[0][0].last_name} {players_match[0][0].first_name}\n "
                     f"Score  : {players_match[0][1]}\n",
                     "\n== Jouera contre == >\n",
-                    f"\n{players_match[1][0]} "
+                    f"\n{players_match[1][0].last_name} {players_match[1][0].first_name}\n "
                     f"Score : {players_match[1][1]}\n",
                     end_section=True)
 
@@ -70,10 +70,10 @@ class RoundView:
         # for tournament in tournament_list:
         for players in round:
             table.add_row(
-                f"\n{players[0][0]} "
+                f"\n{players[0][0].last_name} {players[0][0].first_name}\n "
                 f"Score  : {players[0][1]}\n",
                 "\n== A joué contre == >\n",
-                f"\n{players[1][0]} "
+                f"\n{players[1][0].last_name} {players[1][0].first_name}\n "
                 f"Score : {players[1][1]}\n",
                 end_section=True)
 

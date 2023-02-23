@@ -6,18 +6,18 @@ c = Console()
 
 
 class MatchView:
-    def display_tournament_to_fill_result(self, started_tournaments,
-                                          tournament_list, round_list):
+    def display_tournament_to_fill_result(self, tournament_list):
         """This function display tournament available to receive players_score
 
         Args:
-            started_tournaments (list): list of tournament already launch
-            tournament_list (list): list of tournament regesitered
+            tournament_list (list): list of tournament registered
 
         Returns:
-            instance: tournament choosen
+            instance: tournament chose
         """
 
+        started_tournaments = [t for t in tournament_list if len(
+            t.tours) > 0 and t.tours[-1].ending_hour is None]
         if not started_tournaments:
             c.print(
                 "[bold red]Il faut d'abord créer et commencer "
@@ -26,38 +26,23 @@ class MatchView:
             return None
 
         else:
-            choice_list = []
+            choice_list = {str(index): tournament for index,
+                           tournament in enumerate(started_tournaments)}
 
-            c.print("[bold yellow]A Quel tournois voulez-vous ajouter "
+            c.print("[bold yellow]A quel tournois voulez-vous ajouter "
                     "des résultats ?[bold yellow]\n\n")
-            for tournament in tournament_list:
-                for round in round_list:
-                    if tournament.name == round.tournament_name and \
-                            round.ending_hour == None:
-
-                        choice_list.append(tournament_list.index(tournament))
-
-                c.print(f"- {tournament_list.index(tournament)} : "
+            for index, tournament in choice_list.items():
+                c.print(f"- {index} : "
                         f"[bold green]{tournament.name}[bold green]\n")
 
             tournament_choice = c.input("==> ")
 
-            while not tournament_choice.isdigit() \
-                    or not int(tournament_choice) in choice_list:
+            while tournament_choice not in choice_list:
                 c.print("[bold red] Merci de faire un choix dans "
                         "la liste[bold red]")
                 tournament_choice = c.input("==> ")
 
-            # c.print(started_tournaments[int(tournament_choice)])
-            tournament_choice = started_tournaments[int(
-                tournament_choice)]
-
-            if tournament_choice in tournament_list:
-                tournament_choice = tournament_list[tournament_list.index(
-                    tournament_choice)
-                ]
-
-            return tournament_choice
+            return choice_list[tournament_choice]
 
     def display_player_in_tournament_to_fill_score(self, tournament_choice,
                                                    match_list):
@@ -116,12 +101,12 @@ class MatchView:
             for match in round.match_list:
 
                 table.add_row(f"[bold cyan]"
-                              f"{match[0][0]},\n "
+                              f"{match[0][0].last_name} {match[0][0].first_name},\n "
                               f"Score : "
                               f"{match[0][1]},\n",
                               "\n== Contre ==>\n",
                               f"[bold cyan]"
-                              f"{match[1][0]},\n "
+                              f"{match[1][0].last_name} {match[1][0].first_name},\n "
                               f"Score : [bold cyan] "
                               f"{match[1][1]}\n")
 

@@ -177,7 +177,7 @@ class TournamentView:
                     "chosen_player": player_list[int(player_choice)]
                 }
 
-    def display_choose_a_tournament_to_launch(self, tournament_list, round_list):
+    def display_choose_a_tournament_to_launch(self, tournament_list):
         """
         This function check the tournament list and propose user to launch one
 
@@ -189,27 +189,13 @@ class TournamentView:
         """
         if tournament_list:
             tournament_available = []
-            tournament_not_available = []
 
             for tournament in tournament_list:
-                if len(tournament.players) != 0 \
-                        and not len(tournament.players) % 2:
-                    tournament_available.append(tournament)
-
-            for tournament in tournament_available:
-                for round in round_list:
-                    if round_list == 0 or \
-                        tournament.name == round.tournament_name \
-                            and round.ending_hour == None:
-                        tournament_not_available.append(
-                            tournament)
-
-            for tournament in tournament_not_available:
-                if tournament in tournament_available:
-                    tournament_available.pop(
-                        tournament_not_available.index(tournament))
-
-            # print(tournament_available)
+                if len(tournament.players) == 0 or len(tournament.players) % 2 == 1:
+                    continue
+                if len(tournament.tours) > 0 and tournament.tours[-1].ending_hour is None:
+                    continue
+                tournament_available.append(tournament)
 
             if len(tournament_available) == 0:
                 c.print("[bold red]Votre tournois est déjà en cours veuillez "
