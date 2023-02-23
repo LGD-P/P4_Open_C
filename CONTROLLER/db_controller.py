@@ -30,21 +30,15 @@ class DataBase:
 
     def serialissed_match_list(self, tournament):
         match_list = []
+
         for tour in tournament.tours:
             for player in tour.match_list:
+
                 match_list.append(([{
-                    'last_name': player[0][0].last_name,
-                    'first_name': player[0][0].first_name,
-                    'birth': player[0][0].birth,
-                    'sex': player[0][0].sex,
-                    'rank': player[0][0].rank}, {
+                    'joueur': tournament.players.index(player[0][0])+1}, {
                     'score': player[0][1]}],
                     [{
-                        'last_name': player[1][0].last_name,
-                        'first_name': player[1][0].first_name,
-                        'birth': player[1][0].birth,
-                        'sex': player[1][0].sex,
-                        'rank': player[1][0].rank}, {
+                        'joueur': tournament.players.index(player[1][0])+1}, {
                         'score': player[1][1]}])
                 )
         return match_list
@@ -293,21 +287,50 @@ class DataBase:
             except KeyError:
                 pass
 
-    def load_match_list_in_round(self, tournament_deserializer):
+    def load_match_list_in_round(self, tournament_deserializer, data):
         match_list_loaded = []
         for tournament in tournament_deserializer:
             for match_list in tournament["tours"]:
                 for player in match_list["match_list"]:
+
                     match_list_loaded.append(
                         (
-                            [Player(player[0][0]['last_name'], player[0][0]['first_name'], player[0][0]
-                                    ['birth'], player[0][0]['sex'], player[0][0]['rank']), player[0][1]["score"]],
-                            [Player(player[1][0]['last_name'], player[1][0]['first_name'], player[1][0]
-                                    ['birth'], player[1][0]['sex'], player[1][0]['rank']), player[1][1]["score"]]
+                            [
+                                Player(
+                                    data["PLAYERS"][str(
+                                        player[0][0]['joueur'])]["last_name"],
+                                    data["PLAYERS"][str(
+                                        player[0][0]['joueur'])]["first_name"],
+                                    data["PLAYERS"][str(
+                                        player[0][0]['joueur'])]["birth"],
+                                    data["PLAYERS"][str(
+                                        player[0][0]['joueur'])]["sex"],
+                                    data["PLAYERS"][str(
+                                        player[0][0]['joueur'])]["rank"]
+                                ),
+                                player[0][1]["score"]
+                            ],
+
+                            [
+                                Player(
+                                    data["PLAYERS"][str(
+                                        player[1][0]['joueur'])]["last_name"],
+                                    data["PLAYERS"][str(
+                                        player[1][0]['joueur'])]["first_name"],
+                                    data["PLAYERS"][str(
+                                        player[1][0]['joueur'])]["birth"],
+                                    data["PLAYERS"][str(
+                                        player[1][0]['joueur'])]["sex"],
+                                    data["PLAYERS"][str(
+                                        player[1][0]['joueur'])]["rank"]
+                                ),
+                                player[1][1]["score"]
+                            ]
                         ))
+
         return match_list_loaded
 
-    def load_tours_in_tournament(self, tournament_deserializer):
+    def load_tours_in_tournament(self, tournament_deserializer, data):
         """This function all to deserialise Round() from db
 
         Args:
@@ -323,7 +346,7 @@ class DataBase:
             for tours in tournament["tours"]:
                 if tours["ending_hour"] == "None":
                     deserialized_tournament.append(
-                        Round(self.load_match_list_in_round(tournament_deserializer), tours["name"],
+                        Round(self.load_match_list_in_round(tournament_deserializer, data), tours["name"],
                               datetime.strptime(
                             tours['starting_hour'][0:19],
                             '%Y-%m-%d  %H:%M:%S'),
@@ -334,7 +357,7 @@ class DataBase:
                 else:
 
                     deserialized_tournament.append(
-                        Round(self.load_match_list_in_round(tournament_deserializer), tours["name"],
+                        Round(self.load_match_list_in_round(tournament_deserializer, data), tours["name"],
                               datetime.strptime(
                             tours['starting_hour'][0:19],
                             '%Y-%m-%d  %H:%M:%S'),
@@ -364,7 +387,7 @@ class DataBase:
             index += 1
             tournament_deserializer.append(data["TOURNAMENT"][str(index)])
 
-        tours = self.load_tours_in_tournament(tournament_deserializer)
+        tours = self.load_tours_in_tournament(tournament_deserializer, data)
 
         for tournament in tournament_deserializer:
             self.tournament_list.append(Tournament(

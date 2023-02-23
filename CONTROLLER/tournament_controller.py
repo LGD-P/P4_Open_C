@@ -58,7 +58,7 @@ class TournamentController:
 
         player_in_tournament = self.tournament_view \
             .display_add_player_in_tournament_form(
-            self.tournament_list, self.player_list, self.player_view)
+                self.tournament_list, self.player_list, self.player_view)
 
         if not player_in_tournament:
             return None
@@ -128,7 +128,8 @@ class TournamentController:
             if player in associated_players:
                 continue
 
-            list_of_opponent = [p for p in player_in_tournament_to_run if p != player and p not in associated_players]
+            list_of_opponent = [
+                p for p in player_in_tournament_to_run if p != player and p not in associated_players]
             for opponent in list_of_opponent:
                 if self.has_players_already_played_together(tournament_to_run, player, opponent):
                     continue
@@ -169,7 +170,8 @@ class TournamentController:
             instance: tournament instance filled with new tour
         """
 
-        tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(self.tournament_list)
+        tournament_to_run = self.tournament_view.display_choose_a_tournament_to_launch(
+            self.tournament_list)
 
         if not tournament_to_run:
             return None
@@ -265,7 +267,8 @@ class TournamentController:
         """This function using add_player_point() fill tournament
         instance.player_score and round instance.
         """
-        tournament_choice = self.match_view.display_tournament_to_fill_result(self.tournament_list)
+        tournament_choice = self.match_view.display_tournament_to_fill_result(
+            self.tournament_list)
 
         if not tournament_choice:
             return None
@@ -274,7 +277,7 @@ class TournamentController:
         for match_list in tour.match_list:
             winner_choice = self.match_view \
                 .display_player_in_tournament_to_fill_score(
-                tournament_choice, match_list)
+                    tournament_choice, match_list)
 
             self.add_player_point(winner_choice, tournament_choice,
                                   match_list)
