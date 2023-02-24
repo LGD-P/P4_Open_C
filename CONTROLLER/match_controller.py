@@ -1,5 +1,3 @@
-
-
 class MatchController:
 
     def add_unique_match_list(self, match_list, player_score):

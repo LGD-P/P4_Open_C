@@ -35,17 +35,17 @@ class DataBase:
         for tour in tournament.tours:
             for player in tour.match_list:
                 match_list.append(([{
-                    'joueur': tournament.players.index(player[0][0])+1}, {
+                    'joueur': tournament.players.index(player[0][0]) + 1}, {
                     'score': player[0][1]}],
                     [{
-                        'joueur': tournament.players.index(player[1][0])+1}, {
+                        'joueur': tournament.players.index(player[1][0]) + 1}, {
                         'score': player[1][1]}])
                 )
 
         return match_list
 
     def serialised_tournament_tours(self, tournament, table_tournament):
-        """This function allow to serialize class Round as 
+        """This function allow to serialize class Round as
         Tournament().tours
 
         Args:
@@ -57,28 +57,29 @@ class DataBase:
             return None
         else:
 
-            serialized_tournament_tour = []
-            index = 0
+            player_index = [
+                (tournament.players.index(player) + 1) for player in tournament.players]
 
-            match_list = []
+            dict_for_match = {player: index for player,
+                              index in zip(tournament.players, player_index)}
+
+            serialized_tournament_tour = []
+
+            match_list_of_round = []
 
             for tour in tournament.tours:
 
                 for player in tour.match_list:
-                    print(player[0][0])
-                    print(tournament.players)
-                    print(tournament.players.index(player[0][0]))
-                    # Est ce que les joueurs sont chargé à cette étape ? sinon le l'index n'exsiste pas
 
-                    match_list.append(([{
-                        'joueur': tournament.players.index(player[0][0])+1}, {
+                    match_list_of_round.append(([{
+                        'joueur': dict_for_match[player[0][0]]},
+                        {
                         'score': player[0][1]}],
                         [{
-                            'joueur': tournament.players.index(player[1][0])+1}, {
+                            'joueur': dict_for_match[player[1][0]]},
+                         {
                             'score': player[1][1]}])
                     )
-
-                index += 1
 
                 serialized_tournament_tour.append(
                     {
@@ -87,7 +88,7 @@ class DataBase:
                         "starting_hour": str(tour.starting_hour),
                         "ending_hour": str(tour.ending_hour),
                         "number_of_round": tour.number_of_round,
-                        "match_list": match_list
+                        "match_list": match_list_of_round
                     }
                 )
 
@@ -118,7 +119,7 @@ class DataBase:
         return serialized_tournament
 
     def serialized_player_and_score_in_t_table(self, table_tournament):
-        """this function will be specificly used to fill player_score and 
+        """this function will be specificly used to fill player_score and
         list of player in tournament. To identify player, this function uses
         index of players_table
 
@@ -132,9 +133,9 @@ class DataBase:
         for tournament in self.tournament_list:
             for player in tournament.players:
                 player_list_index.append(
-                    tournament.players.index(player)+1)
+                    tournament.players.index(player) + 1)
                 player_score_dict_in_tournament_table[
-                    tournament.players.index(player)+1] = tournament\
+                    tournament.players.index(player) + 1] = tournament\
                     .player_score[player]
 
         table_tournament.upsert({
@@ -149,10 +150,10 @@ class DataBase:
 
     def serialize_players(self, player):
         """This function will be used in a loop
-        to put all players recorded in data base 
+        to put all players recorded in data base
 
         Args:
-            player (instance): from tournament.players 
+            player (instance): from tournament.players
 
         Returns:
             dict : dict of a player
@@ -170,7 +171,7 @@ class DataBase:
 
     def save_data(self, tournament_list, player_list):
         """This function uses previous ones to record all data
-        in .json file 
+        in .json file
 
 
         Args:
@@ -274,7 +275,7 @@ class DataBase:
                     for tournament_to_fill in self.tournament_list:
                         if data["TOURNAMENT"][
                             str(self.tournament_list
-                                .index(tournament_to_fill)+1)][
+                                .index(tournament_to_fill) + 1)][
                                     "name"] == tournament_to_fill.name:
                             tournament_to_fill.players = player_to_get
 
@@ -293,9 +294,9 @@ class DataBase:
         for tournament in self.tournament_list:
             try:
                 if tournament.name == data["TOURNAMENT"][
-                        str(self.tournament_list.index(tournament)+1)]['name']:
+                        str(self.tournament_list.index(tournament) + 1)]['name']:
                     for values in data["TOURNAMENT"][
-                            str(self.tournament_list.index(tournament)+1)][
+                            str(self.tournament_list.index(tournament) + 1)][
                                 'player_score'].items():
                         index += 1
                         new_dict[tournament.players[index]] = values[1]
@@ -407,14 +408,16 @@ class DataBase:
             index += 1
             tournament_deserializer.append(data["TOURNAMENT"][str(index)])
 
-        tours = self.load_tours_in_tournament(tournament_deserializer, data)
+        # tours = self.load_tours_in_tournament(
+        #  tournament_deserializer, data)
 
         for tournament in tournament_deserializer:
             self.tournament_list.append(Tournament(
                 tournament["name"],
                 tournament["place"],
                 tournament["date"],
-                tours,
+                self.load_tours_in_tournament(
+                    tournament_deserializer, data),
                 tournament["players"],
                 tournament["time_control"],
                 tournament["description"],
