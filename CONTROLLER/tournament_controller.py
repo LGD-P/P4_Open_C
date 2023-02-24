@@ -115,10 +115,14 @@ class TournamentController:
 
         tournament_to_run.tours.append(tour)
 
-    def fill_memory_of_opponent(self, tournament_list):
-        pass
-
     def matchmaking_next_round(self, tournament_to_run):
+        """This function sorted player by score -k and rank k
+        then creat a list of oponent to each players, if players
+        are not in this list match can be created
+
+        Args:
+            tournament_to_run (instance): instance of tournament chosen by user
+        """
         player_in_tournament_to_run = [
             element[0] for element in
             sorted(tournament_to_run.player_score.items(),
@@ -159,6 +163,17 @@ class TournamentController:
         tournament_to_run.tours.append(tour)
 
     def has_players_already_played_together(self, tournament, player, opponent):
+        """This function check match possibilities regardless that
+        Pierre vs Paul is the same match as Paul vs Pierre. Used in a loop
+        it allowd to creat match that were not been played
+        Args:
+            tournament (instance): intance of tournament
+            player (instance): player instance
+            opponent (instance): player instance as opponent
+
+        Returns:
+            Bool: True or False
+        """
         for tour in tournament.tours:
             for match in tour.match_list:
                 if match[0][0] == player and match[1][0] == opponent:
