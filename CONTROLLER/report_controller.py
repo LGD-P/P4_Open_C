@@ -23,21 +23,21 @@ class ReportController:
                 self.tournament_list)
 
     def report_tournament_list(self):
-        """This function use ReportView to display tournaments 
+        """This function use ReportView to display tournaments
         of tournament_list
         """
         Report_View().display_tournament(
             self.tournament_list)
 
     def report_tour_in_tournament(self):
-        """This function use ReportView to display each touch 
+        """This function use ReportView to display each touch
         in tournament_list
         """
         Report_View().report_display_tour_in_tournament(
             self.tournament_list)
 
     def report_match_in_tournament(self):
-        """This function use ReportView to display each match 
+        """This function use ReportView to display each match
         in tournament list
         """
         Report_View().report_display_match_in_tournament(
