@@ -115,6 +115,9 @@ class TournamentController:
 
         tournament_to_run.tours.append(tour)
 
+    def fill_memory_of_opponent(self, tournament_list):
+        pass
+
     def matchmaking_next_round(self, tournament_to_run):
         player_in_tournament_to_run = [
             element[0] for element in
@@ -130,6 +133,7 @@ class TournamentController:
 
             list_of_opponent = [
                 p for p in player_in_tournament_to_run if p != player and p not in associated_players]
+
             for opponent in list_of_opponent:
                 if self.has_players_already_played_together(tournament_to_run, player, opponent):
                     continue
@@ -209,7 +213,7 @@ class TournamentController:
         """
 
         tournament_running = self.create_round()
-        self.round_view.display_launching_roungitd_view(tournament_running)
+        self.round_view.display_launching_round_view(tournament_running)
 
     def add_player_point(self, winner_choice, tournament_choice, match_list):
         """This function will be user to add tournament.player_score result.
@@ -220,6 +224,11 @@ class TournamentController:
             tournament_choice (instance): tournament
             match_list (instance attribute): tournament.tours
         """
+
+        if not tournament_choice.memory_of_enconters and len(tournament_choice.tours) > 0:
+            c.print("[bold red]la liste des opposant est vide[bold red]")
+            for players in tournament_choice.players:
+                tournament_choice.memory_of_enconters[players] = []
 
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
