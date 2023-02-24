@@ -103,6 +103,11 @@ class RoundView:
                     f"{round.match_list}\n")
 
     def display_for_tournament(self, tournament):
+
+        if not tournament.tours:
+            c.print("[bold red]Il n'y a pas encore de Rounds[bold red]")
+            return None
+
         for round in tournament.tours:
 
             if not round.ending_hour:

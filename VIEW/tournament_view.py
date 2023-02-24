@@ -193,8 +193,14 @@ class TournamentView:
             for tournament in tournament_list:
                 if len(tournament.players) == 0 or len(tournament.players) % 2 == 1:
                     continue
-                if len(tournament.tours) > 0 and tournament.tours[-1].ending_hour is None:
+                try:
+                    if len(tournament.tours) > 0 and tournament.tours[-1].ending_hour is None:
+                        continue
+                except TypeError:
+                    tournament.tours = []
+                    tournament_available.append(tournament)
                     continue
+
                 tournament_available.append(tournament)
 
             if len(tournament_available) == 0:
