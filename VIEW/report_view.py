@@ -114,7 +114,7 @@ class Report_View:
         """Display players from tournament list
 
         Args:
-            tournament_list (list):  tournament list 
+            tournament_list (list):  tournament list
         """
         for tournament in tournament_list:
             for player in tournament.players:
@@ -139,7 +139,7 @@ class Report_View:
         """Pretty display of each tournament
 
         Args:
-            tournament_list (list): tournament_list from 
+            tournament_list (list): tournament_list from
         """
 
         for tournament in tournament_list:
@@ -170,7 +170,7 @@ class Report_View:
             c.print("[bold green3]Liste des scores par joueurs: [bold green3]")
             self.display_player_score(tournament)
 
-            c.print(f"[bold green3]Liste des tours :[bold green3]")
+            c.print("[bold green3]Liste des tours :[bold green3]")
             RoundView().display_for_tournament(tournament)
 
     def report_display_tour_in_tournament(self, tournament_list):

@@ -1,7 +1,6 @@
 from rich.console import Console
 from rich.table import Table
-from rich import inspect
-from datetime import datetime
+
 c = Console()
 
 
@@ -22,7 +21,7 @@ class RoundView:
         else:
 
             table = Table(
-                title=f"",
+                title="",
                 style="red")
 
             table.add_column("Joueur Un", justify="center",
@@ -58,7 +57,7 @@ class RoundView:
         """
 
         table = Table(
-            title=f"",
+            title="",
             style="red")
 
         table.add_column("Joueur Un", justify="center",
@@ -82,7 +81,7 @@ class RoundView:
     def debug_print(self, tournament):
 
         for round in tournament.tours:
-            if round.ending_hour == None:
+            if round.ending_hour is None:
                 c.print(
                     f"{round.tournament_name}\n"
                     f"{round.name}\n"
@@ -119,7 +118,7 @@ class RoundView:
                     f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}"
                     "\n")
                 self.display_round_view_for_report(round.match_list)
-                c.print(f"Ce round n'est pas encore terminé\n")
+                c.print("Ce round n'est pas encore terminé\n")
 
             else:
                 c.print(

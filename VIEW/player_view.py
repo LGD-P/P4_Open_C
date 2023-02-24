@@ -58,8 +58,8 @@ class PlayerView:
 
         year = c.input("Année: ")
         while not year.isdigit() or not int(year) in range(
-            (int(datetime.now().strftime("%Y"))-118),
-                (int(datetime.now().strftime("%Y"))-10)):
+            (int(datetime.now().strftime("%Y")) - 118),
+                (int(datetime.now().strftime("%Y")) - 10)):
             c.print("[bold red]\nInvalide: Le joueur doit avoir "
                     "au moins 10 ans, au plus 118 ans")
             year = c.input("Année: ")
@@ -101,14 +101,14 @@ class PlayerView:
                     "[bold yellow]")
 
             for player in player_list:
-                if not player in tournament.players:
+                if player not in tournament.players:
                     player_available.append(player)
 
             [unique_player_available.append(
                 player) for player in player_available if player not in unique_player_available]
 
             for player in unique_player_available:
-                if not player in tournament.players:
+                if player not in tournament.players:
                     c.print(
                         f"- {player_list.index(player)} [bold green] "
                         f"{player.last_name}"

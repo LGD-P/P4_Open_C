@@ -17,7 +17,7 @@ class ErrorAndUserMessages:
                        "[bold red]")
 
     def bug_in_report(self):
-        """Simple message to say that there is no data to data to show in 
+        """Simple message to say that there is no data to data to show in
         report section
 
         Returns:

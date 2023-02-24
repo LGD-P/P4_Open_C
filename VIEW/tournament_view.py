@@ -243,10 +243,10 @@ class TournamentView:
 
     def display_winner(self, player: list, player_score):
 
-        table = Table(title="",  style="red")
+        table = Table(title="", style="red")
 
         table.add_column(
-            f"[bold red]:1st_place_medal: Et le Vainqueur est : "
+            "[bold red]:1st_place_medal: Et le Vainqueur est : "
             ":1st_place_medal:[bold red]", justify="center", style="cyan",
             no_wrap=True,)
 
