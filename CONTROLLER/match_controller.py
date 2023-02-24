@@ -1,6 +1,4 @@
 
-from MODEL.match_model import Match
-
 
 class MatchController:
 
