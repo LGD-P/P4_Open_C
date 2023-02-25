@@ -219,6 +219,7 @@ class DataBase:
         """
 
         self.save_data(self.tournament_list, self.player_list)
+        ErrorAndUserMessages().database_created()
         if not self.tournament_list and not self.player_list:
             ErrorAndUserMessages().bug_to_creat_db()
 
@@ -446,3 +447,4 @@ class DataBase:
         else:
 
             self.load_touranment()
+            ErrorAndUserMessages().database_loaded()

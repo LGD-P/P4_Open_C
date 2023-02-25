@@ -344,4 +344,4 @@ class TournamentController:
         for tournament in quick_tournament:
             self.tournament_list.append(tournament)
 
-        ErrorAndUserMessages().operation_done()
+        ErrorAndUserMessages().tournament_players_operation_done()
