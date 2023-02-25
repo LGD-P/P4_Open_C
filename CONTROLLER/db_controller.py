@@ -60,8 +60,9 @@ class DataBase:
             player_index = [
                 (tournament.players.index(player) + 1) for player in tournament.players]
 
-            dict_for_match = {player: index for player,
-                              index in zip(tournament.players, player_index)}
+            dict_for_match = {str(player): index for player,
+                              index in zip(tournament.players, player_index)
+                              }
 
             serialized_tournament_tour = []
 
@@ -72,11 +73,11 @@ class DataBase:
                 for player in tour.match_list:
 
                     match_list_of_round.append(([{
-                        'joueur': dict_for_match[player[0][0]]},
+                        'joueur': dict_for_match[str(player[0][0])]},
                         {
                         'score': player[0][1]}],
                         [{
-                            'joueur': dict_for_match[player[1][0]]},
+                            'joueur': dict_for_match[str(player[1][0])]},
                          {
                             'score': player[1][1]}])
                     )
