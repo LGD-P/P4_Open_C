@@ -127,36 +127,43 @@ class TournamentController:
             element[0] for element in
             sorted(tournament_to_run.player_score.items(),
                    key=lambda k: (-k[1], k[0].rank))]
-
+        # Will be filled with match
         list_of_match = []
-
+        # Will be used to creat news round
         associated_players = []
         for player in player_in_tournament_to_run:
             if player in associated_players:
-                continue
+                continue  # first loop is obviously empty we need to continue
 
+            # Start to creat a list of oponants from player_in_tournament and associated_players
+            # As in the first loop, associated player is empty, all players are in.
+            # then list_of_opponent decrease, because oponent will be added in the next tow loops .
             list_of_opponent = [
                 p for p in player_in_tournament_to_run if p != player and p not in associated_players]
 
+            # here we check if players has already played togather returning True, adding
+            # player and opponent in associated_player, else break logic
             for opponent in list_of_opponent:
                 if self.has_players_already_played_together(tournament_to_run, player, opponent):
                     continue
                 list_of_match.append([player, opponent])
                 associated_players.append(player)
                 associated_players.append(opponent)
-                break
 
+                break
+            # Then we can creat a match and add it in list_of_match
+            # Finaly we add player and oponent in associated_player for next loop.
             if player not in associated_players:
                 list_of_match.append([player, list_of_opponent[0]])
                 associated_players.append(player)
                 associated_players.append(list_of_opponent[0])
 
-        # add  round list in tournament chosen
+        # Creat match list
         match_list = self.match_controller.add_unique_match_list(
             list_of_match, tournament_to_run.player_score)
 
         starting_hour = datetime.now()
-
+        # reat Round()
         tour = Round(match_list, f"Round {len(tournament_to_run.tours) + 1}",
                      starting_hour, None, len(tournament_to_run.tours) + 1, tournament_to_run.name)
 
