@@ -313,9 +313,8 @@ class TournamentController:
             self.add_player_point(winner_choice, tournament_choice,
                                   match_list)
 
-            # c.print(tournament_choice)
-
         tour.ending_hour = datetime.now()
+        ErrorAndUserMessages().score_added()
 
     def generate_data(self):
         """Use this feature to quickly set up a tournament with a list of

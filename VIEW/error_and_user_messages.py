@@ -45,8 +45,7 @@ class ErrorAndUserMessages:
         return c.print("\n[bold green3]Tournois et joueurs ajoutés 👍 [bold green3]")
 
     def database_created(self):
-        """Simple message to say that players and tournament are
-        well created
+        """Simple message to say that database is created
 
         Returns:
             str: information message
@@ -54,10 +53,17 @@ class ErrorAndUserMessages:
         return c.print("\n[bold green3]La sauvegarde a bien été réalisée 👍 [bold green3]")
 
     def database_loaded(self):
-        """Simple message to say that players and tournament are
-        well created
+        """Simple message to say that database is loaded
 
         Returns:
             str: information message
         """
         return c.print("\n[bold green3]La base de donnée a bien été chargée 👍 [bold green3]")
+
+    def score_added(self):
+        """Simple message to say that database is loaded
+
+        Returns:
+            str: information message
+        """
+        return c.print("\n[bold green3]Les scores ont été ajoutés 👍 [bold green3]")
