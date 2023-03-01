@@ -4,6 +4,16 @@
 
 * La mise en oeuvre devra respecter le schema Model View Controller.
 
+```mermaid
+graph LR;
+    A[USER] --> |Ask something\n to the program| B(VIEW);
+    B --> | Give the request \nto Controller |C{CONTROLLER};
+    C --> | Ask which Model\n to use|D(MODEL);
+    D --> | Give Model logic\n back to Controller|C;
+    C --> | Process request\n give answer back\n to the View|B; 
+    B --> |display answer| A;
+```
+
 * L'algorithme suisse est implanté pour la gestion des paires de joueurs
 
 * Une base de donnée TinyDB devra stocker les résultats du tournois. Un rapport pourra être généré à la fin du tournois. De plus, l'état du programme pourra être chargé à tout moment entre les actions de l'utilisateur.
@@ -91,4 +101,5 @@ Puis on lance l'installation des modules nécessaires au fonctionnement du scrip
 Il n'y a plus qu'à exécuter le script:
 
     python3 main.py
+
 
