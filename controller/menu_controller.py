@@ -1,13 +1,13 @@
 from rich.console import Console
 
 
-from VIEW.menu_view import MenuView
+from view.menu_view import MenuView
 
 
-from CONTROLLER.player_controller import PlayerController
-from CONTROLLER.tournament_controller import TournamentController
-from CONTROLLER.db_controller import DataBase
-from CONTROLLER.report_controller import ReportController
+from controller.player_controller import PlayerController
+from controller.tournament_controller import TournamentController
+from controller.db_controller import DataBase
+from controller.report_controller import ReportController
 
 
 c = Console()
@@ -20,12 +20,9 @@ class MenuController:
         self.tournament_controller = TournamentController(
             [], self.player_controller.player_list)
         self.db_controller = DataBase(self.tournament_controller.player_list,
-                                      self.tournament_controller
-                                          .tournament_list)
-        self.report_view = ReportController(self.tournament_controller
-                                            .tournament_list,
-                                            self.tournament_controller
-                                                .player_list)
+                                      self.tournament_controller.tournament_list)
+        self.report_view = ReportController(self.tournament_controller.tournament_list,
+                                            self.tournament_controller.player_list)
         self.main_menu_view_in_controller = MenuView({
             "1": {
                 "label": "[bold blue]- 1. Créer des tournois :pencil: "

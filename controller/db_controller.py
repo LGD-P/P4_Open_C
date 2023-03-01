@@ -3,11 +3,11 @@ import json
 from tinydb import TinyDB, where
 from datetime import datetime
 
-from MODEL.tournament_model import Tournament
-from MODEL.player_model import Player
-from MODEL.round_model import Round
+from model.tournament_model import Tournament
+from model.player_model import Player
+from model.round_model import Round
 
-from VIEW.error_and_user_messages import ErrorAndUserMessages
+from view.error_and_user_messages import ErrorAndUserMessages
 
 c = Console()
 
@@ -124,8 +124,7 @@ class DataBase:
             for player in tournament.players:
                 player_list_index.append(tournament.players.index(player) + 1)
                 player_score_dict_in_tournament_table[
-                    tournament.players.index(player) + 1] = tournament\
-                    .player_score[player]
+                    tournament.players.index(player) + 1] = tournament.player_score[player]
 
         table_tournament.upsert({"players": player_list_index},
                                 where('players') == [])
@@ -173,7 +172,7 @@ class DataBase:
             """
 
         db = self.creat_data_base()
-        # db.drop_table("_default")
+
         if not tournament_list and not player_list:
             return None
 
@@ -181,8 +180,6 @@ class DataBase:
         table_tournament.truncate()
         table_players = db.table("PLAYERS")
         table_players.truncate()
-
-        # print(self.tournament_list)
 
         if not player_list:
             pass
@@ -387,7 +384,6 @@ class DataBase:
 
                 self.load_players_tournament_p_score(tournament, data)
             else:
-                print(tournament["name"])
 
                 self.tournament_list.append(
                     Tournament(

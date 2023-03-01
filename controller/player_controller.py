@@ -1,8 +1,8 @@
 from rich.console import Console
 
 
-from VIEW.player_view import PlayerView
-from MODEL.player_model import Player
+from view.player_view import PlayerView
+from model.player_model import Player
 
 
 c = Console()

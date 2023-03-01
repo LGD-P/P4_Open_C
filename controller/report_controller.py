@@ -1,5 +1,5 @@
-from VIEW.report_view import Report_View
-from VIEW.error_and_user_messages import ErrorAndUserMessages
+from view.report_view import Report_View
+from view.error_and_user_messages import ErrorAndUserMessages
 
 
 class ReportController:

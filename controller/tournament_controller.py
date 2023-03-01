@@ -2,15 +2,15 @@ from datetime import datetime
 
 from rich.console import Console
 
-from CONTROLLER.match_controller import MatchController
-from MODEL.player_model import Player
-from MODEL.round_model import Round
-from MODEL.tournament_model import Tournament
-from VIEW.error_and_user_messages import ErrorAndUserMessages
-from VIEW.match_view import MatchView
-from VIEW.player_view import PlayerView
-from VIEW.round_view import RoundView
-from VIEW.tournament_view import TournamentView
+from controller.match_controller import MatchController
+from model.player_model import Player
+from model.round_model import Round
+from model.tournament_model import Tournament
+from view.error_and_user_messages import ErrorAndUserMessages
+from view.match_view import MatchView
+from view.player_view import PlayerView
+from view.round_view import RoundView
+from view.tournament_view import TournamentView
 
 c = Console()
 
@@ -93,11 +93,8 @@ class TournamentController:
         half_list = len(player_in_tournament_to_run) // 2
 
         first_part = player_in_tournament_to_run[:half_list]
-        # print(first_part)
 
         second_part = player_in_tournament_to_run[half_list:]
-        # print(second_part)
-        ###################################################
 
         list_of_match = []
 
@@ -203,13 +200,7 @@ class TournamentController:
             return None
         else:
             if len(tournament_to_run.tours) == 4:
-                """
-                c.print(
-                    "[bold red] ******************\n************\n[bold red]")
-                c.print(tournament_to_run.player_score)
-                c.print(
-                    "[bold red] ******************\n************\n[bold red]")
-                """
+
                 player_in_tournament_to_run = [
                     element[0] for element in
                     sorted(tournament_to_run.player_score.items(),
@@ -219,10 +210,6 @@ class TournamentController:
 
                 return self.tournament_view.display_winner(
                     winner, tournament_to_run.player_score[winner])
-
-            #################################
-            # DEBUG ZONE FOR SORTING
-            #################################
 
             if len(tournament_to_run.tours) == 0:
                 self.matchmaking_round_one(tournament_to_run)
