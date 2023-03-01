@@ -2,7 +2,7 @@
 
 *Le but de ce projet est de créer un script qui gère des tournois d'échecs.*
 
-* La mise en oeuvre devra respecter le schema Model View Controller.
+* La mise en oeuvre devra respecter le schema :  Model View Controller.
 
 ```mermaid
 graph LR;
