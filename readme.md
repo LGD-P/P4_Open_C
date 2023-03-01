@@ -1,4 +1,4 @@
-# Tournois d'Echecs 
+# ♖ Tournois d'Echecs ♖
 
 *Le but de ce projet est de créer un script qui gère des tournois d'échecs.*
 
@@ -9,7 +9,7 @@ graph LR;
     A[USER] --> |Ask something\n to the program| B(VIEW);
     B --> | Give the request \nto Controller |C{CONTROLLER};
     C --> | Ask which Model\n to use|D(MODEL);
-    D --> | Give Model logic\n back to Controller|C;
+    D --> | Give data\n back to Controller|C;
     C --> | Process request\n give answer back\n to the View|B; 
     B --> |display answer| A;
 ```
@@ -23,7 +23,7 @@ graph LR;
 
 ---
 
-# Déroulement de base d'un tournois:
+# ♝ Déroulement de base d'un tournois: 
 
     1. Créer un nouveau tournoi.
     2. Ajouter huit joueurs.
@@ -33,7 +33,7 @@ graph LR;
 
 ---
 
-# Un tournois est constitué de: 
+# ♘ Un tournois est constitué de : 
     • Nom
     • Lieu :
     • Date
@@ -51,7 +51,7 @@ graph LR;
 
 ---
 
-# Un joueur est constitué de:
+# ♗ Un joueur est constitué de :
 
     • Nom de famille
     • Prénom
@@ -62,12 +62,8 @@ graph LR;
 
 ---
 
-# Le rapport est constitué de:
+# ♔ Le rapport est constitué de :
 
-
-    • Liste de tous les acteurs :
-        ◦ par ordre alphabétique ;
-        ◦ par classement.
     • Liste de tous les joueurs d'un tournoi :
         ◦ par ordre alphabétique ;
         ◦ par classement.
@@ -77,7 +73,7 @@ graph LR;
 
 ---------
 
-# Liste des commandes à exécuter pour lancer le programme:
+# ♙ Liste des commandes à exécuter pour lancer le programme : 
 
 Pré-requis: se placer depuis le terminal dans le dossier où l'on exécute le script:
 
@@ -96,7 +92,14 @@ suivi de:
 
 Puis on lance l'installation des modules nécessaires au fonctionnement du script:
 
-    pip install -m requirements.txt
+    pip install -r requirements.txt
+
+
+Générer avec flake8-html, un rapport montrant bien que le code ne contient aucune erreur de peluchage:
+
+    flake8 --format=html --htmldir=flake-report
+
+
 
 Il n'y a plus qu'à exécuter le script:
 
