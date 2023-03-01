@@ -202,10 +202,11 @@ class DataBase:
                 If there is no data send appropriate user message.
             """
 
-        self.save_data(self.tournament_list, self.player_list)
-        ErrorAndUserMessages().database_created()
         if not self.tournament_list and not self.player_list:
             ErrorAndUserMessages().bug_to_creat_db()
+        else:
+            self.save_data(self.tournament_list, self.player_list)
+        ErrorAndUserMessages().database_created()
 
     def load_global_player_list(self):
         """this function open .json file and put players from PLAYERS table

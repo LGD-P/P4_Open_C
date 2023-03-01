@@ -30,8 +30,7 @@ class ErrorAndUserMessages:
         Returns:
             str: information message
         """
-        return c.print("[bold red]Vous n'avez pas de base de données à \
-            charger[bold red]")
+        return c.print("[bold red]Vous n'avez pas de base de données à charger[bold red]")
 
     def tournament_players_operation_done(self):
         """Simple message to say that players and tournament are
