@@ -28,6 +28,30 @@ class DataBase:
 
         return db
 
+    def serialised_tournament(self, tournament):
+        """This function will be used in a loop
+            to put all tournaments recorded in data base
+
+            Args:
+                tournament (tournament): instance of tournament
+
+            Returns:
+                dict: dict of a tournament
+            """
+
+        serialized_tournament = {
+            "name": tournament.name,
+            "place": tournament.place,
+            "date": tournament.date,
+            "tours": [],
+            "players": [],
+            "time_control": tournament.time_control,
+            "description": tournament.description,
+            "player_score": {}
+        }
+
+        return serialized_tournament
+
     def serialised_tournament_match(self, tournament, round):
         player_index = [(tournament.players.index(player) + 1)
                         for player in tournament.players]
@@ -51,7 +75,7 @@ class DataBase:
 
         return match_list_of_round
 
-    def serialised_tournament_tours(self, tournament, table_tournament):
+    def serialised_tournament_tours(self, tournament):
         """This function allow to serialize class Round as
             Tournament().tours
 
@@ -70,7 +94,7 @@ class DataBase:
             for round in tournament.tours:
                 serialized_tournament_tour.append({
                     "tournament_name":
-                    round.name,
+                    round.tournament_name,
                     "name":
                     round.name,
                     "starting_hour":
@@ -82,62 +106,26 @@ class DataBase:
                     "match_list":
                     self.serialised_tournament_match(tournament, round)
                 })
+        return serialized_tournament_tour
 
-            table_tournament.update({"tours": serialized_tournament_tour})
+    def serialize_players_in_tournament(self, tournament):
 
-    def serialised_tournament(self, tournament):
-        """This function will be used in a loop
-            to put all tournaments recorded in data base
-
-            Args:
-                tournament (tournament): instance of tournament
-
-            Returns:
-                dict: dict of a tournament
-            """
-
-        serialized_tournament = {
-            "name": tournament.name,
-            "place": tournament.place,
-            "date": tournament.date,
-            "tours": None,
-            "players": [],
-            "time_control": tournament.time_control,
-            "description": tournament.description,
-            "player_score": {}
-        }
-        return serialized_tournament
-
-    def serialized_player_and_score_in_t_table(self, table_tournament):
-        """this function will be specificly used to fill player_score and
-            list of player in tournament. To identify player, this function uses
-            index of players_table
-
-            Args:
-                tournament_list (list): list of each touranment
-                table_tournament (dict): tournament table in .json file
-            """
+        # player_list_index = [self.player_list.index(player + 1) for player in tournament.player if player in self.player_list ]
         player_list_index = []
-        player_score_dict_in_tournament_table = {}
+        for player in tournament.players:
+            if player in self.player_list:
+                player_list_index.append(self.player_list.index(player) + 1)
 
-        for tournament in self.tournament_list:
-            if tournament.players != []:
-                for player in tournament.players:
-                    player_list_index.append(
-                        tournament.players.index(player) + 1)
-                    player_score_dict_in_tournament_table[
-                        tournament.players.index(player) + 1] = tournament.player_score[player]
+        return player_list_index
 
-                table_tournament.upsert({"players": player_list_index},
-                                        where('players') == [])
+    def serialize_player_score(self, tournament):
+        player_score_dict = {}
+        if tournament.players != []:
+            for player in tournament.players:
+                player_score_dict[tournament.players.index(player) + 1] = tournament.player_score[player]
+        return player_score_dict
 
-                table_tournament.upsert(
-                    {"player_score": player_score_dict_in_tournament_table},
-                    where("player_score") == {})
-            else:
-                pass
-
-    def serialize_players(self, player):
+    def serialize_players_in_player_list(self, player):
         """This function will be used in a loop
             to put all players recorded in data base
 
@@ -186,16 +174,24 @@ class DataBase:
             pass
         else:
             for player in player_list:
-                table_players.insert(self.serialize_players(player))
+                table_players.insert(self.serialize_players_in_player_list(player))
 
         if not tournament_list:
             pass
         else:
             for tournament in tournament_list:
                 table_tournament.insert(self.serialised_tournament(tournament))
-                self.serialised_tournament_tours(tournament, table_tournament)
                 if tournament.players != []:
-                    self.serialized_player_and_score_in_t_table(table_tournament)
+                    table_tournament.update(
+                        {"players": self.serialize_players_in_tournament(tournament)},
+                        where("name") == tournament.name)
+                    table_tournament.update(
+                        {"player_score": self.serialize_player_score(tournament)},
+                        where("name") == tournament.name)
+
+                if tournament.tours != []:
+                    table_tournament.update({"tours": self.serialised_tournament_tours(tournament)},
+                                            where('name') == tournament.name)
 
     def creat_db(self):
         """This function use db_controller to creat .json file

@@ -28,7 +28,7 @@ class TournamentController:
     def add_tournament(self):
         """This function get dict from tournament_view
         display_add_tournament_form() and instance a tournament in
-        tournament_list; add data in database
+        tournament_list
         """
 
         serialized_tournament = self.tournament_view \
