@@ -372,8 +372,8 @@ class DataBase:
                         self.load_tours_in_tournament(
                             tournament_deserializer, data),
                         self.load_players_in_tournament(tournament, data), tournament["time_control"],
-                        tournament["description"], self.load_players_tournament_p_score(tournament, data)))
-                self.load_players_tournament_p_score(tournament, data)
+                        tournament["description"], self.load_players_tournament_p_score(tournament)))
+
             else:
 
                 self.tournament_list.append(
