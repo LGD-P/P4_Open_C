@@ -118,7 +118,7 @@ class DataBase:
         return serialized_tournament_tour
 
     def serialize_players_in_tournament(self, tournament):
-        """This function get player in tournament compare to 
+        """This function get player in tournament compare to
         global player list
 
         Args:
@@ -139,7 +139,7 @@ class DataBase:
         return player_list_index
 
     def serialize_player_score(self, tournament):
-        """This function get player score 
+        """This function get player score
 
         Args:
             tournament (instance): tournament in a loop of global tournament list
@@ -271,7 +271,7 @@ class DataBase:
             return None
 
     def load_players_in_tournament(self, tournament, data):
-        """This function load players in each tournament 
+        """This function load players in each tournament
 
         Args:
             tournament (instance): tournament in a loop of global tournament list
