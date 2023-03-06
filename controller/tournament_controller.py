@@ -28,7 +28,7 @@ class TournamentController:
     def add_tournament(self):
         """This function get dict from tournament_view
         display_add_tournament_form() and instance a tournament in
-        tournament_list
+        tournament_list; add data in database
         """
 
         serialized_tournament = self.tournament_view \
@@ -72,7 +72,7 @@ class TournamentController:
             tournament.player_score[player] = 0
 
             for player in tournament.players:
-                tournament.memory_of_enconters[player] = []
+                tournament.memory_of_enconters[str(player)] = []
 
     def matchmaking_round_one(self, tournament_to_run):
         """This function is the last part of swiss logic. Sorted players list
@@ -233,24 +233,28 @@ class TournamentController:
             tournament_choice (instance): tournament
             match_list (instance attribute): tournament.tours
         """
+        if not tournament_choice.memory_of_enconters:
+            for players in tournament_choice.players:
+                tournament_choice.memory_of_enconters[str(players)] = []
 
         if not tournament_choice.memory_of_enconters and len(tournament_choice.tours) > 0:
 
             for players in tournament_choice.players:
-                tournament_choice.memory_of_enconters[players] = []
+                tournament_choice.memory_of_enconters[str(players)] = []
 
+        print(tournament_choice.memory_of_enconters)
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
-                    tournament_choice.player_score[player] += 0.5
+                    tournament_choice.player_score[(player)] += 0.5
                     match_list[0][1] += 0.5
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
                 elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0.5
                     match_list[1][1] += 0.5
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[0][0])
 
         elif int(winner_choice) == 0:
@@ -258,13 +262,13 @@ class TournamentController:
                 if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 1
                     match_list[0][1] += 1
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
                 elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0
                     match_list[1][1] += 0
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[0][0])
 
         elif int(winner_choice) == 1:
@@ -272,13 +276,13 @@ class TournamentController:
                 if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 0
                     match_list[0][1] += 0
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
                 elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 1
                     match_list[1][1] = 1
-                    tournament_choice.memory_of_enconters[player].append(
+                    tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[0][0])
 
     def fill_result(self):
@@ -332,7 +336,7 @@ class TournamentController:
         for tournament in quick_tournament:
             for player in tournament.players:
                 tournament.player_score[player] = 0
-                tournament.memory_of_enconters[player] = []
+                tournament.memory_of_enconters[str(player)] = []
 
         for tournament in quick_tournament:
             self.tournament_list.append(tournament)
