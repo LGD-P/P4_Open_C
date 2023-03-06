@@ -53,6 +53,15 @@ class DataBase:
         return serialized_tournament
 
     def serialised_tournament_match(self, tournament, round):
+        """This function, for each tournament, get match in each round
+
+        Args:
+            tournament (instance): in a loop instance of touranment
+            round (tuple): tuple of tow list
+
+        Returns:
+            _type_: _description_
+        """
         player_index = [(tournament.players.index(player) + 1)
                         for player in tournament.players]
 
@@ -80,7 +89,7 @@ class DataBase:
                 Tournament().tours
 
                 Args:
-                    tournament (instance): tournament
+                    tournament (instance): tournament in a loop of global tournament list
                     table_tournament (json table): TOURNAMENT table
 
                 """
@@ -109,6 +118,15 @@ class DataBase:
         return serialized_tournament_tour
 
     def serialize_players_in_tournament(self, tournament):
+        """This function get player in tournament compare to 
+        global player list
+
+        Args:
+            tournament (instance): tournament in a loop of global tournament list
+
+        Returns:
+            list: index of each player compare to global player list
+        """
 
         global_player_list = []
         for player in self.player_list:
@@ -118,20 +136,17 @@ class DataBase:
             index + 1 for (index, player) in enumerate(tournament.players)
         ]
 
-        print(player_list_index)
-        """  
-    player_list_index = []
-    for player in tournament.players:
-     
-        player_list_index.append(str(self.player_list.index(player) + 1))
-    
-    players_in_tournament = [player for player in player_list_index if player in global_player_list]
-
-    print(players_in_tournament)
-    """
         return player_list_index
 
     def serialize_player_score(self, tournament):
+        """This function get player score 
+
+        Args:
+            tournament (instance): tournament in a loop of global tournament list
+
+        Returns:
+            dict : index player as key and score as value
+        """
         player_score_dict = {}
         player_index = []
         player_score = []
@@ -256,6 +271,15 @@ class DataBase:
             return None
 
     def load_players_in_tournament(self, tournament, data):
+        """This function load players in each tournament 
+
+        Args:
+            tournament (instance): tournament in a loop of global tournament list
+            data (.json db): PLAYERS table
+
+        Returns:
+            list: list of player instance
+        """
         player_in_tournament_as_index = []
         for players in tournament["players"]:
             player_in_tournament_as_index.append(players)
@@ -277,7 +301,7 @@ class DataBase:
         return player_to_put_in_tournament
 
     def load_players_tournament_p_score(self, tournament):
-        """This function will get player_score in data base identifying player
+        """This function will load player_score in data base identifying player
                 with index, and put this dict with player instance as key in controller
 
                 Args:
@@ -295,6 +319,15 @@ class DataBase:
         return players_score
 
     def load_match_list_in_round(self, tours, data):
+        """This function load match list, to be used in Round()
+
+        Args:
+            tours (instance): instance of Round() in Tournament()
+            data (.json): touranment_table
+
+        Returns:
+            list1: match list for each round
+        """
         match_list_loaded = []
 
         for player in tours["match_list"]:
@@ -359,6 +392,12 @@ class DataBase:
         return tours_in_tournament
 
     def load_first_tournament_part(self, tournament):
+        """This function load a tournament if there is no Players in it.
+        so no round no players socre.
+
+        Args:
+            tournament (instance): instance of Tournament in .json file
+        """
 
         self.tournament_list.append(
             Tournament(tournament["name"], tournament["date"], tournament["place"],

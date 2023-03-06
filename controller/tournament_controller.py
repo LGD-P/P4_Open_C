@@ -242,7 +242,6 @@ class TournamentController:
             for players in tournament_choice.players:
                 tournament_choice.memory_of_enconters[str(players)] = []
 
-        print(tournament_choice.memory_of_enconters)
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
