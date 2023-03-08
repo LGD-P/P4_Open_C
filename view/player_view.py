@@ -30,41 +30,7 @@ class PlayerView:
             first_name = c.input("[bold green3]Entrez le prénom du Joueur:"
                                  "[bold green3] ")
 
-        c.print("[bold green3]Entrez la date de naissance du joueur :")
-
-        day = c.input("Jour: ")
-        while not day.isdigit() or int(day) not in range(1, 32):
-            c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
-            day = c.input("Jour: ")
-
-        month = c.input("Mois: ")
-        while not month.isdigit() or int(month) not in range(1, 13):
-            c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
-            month = c.input("Mois: ")
-
-        while int(month) == 2 and int(day) in range(29, 32):
-            c.print("[bold red] Le mois de février ne compte pas de 29 30 "
-                    "ou 31[bold red]")
-
-            day = c.input("Jour: ")
-            while not day.isdigit() or int(day) not in range(1, 32):
-                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31")
-                day = c.input("Jour: ")
-
-            month = c.input("Mois: ")
-            while not month.isdigit() or int(month) not in range(1, 13):
-                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12")
-                month = c.input("Mois: ")
-
-        year = c.input("Année: ")
-        while not year.isdigit() or not int(year) in range(
-            (int(datetime.now().strftime("%Y")) - 118),
-                (int(datetime.now().strftime("%Y")) - 10)):
-            c.print("[bold red]\nInvalide: Le joueur doit avoir "
-                    "au moins 10 ans, au plus 118 ans")
-            year = c.input("Année: ")
-
-        birth = (f'{day}-{month}-{year}')
+        birth = self.birthform()
 
         sex_list = ["h", "f"]
         sex = c.input("[bold green3]Entrez le sexe: H - F[bold green3] ")
@@ -114,3 +80,40 @@ class PlayerView:
                         f"{player.last_name}"
                         f" {player.first_name}, rang :  "
                         f"{player.rank}[bold green]")
+
+    def birthform(self):
+        """This function display form to get bith
+        check with datetiume if date really exist
+
+        Returns:
+            datetime : d% m% Y%
+        """
+        print("Entez la date de naissance du joueur")
+        exist = False
+        while exist is False:
+            year = input("Année: ")
+            while not year.isdigit() or int(year) not in range(
+                (int(datetime.now().strftime("%Y")) - 118),
+                    (int(datetime.now().strftime("%Y")) - 10)):
+                c.print("[bold red]\nInvalide: Le joueur doit avoir "
+                        "au moins 10 ans, au plus 118 ans[bold red]")
+                year = c.input("Année: ")
+
+            month = input("Mois ")
+            while not month.isdigit() or int(month) not in range(1, 13):
+                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 12[bold red]")
+                month = c.input("Mois: ")
+
+            day = input("Jour ")
+            while not day.isdigit() or int(day) not in range(1, 32):
+                c.print("[bold red]\nInvalide: entrez un jour entre 1 et 31[bold red]")
+                day = c.input("Jour: ")
+
+            try:
+                birth = f"{day}/{month}/{year}"
+                birth = datetime.strptime(birth, "%d/%m/%Y")
+                exist = True
+                return birth
+
+            except ValueError:
+                c.print("[bold red]La date entrée n'est pas correcte[bold red]")

@@ -175,7 +175,7 @@ class DataBase:
         serialized_players = {
             'last_name': player.last_name,
             'first_name': player.first_name,
-            'birth': player.birth,
+            'birth': player.birth.isoformat(),
             'sex': player.sex,
             'rank': player.rank
         }
@@ -261,7 +261,7 @@ class DataBase:
 
             for player in player_deserializer:
                 self.player_list.append(
-                    Player(player["last_name"], player["first_name"], player["birth"],
+                    Player(player["last_name"], player["first_name"], datetime.fromisoformat(player["birth"]),
                            player["sex"], player["rank"]))
 
             opener.close()
