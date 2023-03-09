@@ -16,25 +16,21 @@ class TournamentView:
         Returns:
             dict : {'player attributes' : user input}
         """
-        name = c.input(
-            "[bold green3]Entrez le nom du Tournois : [bold green3] ")
+        name = c.input("[bold green3]Entrez le nom du Tournois : [bold green3] ")
         date = datetime.now()
-        place = c.input(
-            "[bold green3]Entrez le lieu du Tournois [bold green3] ")
+        place = c.input("[bold green3]Entrez le lieu du Tournois [bold green3] ")
         tours = []
         players = []
         time_control_dict = {1: "Bullet", 2: "Blitz", 3: "Coup rapide"}
 
-        time_control = c.input("[bold green3]Choisissez le mode de contrôle "
-                               "du temps\n[bold green3]"
+        time_control = c.input("[bold green3]Choisissez le mode de contrôle du temps\n[bold green3]"
                                "[bold green]- 1. Bullet\n"
                                "- 2. Blitz\n"
                                "- 3. Coup rapide\n[bold green]")
 
         while not time_control.isdigit() or int(time_control) <= 0 \
                 or int(time_control) > 3:
-            c.print("[bold red]\nInvalide, possiblités ==> 1. 2. 3. "
-                    "[bold red]\n")
+            c.print("[bold red]\nInvalide, possiblités ==> 1. 2. 3. [bold red]\n")
             time_control = input(
                 "- 1. Bullet\n"
                 "- 2. Blitz\n"
@@ -43,8 +39,7 @@ class TournamentView:
 
         time_control = time_control_dict[int(time_control)]
 
-        description = c.input("[bold green3]Indiquez la description du "
-                              "tournois [bold green3]")
+        description = c.input("[bold green3]Indiquez la description du tournois [bold green3]")
         c.print("\n[bold red]Tournois ajouté 👍 [bold red]")
 
         return {
@@ -106,8 +101,7 @@ class TournamentView:
             # retourner directement l'instance du tournois
             return tournament_list[int(tournament_choice)]
 
-    def display_add_player_in_tournament_form(self, tournament_list,
-                                              player_list, player_view):
+    def display_add_player_in_tournament_form(self, tournament_list, player_list, player_view):
         """
         This function display only players available to fill tournament with
         returning a dict with tournament and player choosen
@@ -125,52 +119,35 @@ class TournamentView:
                 }
         """
         if not tournament_list:
-            c.print("[bold red]Veuillez créer un tournois pour "
-                    "pouvoir l'alimenter en joueurs..\n [bold red]")
+            c.print("[bold red]Veuillez créer un tournois pour pouvoir l'alimenter en joueurs..\n [bold red]")
             return None
 
         elif not player_list:
-            c.print("[bold red]Veuillez créer des joueurs pour "
-                    "pouvoir les ajouter à des tournois")
+            c.print("[bold red]Veuillez créer des joueurs pour pouvoir les ajouter à des tournois")
             return None
 
         else:
-
-            tournament = self.display_tournament_to_fill(
-                tournament_list, player_list)
-            # print(tournament.name)
-
+            tournament = self.display_tournament_to_fill(tournament_list, player_list)
             if not tournament:
                 return None
-
             else:
 
                 player_view.display_players_to_choose(
                     player_list, tournament)
 
-                player_choice = c.input("[bold yellow]Choisissez votre "
-                                        "joueur\n ==> [bold yellow]")
+                player_choice = c.input("[bold yellow]Choisissez votre joueur\n ==> [bold yellow]")
                 choice_list = []
                 for player in player_list:
                     choice_list.append(player_list.index(player))
 
                 while not player_choice.isdigit() \
                         or int(player_choice) not in choice_list:
-                    c.print(
-                        "[bold red]Faites un choix parmis ceux "
-                        "disponibles[bold red]")
+                    c.print("[bold red]Faites un choix parmis ceux disponibles[bold red]")
                     player_choice = c.input("[bold yellow]==> [bold yellow]")
 
                 while player_list[int(player_choice)] in tournament.players:
-                    c.print(
-                        "[bold red]Ce joueur est déjà dans la liste "
-                        "[bold red]")
+                    c.print("[bold red]Ce joueur est déjà dans la liste [bold red]")
                     player_choice = c.input("[bold yellow]==> [bold yellow]")
-
-                # tournament_choice.players.append(
-                    # player_list[int(player_choice)])
-
-                # c.print(player_list[int(player_choice)])
 
                 return {
                     "chosen_tournament": tournament,
@@ -204,8 +181,7 @@ class TournamentView:
                 tournament_available.append(tournament)
 
             if len(tournament_available) == 0:
-                c.print("[bold red]Votre tournois est déjà en cours veuillez "
-                        "remplir les scores[bold red]")
+                c.print("[bold red]Votre tournois est déjà en cours veuillez remplir les scores[bold red]")
                 return None
             else:
                 for tournament in tournament_available:
@@ -214,9 +190,7 @@ class TournamentView:
                         f"{tournament.name}, {tournament.place}"
                         "[bold green]\n")
 
-            tournament_choice = c.input(
-                "[bold blue]Faites votre choix :  [bold blue]"
-            )
+            tournament_choice = c.input("[bold blue]Faites votre choix :  [bold blue]")
 
             choice_player = []
             index = -1
@@ -226,9 +200,7 @@ class TournamentView:
 
             while not tournament_choice.isdigit() or not \
                     int(tournament_choice) in choice_player:
-                c.print(
-                    "[bold red] Merci de faire un choix dans "
-                    "la liste[bold red]")
+                c.print("[bold red] Merci de faire un choix dans la liste[bold red]")
                 tournament_choice = c.input("==> ")
 
             tournament_to_launch = tournament_available[int(
@@ -237,8 +209,7 @@ class TournamentView:
             return tournament_to_launch
 
         else:
-            c.print("[bold red]Vous devez créer un tournois d'abord..."
-                    "\n[bold red]")
+            c.print("[bold red]Vous devez créer un tournois d'abord...\n[bold red]")
             return None
 
     def display_winner(self, player: list, player_score):
@@ -246,8 +217,8 @@ class TournamentView:
         table = Table(title="", style="red")
 
         table.add_column(
-            "[bold red]:1st_place_medal: Et le Vainqueur est : "
-            ":1st_place_medal:[bold red]", justify="center", style="cyan",
+            "[bold red]:1st_place_medal: Et le Vainqueur est : :1st_place_medal:[bold red]",
+            justify="center", style="cyan",
             no_wrap=True,)
 
         table.add_row(

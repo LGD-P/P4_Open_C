@@ -16,7 +16,7 @@ class Player:
     def __str__(self):
         return (f"- Nom: {self.last_name} "
                 f"- Prénom: {self.first_name} "
-                f"- Date de naissance: {datetime.strftime(self.birth, '%d/%m/%Y')} "
+                f"- Date de naissance: {self.birth.strftime('%d/%m/%Y')} "
                 f"- Sexe: {self.sex} "
                 f"- rank: {self.rank}"
                 )
@@ -24,7 +24,7 @@ class Player:
     def __repr__(self):
         return (f"\n- Nom : {self.last_name}"
                 f" Prénom : {self.first_name} "
-                f" Date de naissance : {datetime.strftime(self.birth, '%d/%m/%Y')} "
+                f" Date de naissance : {self.birth.strftime('%d/%m/%Y')} "
                 f" Sexe : {self.sex} "
                 f" rank : {self.rank} ")
 

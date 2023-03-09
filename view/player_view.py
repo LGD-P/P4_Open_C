@@ -17,18 +17,13 @@ class PlayerView:
         last_name = c.input(
             "[bold green3]Entrez le nom du Joueur: [bold green3] ")
         while last_name.isdigit():
-            c.print("[bold red]\nInvalide, le nom ne peut pas contenir "
-                    "de numéro\n ")
-            last_name = c.input("[bold green3]Entrez le nom du Joueur:"
-                                "[bold green3] ")
+            c.print("[bold red]\nInvalide, le nom ne peut pas contenir de numéro\n ")
+            last_name = c.input("[bold green3]Entrez le nom du Joueur:[bold green3] ")
 
-        first_name = c.input("[bold green3]Entrez le prénom du Joueur: "
-                             "[bold green3] ")
+        first_name = c.input("[bold green3]Entrez le prénom du Joueur: [bold green3] ")
         while first_name.isdigit():
-            c.print("[bold red]\nInvalide, le prénom ne peut pas contenir "
-                    "de numéro\n ")
-            first_name = c.input("[bold green3]Entrez le prénom du Joueur:"
-                                 "[bold green3] ")
+            c.print("[bold red]\nInvalide, le prénom ne peut pas contenir de numéro\n ")
+            first_name = c.input("[bold green3]Entrez le prénom du Joueur:[bold green3] ")
 
         birth = self.birthform()
 
@@ -36,11 +31,9 @@ class PlayerView:
         sex = c.input("[bold green3]Entrez le sexe: H - F[bold green3] ")
         while not sex.lower() in sex_list or sex.isdigit():
             c.print("[bold red]\nInvalide ")
-            sex = c.input("[bold green3]Entrez le sexe du joueur: H / F "
-                          "[bold green3]")
+            sex = c.input("[bold green3]Entrez le sexe du joueur: H / F [bold green3]")
 
-        rank = c.input("[bold green3]Entrez le classement du joueur:"
-                       "[bold green3]")
+        rank = c.input("[bold green3]Entrez le classement du joueur:[bold green3]")
 
         return {
             "last_name": last_name,
@@ -95,8 +88,7 @@ class PlayerView:
             while not year.isdigit() or int(year) not in range(
                 (int(datetime.now().strftime("%Y")) - 118),
                     (int(datetime.now().strftime("%Y")) - 10)):
-                c.print("[bold red]\nInvalide: Le joueur doit avoir "
-                        "au moins 10 ans, au plus 118 ans[bold red]")
+                c.print("[bold red]\nInvalide: Le joueur doit avoir au moins 10 ans, au plus 118 ans[bold red]")
                 year = c.input("Année: ")
 
             month = input("Mois ")

@@ -47,15 +47,12 @@ class Report_View:
         Returns:
             list: list of player in tournament sorted by alphabetical order
         """
-        answer = [tournament_list.index(
-            tournament) for tournament in tournament_list if tournament.players]
+        answer = [tournament_list.index(tournament) for tournament in tournament_list if tournament.players]
 
-        tournament_available = [
-            tournament for tournament in tournament_list if tournament.players]
+        tournament_available = [tournament for tournament in tournament_list if tournament.players]
 
         if not tournament_available:
-            c.print(
-                "[bold red]Il faut ajouter des joueurs aux tournois [bold red]")
+            c.print("[bold red]Il faut ajouter des joueurs aux tournois [bold red]")
             return None
 
         for tournament in tournament_available:
@@ -76,19 +73,16 @@ class Report_View:
 
         tournament_choosen = tournament_list[int(question)]
 
-        sorted_players = sorted(tournament_choosen.players,
-                                key=lambda player: player.last_name)
+        sorted_players = sorted(tournament_choosen.players, key=lambda player: player.last_name)
 
-        c.print("[bold magenta]Voici la liste des joueurs par ordre "
-                "alphabétique:\n[bold magenta]")
+        c.print("[bold magenta]Voici la liste des joueurs par ordre alphabétique:\n[bold magenta]")
         for player in sorted_players:
             c.print(player)
 
     def name_and_date_of_touranment(self, tournament_list):
 
         answer = []
-        c.print("[bold yellow]Choisissez le tournois dont "
-                "vous souhaitez connaître la date ? \n[bold yellow]")
+        c.print("[bold yellow]Choisissez le tournois dont vous souhaitez connaître la date ? \n[bold yellow]")
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
 
@@ -103,9 +97,8 @@ class Report_View:
 
         tournament_chosen = tournament_list[int(question)]
 
-        c.print(
-            f"Le tournois : {tournament_chosen.name} s'est déroulé le "
-            f"{tournament_chosen.date.strftime('%d-%m-%Y à %H:%M' )}")
+        c.print(f"Le tournois : {tournament_chosen.name} s'est déroulé le "
+                f"{tournament_chosen.date.strftime('%d-%m-%Y à %H:%M' )}")
 
     def display_player_in_row(self, tournament):
         """Display players from tournament list
@@ -115,8 +108,7 @@ class Report_View:
         """
 
         if not tournament.players:
-            c.print(
-                "[bold red]Pas encore de joueurs dans le tournois[bold red]")
+            c.print("[bold red]Pas encore de joueurs dans le tournois[bold red]")
         else:
             for player in tournament.players:
                 c.print(player)
@@ -128,8 +120,7 @@ class Report_View:
             tournament (instance): from loop on tournament_list
         """
         if not tournament.player_score:
-            c.print(
-                "[bold red]Pas encore de scores dans le tournois[bold red]")
+            c.print("[bold red]Pas encore de scores dans le tournois[bold red]")
         else:
             for player_score in tournament.player_score:
                 c.print(
@@ -157,7 +148,7 @@ class Report_View:
                     f"[bold yellow]{tournament.place}[bold yellow]")
 
             c.print("[bold green3]Date du tournois : [bold green3]"
-                    f"[bold yellow]{tournament.date}[bold yellow]0")
+                    f"[bold yellow]{tournament.date.strftime('%d-%m-%Y - %H:%M:%S')}[bold yellow]0")
 
             c.print("[bold green3]Nombres de tours : [bold green3]"
                     f"[bold yellow]{tournament.number_of_rounds}[bold yellow]")
@@ -225,5 +216,4 @@ class Report_View:
 
         if menu_choice in secondary_menu:
             return secondary_menu[menu_choice]["action"]()
-        c.print("\n[bold red]Merci de faire un choix présent"
-                " dans le menu[bold red]\n")
+        c.print("\n[bold red]Merci de faire un choix présent dans le menu[bold red]\n")

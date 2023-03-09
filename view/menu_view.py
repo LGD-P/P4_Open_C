@@ -27,6 +27,7 @@ class MenuView:
   ^BB&@@@P     !BB@@@#~     !Y&@B!     G@@@@&?.   .JG@@#^     :P@?
  ~5##&&&@@5:  !P#&&&@@B!   !#&&@@&!   ^P&&@@@?   .J&&&@@G^   7#&@@B^
  !J?JJJYYY5^  ???JJJYY5?  .??JJJY5J   7??JJYYY:  ^J?JJJY5!  :??JJY57 [bold green3]""")
+
         c.print("\n[bold yellow] :clipboard: CHESS MENU Veuillez faire un "
                 "choix dans le menu: :clipboard: [bold yellow]\n")
         for element in self.main_menu_view:
