@@ -106,4 +106,4 @@ Il n'y a plus qu'à exécuter le script:
     python3 main.py
 
 
-![preview](preview.png)
+![preview](/menu.gif)
