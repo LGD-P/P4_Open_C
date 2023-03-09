@@ -64,12 +64,11 @@ graph LR;
 
 # ♔ Le rapport est constitué de :
 
-    • Liste de tous les joueurs d'un tournoi :
-        ◦ par ordre alphabétique ;
-        ◦ par classement.
-    • Liste de tous les tournois.
-    • Liste de tous les tours d'un tournoi.
-    • Liste de tous les matchs d'un tournoi.
+    • liste de tous les joueurs par ordre alphabétique 
+    • liste de tous les tournois 
+    • nom et dates d’un tournoi donné 
+    • liste des joueurs du tournoi par ordre alphabétique 
+    • liste de tous les tours du tournoi et de tous les matchs du tour
 
 ---------
 
