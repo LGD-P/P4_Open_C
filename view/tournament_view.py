@@ -18,7 +18,7 @@ class TournamentView:
         """
         name = c.input(
             "[bold green3]Entrez le nom du Tournois : [bold green3] ")
-        date = datetime.now().strftime('%d-%m-%Y à %H:%M:%S')
+        date = datetime.now()
         place = c.input(
             "[bold green3]Entrez le lieu du Tournois [bold green3] ")
         tours = []
