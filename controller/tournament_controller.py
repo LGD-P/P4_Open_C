@@ -3,7 +3,6 @@ from datetime import datetime
 from rich.console import Console
 
 from controller.match_controller import MatchController
-from model.player_model import Player
 from model.round_model import Round
 from model.tournament_model import Tournament
 from view.error_and_user_messages import ErrorAndUserMessages
@@ -305,39 +304,3 @@ class TournamentController:
 
         tour.ending_hour = datetime.now()
         ErrorAndUserMessages().score_added()
-
-    def generate_data(self):
-        """Use this feature to quickly set up a tournament with a list of
-        players so you can test the functionality of the program"""
-        self.player_list.clear()
-        self.tournament_list.clear()
-
-        quick_players_list = [
-            Player("DENIS", "Laurent", "11-12-2000", "h", 1),
-            Player("CHARLES", "Henri", "11-10-2005", "h", 2),
-            Player("MOINE", "Alice", "10-10-1990", "f", 3),
-            Player("VAULT", "Lise", "01-02-1980", "f", 4),
-            Player("CREPIN", "Maurice", "12-07-1950", "h", 5),
-            Player("TIAGO", "Daniela", "05-06-1977", "f", 6),
-            Player("EDON", "Anna", "09-03-1985", "f", 7),
-            Player("PRIMO", "Angelo", "09-03-1970", "h", 8)]
-
-        for players in quick_players_list:
-            self.player_list.append(players)
-
-        quick_tournament = [
-            Tournament("PARIS Chess-Event", "Paris",
-                       datetime.now().strftime("%d-%m-%Y"),
-                       [], quick_players_list[0:9], "Blitz",
-                       "Description", {}, 4)
-        ]
-
-        for tournament in quick_tournament:
-            for player in tournament.players:
-                tournament.player_score[player] = 0
-                tournament.memory_of_enconters[str(player)] = []
-
-        for tournament in quick_tournament:
-            self.tournament_list.append(tournament)
-
-        ErrorAndUserMessages().tournament_players_operation_done()

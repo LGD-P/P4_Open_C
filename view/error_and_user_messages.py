@@ -32,15 +32,6 @@ class ErrorAndUserMessages:
         """
         return c.print("[bold red]Vous n'avez pas de base de données à charger[bold red]")
 
-    def tournament_players_operation_done(self):
-        """Simple message to say that players and tournament are
-        well created
-
-        Returns:
-            str: information message
-        """
-        return c.print("\n[bold green3]Tournois et joueurs ajoutés 👍 [bold green3]")
-
     def database_created(self):
         """Simple message to say that database is created
 
