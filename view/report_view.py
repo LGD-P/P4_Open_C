@@ -1,7 +1,6 @@
 from rich.console import Console
 
 
-from view.match_view import MatchView
 from view.round_view import RoundView
 
 
@@ -193,31 +192,24 @@ class Report_View:
         """
 
         answer = []
+        c.print("[bold yellow]Choisissez le tournois dont "
+                "vous souhaitez afficher la liste des tours "
+                "alphabétique\n[bold yellow]"
+                "[bold blue] ")
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
-            question = c.input("[bold yellow]Choisissez le tournois dont "
-                               "vous souhaitez afficher la liste des tours "
-                               "alphabétique\n[bold yellow]"
-                               "[bold blue] "
-                               f"- {tournament_list.index(tournament)} : "
-                               f"{tournament.name}\n[bold blue]")
 
-            while not question.isdigit() or not int(question) in answer:
-                question = c.input(
-                    "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                    f" - {tournament_list.index(tournament)} : {tournament}")
+            c.print(f"- {tournament_list.index(tournament)} : "
+                    f"{tournament.name}\n[bold blue]")
 
-            tournament_choosen = tournament_list[int(question)]
-            """
-            round_list_to_display = []
-            for round in round_list:
+        question = input("==> ")
+        while not question.isdigit() or not int(question) in answer:
+            question = c.input(
+                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
+                f" - {tournament_list.index(tournament)} : {tournament}")
 
-                if tournament_choosen.name in round.tournament_name:
-
-                    round_list_to_display.append(round)
-            """
-
-        RoundView().display_for_tournament(tournament_choosen)
+        tournament_chosen = tournament_list[int(question)]
+        return tournament_chosen
 
     def report_display_match_in_tournament(self, tournament_list):
         """
@@ -232,23 +224,23 @@ class Report_View:
             in tournament.
         """
         answer = []
+        c.print("[bold yellow]Choisissez le tournois dont "
+                "vous souhaitez afficher la liste des matchs"
+                "\n[bold yellow]"
+                "[bold blue]")
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
-            question = c.input("[bold yellow]Choisissez le tournois dont "
-                               "vous souhaitez afficher la liste des matchs"
-                               "\n[bold yellow]"
-                               "[bold blue]"
-                               f"- {tournament_list.index(tournament)} : "
-                               f"{tournament.name}\n[bold blue]")
+            c.print(f"- {tournament_list.index(tournament)} : "
+                    f"{tournament.name}\n[bold blue]")
 
-            while not question.isdigit() or not int(question) in answer:
-                question = c.input(
-                    "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                    f" - {tournament_list.index(tournament)} : {tournament}")
+        question = input("==> ")
+        while not question.isdigit() or not int(question) in answer:
+            question = c.input(
+                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
+                f" - {tournament_list.index(tournament)} : {tournament}")
 
-            tournament_choosen = tournament_list[int(question)]
-
-        MatchView().display_match_for_report(tournament_choosen)
+        tournament_chosen = tournament_list[int(question)]
+        return tournament_chosen
 
     def display_report(self, secondary_menu, ):
         """

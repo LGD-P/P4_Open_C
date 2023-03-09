@@ -68,15 +68,7 @@ class MenuController:
                 "label": "[bold blue]- 9. Quitter :raising_hand:  "
                 "[bold blue]\n",
                 "action": self.quit_menu,
-            },
-
-
-            "10": {
-                "label": "[bold blue]- 10. Ajout rapide de tournois et joueurs"
-                ":rocket:\n  [bold blue]",
-                "action": self.tournament_controller.generate_data
             }
-
         })
 
     def run_program(self):

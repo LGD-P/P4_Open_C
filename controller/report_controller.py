@@ -1,5 +1,7 @@
 from view.report_view import Report_View
 from view.error_and_user_messages import ErrorAndUserMessages
+from view.round_view import RoundView
+from view.match_view import MatchView
 
 
 class ReportController:
@@ -33,15 +35,15 @@ class ReportController:
         """This function use ReportView to display each touch
         in tournament_list
         """
-        Report_View().report_display_tour_in_tournament(
-            self.tournament_list)
+        tournament_chosen = Report_View().report_display_tour_in_tournament(self.tournament_list)
+        RoundView().display_for_tournament(tournament_chosen)
 
     def report_match_in_tournament(self):
         """This function use ReportView to display each match
         in tournament list
         """
-        Report_View().report_display_match_in_tournament(
-            self.tournament_list)
+        tournament_chosen = Report_View().report_display_match_in_tournament(self.tournament_list)
+        MatchView().display_match_for_report(tournament_chosen)
 
     def report(self):
         """This function using ReportView allow acces to report menu.
