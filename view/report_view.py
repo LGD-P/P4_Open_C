@@ -9,6 +9,32 @@ c = Console()
 
 class Report_View:
 
+    def report_display_all_players_by_alphabetical_order(
+            self, player_list):
+        """
+        This function used in report return player list by alphabetical order
+        using player list in tournament
+
+        Args:
+            tournament_list (list): list of each tournament instance created
+
+        Returns:
+            list: list of player in tournament sorted by alphabetical order
+        """
+
+        if player_list == []:
+            c.print(
+                "[bold red]Il faut d'abord ajouter des joueurs[bold red]")
+            return None
+
+        sorted_players = sorted(player_list,
+                                key=lambda player: player.last_name)
+
+        c.print("[bold magenta]Voici la liste des joueurs par ordre "
+                "alphabétique:\n[bold magenta]")
+        for player in sorted_players:
+            c.print(player)
+
     def report_display_players_in_tournament_by_alphabetical_order(
             self, tournament_list):
         """

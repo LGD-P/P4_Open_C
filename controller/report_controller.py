@@ -14,8 +14,8 @@ class ReportController:
         players by alphabetic order
         """
         Report_View()\
-            .report_display_players_in_tournament_by_alphabetical_order(
-                self.tournament_list)
+            .report_display_all_players_by_alphabetical_order(
+                self.player_list)
 
     def report_player_by_rank(self):
         """This function use ReportView to display player by rank
@@ -49,7 +49,7 @@ class ReportController:
         """This function using ReportView allow acces to report menu.
         """
 
-        if len(self.tournament_list) == 0:
+        if len(self.tournament_list) == 0 and len(self.player_list) == 0:
             ErrorAndUserMessages().bug_in_report()
 
         else:
@@ -57,7 +57,7 @@ class ReportController:
             secondary_report_menu = {
                 "1": {
                     "label": "[bold blue]- 01. Liste de tous les joueurs "
-                    "d'un tournoi par ordre alphabétique[bold blue]",
+                    "par ordre alphabétique[bold blue]",
                     "action": self.report_players_alpahatical_order
                 },
                 "2": {
