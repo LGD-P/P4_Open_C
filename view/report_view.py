@@ -105,7 +105,7 @@ class Report_View:
 
         c.print(
             f"Le tournois : {tournament_chosen.name} s'est déroulé le "
-            f"{tournament_chosen.date}")
+            f"{tournament_chosen.date.strftime('%d-%m-%Y à %H:%M' )}")
 
     def display_player_in_row(self, tournament):
         """Display players from tournament list

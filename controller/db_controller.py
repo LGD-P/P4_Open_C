@@ -42,7 +42,7 @@ class DataBase:
         serialized_tournament = {
             "name": tournament.name,
             "place": tournament.place,
-            "date": tournament.date,
+            "date": tournament.date.isoformat(),
             "tours": [],
             "players": [],
             "time_control": tournament.time_control,
@@ -400,7 +400,7 @@ class DataBase:
         """
 
         self.tournament_list.append(
-            Tournament(tournament["name"], tournament["date"], tournament["place"],
+            Tournament(tournament["name"], datetime.fromisoformat(tournament["date"]), tournament["place"],
                        [], [], tournament["time_control"],
                        tournament["description"], {}))
 
@@ -426,7 +426,7 @@ class DataBase:
 
             if tournament["players"] != [] and tournament["tours"] == []:
                 self.tournament_list.append(
-                    Tournament(tournament["name"], tournament["date"],
+                    Tournament(tournament["name"], datetime.fromisoformat(tournament["date"]),
                                tournament["place"], [],
                                self.load_players_in_tournament(tournament, data),
                                tournament["time_control"], tournament["description"],
@@ -435,7 +435,7 @@ class DataBase:
             elif tournament["tours"] != []:
                 self.tournament_list.append(
                     Tournament(
-                        tournament["name"], tournament["date"], tournament["place"],
+                        tournament["name"], datetime.fromisoformat(tournament["date"]), tournament["place"],
                         self.load_tours_in_tournament(tournament, data),
                         self.load_players_in_tournament(tournament, data),
                         tournament["time_control"], tournament["description"],
