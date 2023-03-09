@@ -16,21 +16,17 @@ class MenuView:
             function: function choosen by user choice
         """
         c.print("""[bold green3]
-        ::
-       !##7
-       ?&@?               !7
-     7YB&@#B?          ..^G#~.:            .:
-     :P@@@@#^         .?G&@@@#J:           5B.         .J5?!~:
-      !&@@@!            ^B@@@!           ~G&7PY.       .?&@@@&7J.        . . . ..
-     .?&&@@J:           ^#&@@!          ^P@#P@@?      !B&&@@@@B@!!      .JG&G&BG:
-    .!G&&&@#?.         !P&&&@#?.         ~B@@&Y:    ^G@@@@@&@@@&BG       ?@@@@@G          .^:
-      :B@@#:            ^B@@#!           ~G&&&?.    ^YB@5!^!&@@@#?7      7G#&@&J         !B@@P
-       5@@B              Y@@G            ^5@@#!.          :5@@@&#&Y       ~&@@7          ^#@@Y
-      ^Y@@@~            .Y@@&:            ~&@5          ~P&@@@@&P7.       ^B@@7         .7#&@P^
-    :7!P@@@&?:        .~!Y@@@B~.          !#@#.        Y@@@@@@@#BG^      .?G@@#:          J@&^
-   :G&#&@@@@@#^       Y#B&@@@@@G.       ~YY&@@#?.       B@@@@@@&5~      :5Y&@@@#~        :J@@J
-  :?#&&&&&@@@@Y^    .!B&@&&@@@@&?.     :B@@@@@@@7      :G&&@@@@@?       J&@@@@@@P.      5##@@@&
- :PGGGGBB##&@@@&:   JPGGBBB#&&@@@B.   !PGBB##&@@@5    ~5GBB##&@@@5    .YGBBB#&&@@B^   .YGB##&@@&?[bold green3]""")
+     !5:
+    :P@?.         !~
+   :5@@@Y       !J##J~        !~        ..:..
+    7@@#.       .5@@5.      .JBJJ      J&&#J!      :.:.:
+   :Y&&&7.      :5&@5:      ^#&&&^   ~G@@@@&#J.    J&#&G.
+   .!#@B^       :5@@5:      .Y&@J   .P@BJJ@@@G~    ?&&@P      :5G7
+    .G@5         ~@@^        7&&!     °  5@@&B?     5@B.      ^&@Y
+   .~B@&!       .7&@5.       :#&.       @@@@#5^     J@&:      :G@?
+  ^BB&@@@P     !BB@@@#~     !Y&@B!     G@@@@&?.   .JG@@#^     :P@?
+ ~5##&&&@@5:  !P#&&&@@B!   !#&&@@&!   ^P&&@@@?   .J&&&@@G^   7#&@@B^
+ !J?JJJYYY5^  ???JJJYY5?  .??JJJY5J   7??JJYYY:  ^J?JJJY5!  :??JJY57 [bold green3]""")
         c.print("\n[bold yellow] :clipboard: CHESS MENU Veuillez faire un "
                 "choix dans le menu: :clipboard: [bold yellow]\n")
         for element in self.main_menu_view:
@@ -43,4 +39,8 @@ class MenuView:
                 " dans le menu[bold red]\n")
 
     def quit_message(self):
-        c.print("[bold red]Merci à bientôt[bold red]")
+        import time
+        message = "\x1b[38;5;1mMerci et à Bientôt ! 🖖 \x1b[0m\n"
+        for char in message:
+            print(char, end="", flush=True)
+            time.sleep(0.05)
