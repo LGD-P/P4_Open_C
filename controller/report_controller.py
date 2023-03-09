@@ -69,7 +69,8 @@ class ReportController:
                     "action": self.report_players_in_tournament_by_alpahatical_order
                 },
                 "5": {
-                    "label": "[bold blue]- 05. Liste de tous les tours du tournoi et de tous les matchs du tour.[bold blue]",
+                    "label": "[bold blue]- 05. Liste de tous les tours du tournoi et de tous les matchs du "
+                    "tour.[bold blue]",
                     "action": self.report_tour_in_tournament
                 },
 

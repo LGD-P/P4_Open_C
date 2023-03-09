@@ -119,10 +119,8 @@ class TournamentController:
         Args:
             tournament_to_run (instance): instance of tournament chosen by user
         """
-        player_in_tournament_to_run = [
-            element[0] for element in
-            sorted(tournament_to_run.player_score.items(),
-                   key=lambda k: (-k[1], k[0].rank))]
+        player_in_tournament_to_run = [element[0] for element in sorted(tournament_to_run.player_score.items(),
+                                                                        key=lambda k: (-k[1], k[0].rank))]
         # Will be filled with match
         list_of_match = []
         # Will be used to creat news round
@@ -155,11 +153,10 @@ class TournamentController:
                 associated_players.append(list_of_opponent[0])
 
         # Creat match list
-        match_list = self.match_controller.add_unique_match_list(
-            list_of_match, tournament_to_run.player_score)
+        match_list = self.match_controller.add_unique_match_list(list_of_match, tournament_to_run.player_score)
 
         starting_hour = datetime.now()
-        # reat Round()
+        # Creat Round()
         tour = Round(match_list, f"Round {len(tournament_to_run.tours) + 1}",
                      starting_hour, None, len(tournament_to_run.tours) + 1, tournament_to_run.name)
 

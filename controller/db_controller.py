@@ -289,7 +289,7 @@ class DataBase:
             players_to_get.append(
                 Player(data["PLAYERS"][str(player)]["last_name"],
                        data["PLAYERS"][str(player)]["first_name"],
-                       data["PLAYERS"][str(player)]["birth"],
+                       datetime.fromisoformat(data["PLAYERS"][str(player)]["birth"]),
                        data["PLAYERS"][str(player)]["sex"],
                        data["PLAYERS"][str(player)]["rank"]))
 

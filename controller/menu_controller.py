@@ -25,18 +25,15 @@ class MenuController:
                                             self.tournament_controller.player_list)
         self.main_menu_view_in_controller = MenuView({
             "1": {
-                "label": "[bold blue]- 1. Créer des tournois :pencil: "
-                "[bold blue]",
+                "label": "[bold blue]- 1. Créer des tournois :pencil: [bold blue]",
                 "action": self.tournament_controller.add_tournament,
             },
             "2": {
-                "label": "[bold blue]- 2. Créer des joueurs :pencil: "
-                "[bold blue]",
+                "label": "[bold blue]- 2. Créer des joueurs :pencil: [bold blue]",
                 "action": self.player_controller.add_player,
             },
             "3": {
-                "label": "[bold blue]- 3. Ajouter des joueurs à un tournois "
-                ":pencil:[bold blue]",
+                "label": "[bold blue]- 3. Ajouter des joueurs à un tournois :pencil:[bold blue]",
                 "action": self.tournament_controller.add_player_in_tournament,
             },
             "4": {
@@ -45,23 +42,19 @@ class MenuController:
                 fill_round_instance_create_announcement
             },
             "5": {
-                "label": "[bold blue]- 5. Ajouter des résultats :trophy: "
-                "[bold blue]",
+                "label": "[bold blue]- 5. Ajouter des résultats :trophy: [bold blue]",
                 "action": self.tournament_controller.fill_result,
             },
             "6": {
-                "label": "[bold blue]- 6. Montrer le rapport :bar_chart: "
-                "[bold blue]",
+                "label": "[bold blue]- 6. Montrer le rapport :bar_chart: [bold blue]",
                 "action": self.report_view.report,
             },
             "7": {
-                "label": "[bold blue]- 7. Sauvegarder les données "
-                ":dvd:  [bold blue]",
+                "label": "[bold blue]- 7. Sauvegarder les données :dvd: [bold blue]",
                 "action": self.db_controller.creat_db
             },
             "8": {
-                "label": "[bold blue]- 8. Charger les données "
-                "🔄    [bold blue]",
+                "label": "[bold blue]- 8. Charger les données 🔄 [bold blue]",
                 "action": self.db_controller.load_data,
             },
             "9": {
