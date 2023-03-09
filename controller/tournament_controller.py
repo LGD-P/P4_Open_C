@@ -242,13 +242,13 @@ class TournamentController:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
                     tournament_choice.player_score[(player)] += 0.5
-                    match_list[0][1] += 0.5
+                    match_list[0][1] = 0.5
                     tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
                 elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0.5
-                    match_list[1][1] += 0.5
+                    match_list[1][1] = 0.5
                     tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[0][0])
 
@@ -256,13 +256,13 @@ class TournamentController:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 1
-                    match_list[0][1] += 1
+                    match_list[0][1] = 1
                     tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
                 elif player == match_list[1][0]:
                     tournament_choice.player_score[player] += 0
-                    match_list[1][1] += 0
+                    match_list[1][1] = 0
                     tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[0][0])
 
@@ -270,7 +270,7 @@ class TournamentController:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
                     tournament_choice.player_score[player] += 0
-                    match_list[0][1] += 0
+                    match_list[0][1] = 0
                     tournament_choice.memory_of_enconters[str(player)].append(
                         match_list[1][0])
 
