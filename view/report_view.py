@@ -57,9 +57,8 @@ class Report_View:
 
         for tournament in tournament_available:
             if tournament in tournament_list:
-                c.print(f"[bold blue]"
-                        f" - {tournament_list.index(tournament)} : "
-                        f"{tournament.name}\n[bold blue]")
+                c.print(f"- {tournament_list.index(tournament)} : "
+                        f"{tournament.name}\n")
 
         question = c.input("[bold yellow]Choisissez le N° du tournois dont "
                            "vous souhaitez afficher les joueurs par "
@@ -68,8 +67,7 @@ class Report_View:
 
         while not question.isdigit() or not int(question) in answer:
             question = c.input(
-                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                f" - {tournament_list.index(tournament)} : {tournament}")
+                "[bold red]Merci de faire un choix dans la liste :[bold red]\n")
 
         tournament_choosen = tournament_list[int(question)]
 
@@ -87,13 +85,12 @@ class Report_View:
             answer.append(tournament_list.index(tournament))
 
             c.print(f"- {tournament_list.index(tournament)} : "
-                    f"{tournament.name}\n[bold blue]")
+                    f"{tournament.name}\n")
 
         question = c.input("[bold red]==> [bold red]")
         while not question.isdigit() or not int(question) in answer:
             question = c.input(
-                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                f" - {tournament_list.index(tournament)} : {tournament}")
+                "[bold red]Merci de faire un choix dans la liste [bold red]\n")
 
         tournament_chosen = tournament_list[int(question)]
 
@@ -182,9 +179,8 @@ class Report_View:
 
         answer = []
         c.print("[bold yellow]Choisissez le tournois dont "
-                "vous souhaitez afficher la liste des tours "
-                "alphabétique\n[bold yellow]"
-                "[bold blue] ")
+                "vous souhaitez afficher la liste des tours \n[bold yellow]")
+
         for tournament in tournament_list:
             answer.append(tournament_list.index(tournament))
 
@@ -194,8 +190,7 @@ class Report_View:
         question = input("==> ")
         while not question.isdigit() or not int(question) in answer:
             question = c.input(
-                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                f" - {tournament_list.index(tournament)} : {tournament}")
+                "[bold red]Merci de faire un choix dans la liste :[bold red]\n\n")
 
         tournament_chosen = tournament_list[int(question)]
         return tournament_chosen
