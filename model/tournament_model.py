@@ -18,7 +18,7 @@ class Tournament:
     def __str__(self):
         return (
             f"\n- Nom du tounois: {self.name}\n"
-            f"- Date du tournois: {self.date}\n"
+            f"- Date du tournois: {self.date.strftime('%d-%m-%Y')}\n"
             f"- Lieu du tournois: {self.place}\n"
             f"- Nombre de round: {self.number_of_rounds}\n"
             f"- Liste des tours: {self.tours}\n"
@@ -32,7 +32,7 @@ class Tournament:
     def __repr__(self):
         return (
             f"\n- Nom du tounois: {self.name}\n"
-            f"- Date du tournois: {self.date}\n"
+            f"- Date du tournois: {self.date.strftime('%A-%B-%Y','fr_FR')}\n"
             f"- Lieu du tournois: {self.place}\n"
             f"- Nombre de round: {self.number_of_rounds}\n"
             f"- Liste des tours: {self.tours}\n"

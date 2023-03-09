@@ -17,6 +17,14 @@ class ReportController:
             .report_display_all_players_by_alphabetical_order(
                 self.player_list)
 
+    def report_players_in_tournament_by_alpahatical_order(self):
+        """This function use ReportView to display
+        players by alphabetic order
+        """
+        Report_View()\
+            .report_display_players_in_tournament_by_alphabetical_order(
+                self.tournament_list)
+
     def report_player_by_rank(self):
         """This function use ReportView to display player by rank
         """
@@ -45,6 +53,9 @@ class ReportController:
         tournament_chosen = Report_View().report_display_match_in_tournament(self.tournament_list)
         MatchView().display_match_for_report(tournament_chosen)
 
+    def name_and_date_of_a_tournament(self):
+        Report_View().name_and_date_of_touranment(self.tournament_list)
+
     def report(self):
         """This function using ReportView allow acces to report menu.
         """
@@ -61,25 +72,24 @@ class ReportController:
                     "action": self.report_players_alpahatical_order
                 },
                 "2": {
-                    "label": "[bold blue]- 02. Liste de tous les joueurs d'un "
-                    "tournoi "
-                    "par classement[bold blue]",
-                    "action": self.report_player_by_rank
-                },
-                "3": {
-                    "label": "[bold blue]- 03. Liste de tous les tournois."
-                    "[bold blue]",
+                    "label": "[bold blue]- 02. Liste de tous les tournois.[bold blue]",
                     "action": self.report_tournament_list
                 },
+                "3":
+                    {
+                    "label": "[bold blue]- 03. Nom et date d'un tournois donné[bold blue] ",
+                    "action": self.name_and_date_of_a_tournament
+                },
                 "4": {
-                    "label": "[bold blue]- 04. Liste de tous les tours d'un "
-                    "tournoi.[bold blue]",
-                    "action": self.report_tour_in_tournament
+                    "label": "[bold blue]- 04. Liste de tous les joueurs d'un tournoi par classement[bold blue]",
+                    "action": self.report_players_in_tournament_by_alpahatical_order
                 },
                 "5": {
-                    "label": "[bold blue]- 05. Liste de tous les matchs d'un "
-                    "tournoi."
-                    "[bold blue]",
+                    "label": "[bold blue]- 05. Liste de tous les tours d'un tournoi.[bold blue]",
+                    "action": self.report_tour_in_tournament
+                },
+                "6": {
+                    "label": "[bold blue]- 06. Liste de tous les matchs d'un tournoi.[bold blue]",
                     "action": self.report_match_in_tournament
                 },
 

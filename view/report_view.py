@@ -84,6 +84,27 @@ class Report_View:
         for player in sorted_players:
             c.print(player)
 
+    def name_and_date_of_touranment(self, tournament_list):
+
+        answer = []
+        c.print("[bold yellow]Choisissez le tournois dont "
+                "vous souhaitez connaître la date ? \n[bold yellow]")
+        for tournament in tournament_list:
+            answer.append(tournament_list.index(tournament))
+
+            c.print(f"- {tournament_list.index(tournament)} : "
+                    f"{tournament.name}\n[bold blue]")
+
+        question = c.input("[bold red]==> [bold red]")
+        while not question.isdigit() or not int(question) in answer:
+            question = c.input(
+                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
+                f" - {tournament_list.index(tournament)} : {tournament}")
+
+        tournament_chosen = tournament_list[int(question)]
+
+        c.print(f"Le tournois : {tournament_chosen.name} s'est déroulé le {tournament_chosen.date}")
+
     def report_display_players_in_tournament_by_rank(self, tournament_list):
         """
         This function used in report return player list by rank, using player
@@ -259,7 +280,7 @@ class Report_View:
             c.print(f"- {tournament_list.index(tournament)} : "
                     f"{tournament.name}\n[bold blue]")
 
-        question = input("==> ")
+        question = c.input("[bold red]==> [bold red]")
         while not question.isdigit() or not int(question) in answer:
             question = c.input(
                 "[bold red]Faites un choix dans la liste :[bold red]\n\n"
