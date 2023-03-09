@@ -335,14 +335,14 @@ class DataBase:
             match_list_loaded.append(([
                 Player(data["PLAYERS"][str(player[0][0]['joueur'])]["last_name"],
                        data["PLAYERS"][str(player[0][0]['joueur'])]["first_name"],
-                       data["PLAYERS"][str(player[0][0]['joueur'])]["birth"],
+                       datetime.fromisoformat(data["PLAYERS"][str(player[0][0]['joueur'])]["birth"]),
                        data["PLAYERS"][str(player[0][0]['joueur'])]["sex"],
                        data["PLAYERS"][str(player[0][0]['joueur'])]["rank"]),
                 player[0][1]["score"]
             ], [
                 Player(data["PLAYERS"][str(player[1][0]['joueur'])]["last_name"],
                        data["PLAYERS"][str(player[1][0]['joueur'])]["first_name"],
-                       data["PLAYERS"][str(player[1][0]['joueur'])]["birth"],
+                       datetime.fromisoformat(data["PLAYERS"][str(player[1][0]['joueur'])]["birth"]),
                        data["PLAYERS"][str(player[1][0]['joueur'])]["sex"],
                        data["PLAYERS"][str(player[1][0]['joueur'])]["rank"]),
                 player[1][1]["score"]
