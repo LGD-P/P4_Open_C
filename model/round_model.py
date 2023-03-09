@@ -17,15 +17,15 @@ class Round:
         if self.ending_hour is None:
             return f"- {self.name}\n"\
                 f"- Début de round : "\
-                f"{self.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
+                f"{self.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"\
                 f"- Fin de round : pas encore d'heure de fin"\
                 f"- Liste des match: {self.match_list}\n"
         else:
             return f"- {self.name}\n"\
                 f"- Début de round : "\
-                f"{self.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
+                f"{self.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"\
                 f"- Fin de round : "\
-                f"{self.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"\
+                f"{self.ending_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"\
                 f"- Liste des match: {self.match_list}\n"
 
     def __repr__(self):

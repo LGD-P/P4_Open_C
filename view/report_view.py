@@ -103,58 +103,9 @@ class Report_View:
 
         tournament_chosen = tournament_list[int(question)]
 
-        c.print(f"Le tournois : {tournament_chosen.name} s'est déroulé le {tournament_chosen.date}")
-
-    def report_display_players_in_tournament_by_rank(self, tournament_list):
-        """
-        This function used in report return player list by rank, using player
-        list in tournament
-
-        Args:
-            tournament_list (_type_): list of each tournament instance created
-
-        Returns:
-            list : list of player in tournament sorted by rank
-        """
-        answer = [tournament_list.index(
-            tournament) for tournament in tournament_list if tournament.players]
-        tournament_available = [
-            tournament for tournament in tournament_list if tournament.players]
-
-        if not tournament_available:
-            c.print(
-                "[bold red]Il faut ajouter des joueurs aux tournois [bold red]")
-            return None
-
-        for tournament in tournament_available:
-            if tournament in tournament_list:
-                c.print(f"[bold blue]"
-                        f" - {tournament_list.index(tournament)} : "
-                        f"{tournament.name}\n[bold blue]")
-
-        question = c.input("[bold yellow]Choisissez le N° du tournois dont "
-                           "vous souhaitez afficher les joueurs par "
-                           "rang\n[bold yellow] "
-                           )
-
-        while not question.isdigit() or not int(question) in answer:
-            question = c.input(
-                "[bold red]Faites un choix dans la liste :[bold red]\n\n")
-
-        tournament_choosen = tournament_list[int(question)]
-
-        sorted_players = sorted(tournament_choosen.players,
-                                key=lambda player: player.rank)
-
-        c.print("[bold magenta]Voici la liste des joueurs par rang:"
-                "\n[bold magenta]")
-
-        for player in sorted_players:
-
-            c.print(
-                f"[white]- {player.last_name} {player.first_name}[white] "
-                "[bold yellow] Classement :[bold yellow] "
-                f"[white]{player.rank}[white]")
+        c.print(
+            f"Le tournois : {tournament_chosen.name} s'est déroulé le "
+            f"{tournament_chosen.date}")
 
     def display_player_in_row(self, tournament):
         """Display players from tournament list
@@ -250,37 +201,6 @@ class Report_View:
                     f"{tournament.name}\n[bold blue]")
 
         question = input("==> ")
-        while not question.isdigit() or not int(question) in answer:
-            question = c.input(
-                "[bold red]Faites un choix dans la liste :[bold red]\n\n"
-                f" - {tournament_list.index(tournament)} : {tournament}")
-
-        tournament_chosen = tournament_list[int(question)]
-        return tournament_chosen
-
-    def report_display_match_in_tournament(self, tournament_list):
-        """
-        This function used in report return each matchs played between each
-        players in tournament
-
-        Args:
-            tournament_list (list): list of each tournament instance created
-
-        Returns:
-            list: attribute of tournament selected as list of each match
-            in tournament.
-        """
-        answer = []
-        c.print("[bold yellow]Choisissez le tournois dont "
-                "vous souhaitez afficher la liste des matchs"
-                "\n[bold yellow]"
-                "[bold blue]")
-        for tournament in tournament_list:
-            answer.append(tournament_list.index(tournament))
-            c.print(f"- {tournament_list.index(tournament)} : "
-                    f"{tournament.name}\n[bold blue]")
-
-        question = c.input("[bold red]==> [bold red]")
         while not question.isdigit() or not int(question) in answer:
             question = c.input(
                 "[bold red]Faites un choix dans la liste :[bold red]\n\n"

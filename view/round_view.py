@@ -57,7 +57,7 @@ class RoundView:
         """
 
         table = Table(
-            title="",
+            title="Liste des matchs du Tour",
             style="red")
 
         table.add_column("Joueur Un", justify="center",
@@ -86,7 +86,7 @@ class RoundView:
                     f"{round.tournament_name}\n"
                     f"{round.name}\n"
                     f"Commencé le :"
-                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"{round.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"
                     f"Pas encore terminé\n"
                     f"{round.number_of_round}\n"
                     f"{round.match_list}\n")
@@ -95,9 +95,9 @@ class RoundView:
                     f"{round.tournament_name}\n"
                     f"{round.name}\n"
                     f"Commencé le :"
-                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"{round.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"
                     f"Terminé le :"
-                    f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n"
+                    f"{round.ending_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n"
                     f"{round.number_of_round}\n"
                     f"{round.match_list}\n")
 
@@ -115,7 +115,7 @@ class RoundView:
                     f"N°{tournament.tours.index(round) + 1}[bold yellow]\n")
                 c.print(
                     f"Commencé le :"
-                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}"
+                    f"{round.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}"
                     "\n")
                 self.display_round_view_for_report(round.match_list)
                 c.print("Ce round n'est pas encore terminé\n")
@@ -127,9 +127,9 @@ class RoundView:
                     "\n")
                 c.print(
                     f"Commencé le :"
-                    f"{round.starting_hour.strftime('%d-%m-%Y - %H:%M:%S')}"
+                    f"{round.starting_hour.strftime('%d-%m-%Y à %H:%M:%S')}"
                     "\n")
                 self.display_round_view_for_report(round.match_list)
                 c.print(
                     f"Terminé le :"
-                    f"{round.ending_hour.strftime('%d-%m-%Y - %H:%M:%S')}\n")
+                    f"{round.ending_hour.strftime('%d-%m-%Y à %H:%M:%S')}\n")
