@@ -309,20 +309,16 @@ class TournamentController:
         """This function using add_player_point() fill tournament
         instance.player_score and round instance.
         """
-        tournament_choice = self.match_view.display_tournament_to_fill_result(
-            self.tournament_list)
+        tournament_choice = self.match_view.display_tournament_to_fill_result(self.tournament_list)
 
         if not tournament_choice:
             return None
 
         tour = tournament_choice.tours[-1]
         for match_list in tour.match_list:
-            winner_choice = self.match_view \
-                .display_player_in_tournament_to_fill_score(
-                    tournament_choice, match_list)
+            winner_choice = self.match_view.display_player_in_tournament_to_fill_score(tournament_choice, match_list)
 
-            self.add_player_point(winner_choice, tournament_choice,
-                                  match_list)
+            self.add_player_point(winner_choice, tournament_choice, match_list)
 
         tour.ending_hour = datetime.now()
         ErrorAndUserMessages().score_added()
