@@ -1,10 +1,10 @@
-# ♖ Tournois d'Echecs ♖
+# ♖ Tournoi d'Echecs ♖
 
 *Le but de ce projet est de créer un script qui gère des tournois d'échecs.*
 
 * La mise en oeuvre devra respecter le schema :  Model View Controller.
 
-```mermaid
+```mermai
 graph LR;
     A[USER] --> |Ask something\n to the program| B(VIEW);
     B --> | Give the request \nto Controller |C{CONTROLLER};
@@ -23,7 +23,7 @@ graph LR;
 
 ---
 
-# ♝ Déroulement de base d'un tournois: 
+# ♝ Déroulement de base d'un tournoi: 
 
     1. Créer un nouveau tournoi.
     2. Ajouter huit joueurs.

@@ -32,7 +32,7 @@ class MenuController:
                 "action": self.player_controller.add_player,
             },
             "3": {
-                "label": "[bold blue]- 3. Ajouter des joueurs à un tournois :pencil:[bold blue]",
+                "label": "[bold blue]- 3. Ajouter des joueurs à un tournoi :pencil:[bold blue]",
                 "action": self.tournament_controller.add_player_in_tournament,
             },
             "4": {
