@@ -84,10 +84,7 @@ class TournamentController:
             instance: tournament chose with tours attribute filled.
         """
 
-        player_in_tournament_to_run = sorted(
-            tournament_to_run.player_score.keys(),
-            key=lambda k: k.rank
-        )
+        player_in_tournament_to_run = sorted(tournament_to_run.player_score.keys(), key=lambda k: k.rank)
 
         half_list = len(player_in_tournament_to_run) // 2
 
@@ -101,8 +98,7 @@ class TournamentController:
             list_of_match.append([element_1, element_2])
 
         # add  round list in tournament chosen
-        match_list = self.match_controller.add_unique_match_list(
-            list_of_match, tournament_to_run.player_score)
+        match_list = self.match_controller.add_unique_match_list(list_of_match, tournament_to_run.player_score)
 
         starting_hour = datetime.now()
 
@@ -112,9 +108,8 @@ class TournamentController:
         tournament_to_run.tours.append(tour)
 
     def matchmaking_next_round(self, tournament_to_run):
-        """This function sorted player by score -k and rank k
-        then creat a list of oponent to each players, if players
-        are not in this list match can be created
+        """This function sorted player by score -k and rank k and creat a list of oponent
+        to each players, if players are not in this list match can be created
 
         Args:
             tournament_to_run (instance): instance of tournament chosen by user
@@ -132,8 +127,7 @@ class TournamentController:
             # Start to creat a list of oponants from player_in_tournament and associated_players
             # As in the first loop, associated player is empty, all players are in.
             # then list_of_opponent decrease, because oponent will be added in the next tow loops .
-            list_of_opponent = [
-                p for p in player_in_tournament_to_run if p != player and p not in associated_players]
+            list_of_opponent = [p for p in player_in_tournament_to_run if p != player and p not in associated_players]
 
             # here we check if players has already played togather returning True, adding
             # player and opponent in associated_player, else break logic
@@ -220,6 +214,51 @@ class TournamentController:
         tournament_running = self.create_round()
         self.round_view.display_launching_round_view(tournament_running)
 
+    def winner_choice_zero(self, winner_choice, tournament_choice, match_list):
+        if int(winner_choice) == 0:
+            for player in tournament_choice.player_score:
+                if player == match_list[0][0]:
+                    tournament_choice.player_score[player] += 1
+                    match_list[0][1] = 1
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[1][0])
+
+                elif player == match_list[1][0]:
+                    tournament_choice.player_score[player] += 0
+                    match_list[1][1] = 0
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[0][0])
+
+    def winner_choice_one(self, winner_choice, tournament_choice, match_list):
+        if int(winner_choice) == 1:
+            for player in tournament_choice.player_score:
+                if player == match_list[0][0]:
+                    tournament_choice.player_score[player] += 0
+                    match_list[0][1] = 0
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[1][0])
+
+                elif player == match_list[1][0]:
+                    tournament_choice.player_score[player] += 1
+                    match_list[1][1] = 1
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[0][0])
+
+    def winner_choice_tow(self, winner_choice, tournament_choice, match_list):
+        if int(winner_choice) == 2:
+            for player in tournament_choice.player_score:
+                if player == match_list[0][0]:
+                    tournament_choice.player_score[(player)] += 0.5
+                    match_list[0][1] = 0.5
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[1][0])
+
+                elif player == match_list[1][0]:
+                    tournament_choice.player_score[player] += 0.5
+                    match_list[1][1] = 0.5
+                    tournament_choice.memory_of_enconters[str(player)].append(
+                        match_list[0][0])
+
     def add_player_point(self, winner_choice, tournament_choice, match_list):
         """This function will be user to add tournament.player_score result.
 
@@ -238,47 +277,9 @@ class TournamentController:
             for players in tournament_choice.players:
                 tournament_choice.memory_of_enconters[str(players)] = []
 
-        if int(winner_choice) == 2:
-            for player in tournament_choice.player_score:
-                if player == match_list[0][0]:
-                    tournament_choice.player_score[(player)] += 0.5
-                    match_list[0][1] = 0.5
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[1][0])
-
-                elif player == match_list[1][0]:
-                    tournament_choice.player_score[player] += 0.5
-                    match_list[1][1] = 0.5
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[0][0])
-
-        elif int(winner_choice) == 0:
-            for player in tournament_choice.player_score:
-                if player == match_list[0][0]:
-                    tournament_choice.player_score[player] += 1
-                    match_list[0][1] = 1
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[1][0])
-
-                elif player == match_list[1][0]:
-                    tournament_choice.player_score[player] += 0
-                    match_list[1][1] = 0
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[0][0])
-
-        elif int(winner_choice) == 1:
-            for player in tournament_choice.player_score:
-                if player == match_list[0][0]:
-                    tournament_choice.player_score[player] += 0
-                    match_list[0][1] = 0
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[1][0])
-
-                elif player == match_list[1][0]:
-                    tournament_choice.player_score[player] += 1
-                    match_list[1][1] = 1
-                    tournament_choice.memory_of_enconters[str(player)].append(
-                        match_list[0][0])
+        self.winner_choice_zero(winner_choice, tournament_choice, match_list)
+        self.winner_choice_one(winner_choice, tournament_choice, match_list)
+        self.winner_choice_tow(winner_choice, tournament_choice, match_list)
 
     def fill_result(self):
         """This function using add_player_point() fill tournament

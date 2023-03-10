@@ -17,8 +17,7 @@ class MenuController:
     def __init__(self):
         self.running_program = True
         self.player_controller = PlayerController([])
-        self.tournament_controller = TournamentController(
-            [], self.player_controller.player_list)
+        self.tournament_controller = TournamentController([], self.player_controller.player_list)
         self.db_controller = DataBase(self.tournament_controller.player_list,
                                       self.tournament_controller.tournament_list)
         self.report_view = ReportController(self.tournament_controller.tournament_list,

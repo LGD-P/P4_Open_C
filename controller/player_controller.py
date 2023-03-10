@@ -17,7 +17,6 @@ class PlayerController:
         """This function get dict from players_list_view.display_player_form()
         and instanced a Player, then add player data in database
         """
-        # récupérer le dictionnaire et ajouter un joueur à player list
         serialized_player = self.players_list_view.display_player_form()
 
         player_instance = Player(
@@ -28,5 +27,3 @@ class PlayerController:
             serialized_player["rank"])
 
         self.player_list.append(player_instance)
-
-        # print(self.player_list)

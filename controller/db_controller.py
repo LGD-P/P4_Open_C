@@ -183,9 +183,7 @@ class DataBase:
         return serialized_players
 
     def save_data(self, tournament_list, player_list):
-        """This function uses previous ones to record all data
-                in .json file
-
+        """This function uses previous ones to record all data in .json file
 
                 Args:
                     tournament_list (list): list of each touranment
@@ -224,7 +222,6 @@ class DataBase:
                     table_tournament.update(
                         {"player_score": self.serialize_player_score(tournament)},
                         where("name") == tournament.name)
-
                 if tournament.tours != []:
                     table_tournament.update(
                         {"tours": self.serialised_tournament_tours(tournament)},
@@ -374,19 +371,16 @@ class DataBase:
                     tours_in_tournament.append(
                         Round(
                             match_list, tours["name"],
-                            datetime.strptime(tours['starting_hour'][0:19],
-                                              '%Y-%m-%d  %H:%M:%S'), None,
+                            datetime.strptime(tours['starting_hour'][0:19], '%Y-%m-%d  %H:%M:%S'), None,
                             tours["number_of_round"], tours["tournament_name"]))
 
                 else:
 
                     tours_in_tournament.append(
                         Round(
-                            match_list, tours["name"],
-                            datetime.strptime(tours['starting_hour'][0:19],
-                                              '%Y-%m-%d  %H:%M:%S'),
-                            datetime.strptime(tours['ending_hour'][0:19],
-                                              '%Y-%m-%d  %H:%M:%S'),
+                            match_list, tours["name"], datetime.strptime(tours['starting_hour'][0:19],
+                                                                         '%Y-%m-%d  %H:%M:%S'),
+                            datetime.strptime(tours['ending_hour'][0:19], '%Y-%m-%d  %H:%M:%S'),
                             tours["number_of_round"], tours["tournament_name"]))
 
         return tours_in_tournament
@@ -401,8 +395,7 @@ class DataBase:
 
         self.tournament_list.append(
             Tournament(tournament["name"], datetime.fromisoformat(tournament["date"]), tournament["place"],
-                       [], [], tournament["time_control"],
-                       tournament["description"], {}))
+                       [], [], tournament["time_control"], tournament["description"], {}))
 
     def load_touranment(self):
         """This function will load tournament from database in controller
@@ -413,9 +406,7 @@ class DataBase:
                 """
 
         opener = open('db.json')
-
         data = json.load(opener)
-
         tournament_deserializer = []
         index = 0
         for _ in data["TOURNAMENT"]:
@@ -423,26 +414,22 @@ class DataBase:
             tournament_deserializer.append(data["TOURNAMENT"][str(index)])
 
         for tournament in tournament_deserializer:
-
             if tournament["players"] != [] and tournament["tours"] == []:
                 self.tournament_list.append(
                     Tournament(tournament["name"], datetime.fromisoformat(tournament["date"]),
-                               tournament["place"], [],
-                               self.load_players_in_tournament(tournament, data),
+                               tournament["place"], [], self.load_players_in_tournament(tournament, data),
                                tournament["time_control"], tournament["description"],
                                self.load_players_tournament_p_score(tournament)))
 
             elif tournament["tours"] != []:
                 self.tournament_list.append(
-                    Tournament(
-                        tournament["name"], datetime.fromisoformat(tournament["date"]), tournament["place"],
-                        self.load_tours_in_tournament(tournament, data),
-                        self.load_players_in_tournament(tournament, data),
-                        tournament["time_control"], tournament["description"],
-                        self.load_players_tournament_p_score(tournament)))
+                    Tournament(tournament["name"], datetime.fromisoformat(tournament["date"]), tournament["place"],
+                               self.load_tours_in_tournament(tournament, data),
+                               self.load_players_in_tournament(tournament, data),
+                               tournament["time_control"], tournament["description"],
+                               self.load_players_tournament_p_score(tournament)))
 
             elif tournament["players"] == []:
-
                 self.load_first_tournament_part(tournament)
 
         opener.close()
