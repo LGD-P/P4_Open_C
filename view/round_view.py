@@ -20,14 +20,10 @@ class RoundView:
             return None
         else:
 
-            table = Table(
-                title="",
-                style="red")
+            table = Table(title="", style="red")
 
-            table.add_column("Joueur Un", justify="center",
-                             style="cyan", no_wrap=True)
-            table.add_column(
-                "Jouera contre", justify="center", style="magenta")
+            table.add_column("Joueur Un", justify="center", style="cyan", no_wrap=True)
+            table.add_column("Jouera contre", justify="center", style="magenta")
             table.add_column("Joueur Deux", justify="center", style="green")
 
             index = -1
@@ -56,14 +52,10 @@ class RoundView:
             None : none if no tournament is running
         """
 
-        table = Table(
-            title="Liste des matchs du Tour",
-            style="red")
+        table = Table(title="Liste des matchs du Tour", style="red")
 
-        table.add_column("Joueur Un", justify="center",
-                         style="cyan", no_wrap=True)
-        table.add_column(
-            "A joué contre", justify="center", style="magenta")
+        table.add_column("Joueur Un", justify="center", style="cyan", no_wrap=True)
+        table.add_column("A joué contre", justify="center", style="magenta")
         table.add_column("Joueur Deux", justify="center", style="green")
 
         # for tournament in tournament_list:

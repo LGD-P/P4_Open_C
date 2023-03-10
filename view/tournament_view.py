@@ -69,15 +69,13 @@ class TournamentView:
             for tournament in tournament_list:
                 if len(tournament.tours) == 0\
                         and not len(tournament_list[tournament_list.index(tournament)].players) == len(player_list):
-                    choice_tournament_available.append(
-                        tournament_list.index(tournament))
+                    choice_tournament_available.append(tournament_list.index(tournament))
                 # if not len(tournament.players) % 2:
 
             while choice_tournament_available == []:
                 c.print((
                     "[bold red]- 1 Soit vous n'avez pas encore de créer de tournois "
-                        "des joueurs\n - 2 Soit le tournois contient déjà tous les joueurs enregistrés.[bold red]"
-                        ))
+                        "des joueurs\n - 2 Soit le tournois contient déjà tous les joueurs enregistrés.[bold red]"))
                 return None
 
             for tournament in choice_tournament_available:
@@ -85,20 +83,13 @@ class TournamentView:
                         f"{tournament_list[tournament].name},"
                         f"{tournament_list[tournament].place}[bold green]\n")
 
-            tournament_choice = c.input(
-                "[bold blue]Faites votre choix :  [bold blue]"
-            )
+            tournament_choice = c.input("[bold blue]Faites votre choix :  [bold blue]")
 
-            c.print("[bold blue]Choisissez un tournois dans lequel"
-                    " ajouter un joueur: [bold blue]\n"
-                    )
-            while not tournament_choice.isdigit() or not \
-                    int(tournament_choice) in choice_tournament_available:
-                tournament_choice = c.input(
-                    "[bold red]Veillez faire un choix dans la liste[bold red]"
-                )
+            c.print("[bold blue]Choisissez un tournois dans lequel ajouter un joueur: [bold blue]\n")
 
-            # retourner directement l'instance du tournois
+            while not tournament_choice.isdigit() or not int(tournament_choice) in choice_tournament_available:
+                tournament_choice = c.input("[bold red]Veillez faire un choix dans la liste[bold red]")
+
             return tournament_list[int(tournament_choice)]
 
     def display_add_player_in_tournament_form(self, tournament_list, player_list, player_view):
@@ -108,9 +99,8 @@ class TournamentView:
 
         Args:
             tournament_list (list): list of each tournament instance created
-            player_view (instance): view instance to use player_view method
-            and display player tournament_list (list): list of each player
-            instance created
+            player_view (instance): view instance to use player_view method and display player
+            tournament_list (list): list of each player instance created
 
         Returns:
             dict: {
@@ -130,18 +120,15 @@ class TournamentView:
             tournament = self.display_tournament_to_fill(tournament_list, player_list)
             if not tournament:
                 return None
+
             else:
-
-                player_view.display_players_to_choose(
-                    player_list, tournament)
-
+                player_view.display_players_to_choose(player_list, tournament)
                 player_choice = c.input("[bold yellow]Choisissez votre joueur\n ==> [bold yellow]")
                 choice_list = []
                 for player in player_list:
                     choice_list.append(player_list.index(player))
 
-                while not player_choice.isdigit() \
-                        or int(player_choice) not in choice_list:
+                while not player_choice.isdigit() or int(player_choice) not in choice_list:
                     c.print("[bold red]Faites un choix parmis ceux disponibles[bold red]")
                     player_choice = c.input("[bold yellow]==> [bold yellow]")
 
@@ -198,13 +185,11 @@ class TournamentView:
                 index += 1
                 choice_player.append(index)
 
-            while not tournament_choice.isdigit() or not \
-                    int(tournament_choice) in choice_player:
+            while not tournament_choice.isdigit() or not int(tournament_choice) in choice_player:
                 c.print("[bold red] Merci de faire un choix dans la liste[bold red]")
                 tournament_choice = c.input("==> ")
 
-            tournament_to_launch = tournament_available[int(
-                tournament_choice)]
+            tournament_to_launch = tournament_available[int(tournament_choice)]
 
             return tournament_to_launch
 

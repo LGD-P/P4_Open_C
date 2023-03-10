@@ -36,8 +36,7 @@ class MenuView:
 
         if menu_choice in self.main_menu_view:
             return self.main_menu_view[menu_choice]["action"]()
-        c.print("\n[bold red]Merci de faire un choix présent"
-                " dans le menu[bold red]\n")
+        c.print("\n[bold red]Merci de faire un choix présent dans le menu[bold red]\n")
 
     def quit_message(self):
         """Just a friendly message to say good by
