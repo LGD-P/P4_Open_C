@@ -215,6 +215,14 @@ class TournamentController:
         self.round_view.display_launching_round_view(tournament_running)
 
     def winner_choice_zero(self, winner_choice, tournament_choice, match_list):
+        """This function set player_score match list and memory_of_encounter
+        if user choice is 0
+
+        Args:
+            winner_choice (str): 0
+            tournament_choice (instance): tournament chosen to fill result
+            match_list (match): match in a round to set result
+        """
         if int(winner_choice) == 0:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
@@ -230,6 +238,14 @@ class TournamentController:
                         match_list[0][0])
 
     def winner_choice_one(self, winner_choice, tournament_choice, match_list):
+        """This function set player_score match list and memory_of_encounter
+        if user choice is 1
+
+        Args:
+            winner_choice (str): 1
+            tournament_choice (instance): tournament chosen to fill result
+            match_list (match): match in a round to set result
+        """
         if int(winner_choice) == 1:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
@@ -245,6 +261,14 @@ class TournamentController:
                         match_list[0][0])
 
     def winner_choice_tow(self, winner_choice, tournament_choice, match_list):
+        """This function set player_score match list and memory_of_encounter
+        if user choice is 2
+
+        Args:
+            winner_choice (str): 2
+            tournament_choice (instance): tournament chosen to fill result
+            match_list (match): match in a round to set result
+        """
         if int(winner_choice) == 2:
             for player in tournament_choice.player_score:
                 if player == match_list[0][0]:
