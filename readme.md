@@ -4,7 +4,7 @@
 
 * La mise en oeuvre devra respecter le schema :  Model View Controller.
 
-```mermai
+```mermaid
 graph LR;
     A[USER] --> |Ask something\n to the program| B(VIEW);
     B --> | Give the request \nto Controller |C{CONTROLLER};
