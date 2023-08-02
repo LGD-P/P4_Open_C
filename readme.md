@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="menu.gif">
+</p>
+
 # ♖ Tournoi d'Echecs ♖
 
 *Le but de ce projet est de créer un script qui gère des tournois d'échecs.*
@@ -105,4 +109,3 @@ Il n'y a plus qu'à exécuter le script:
     python3 main.py
 
 
-![preview](/menu.gif)
