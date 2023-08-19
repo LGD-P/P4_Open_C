@@ -90,22 +90,26 @@ Une fois le projet cloné on crée et on active l'environnement virtuel:
 
 suivi de:
 
-    source env/bin/activate
-  
+```bash
+source env/bin/activate
+```  
 
 Puis on lance l'installation des modules nécessaires au fonctionnement du script:
 
-    pip install -r requirements.txt
-
+```bash
+pip install -r requirements.txt
+```
 
 Générer avec flake8-html, un rapport montrant bien que le code ne contient aucune erreur de peluchage:
 
-    flake8 --format=html --htmldir=flake-report
-
+```bash
+flake8 --format=html --htmldir=flake-report
+```
 
 
 Il n'y a plus qu'à exécuter le script:
 
-    python3 main.py
-
+```bash
+python3 main.py
+```
 
